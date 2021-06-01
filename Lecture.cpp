@@ -1,4 +1,4 @@
-﻿#include <string>
+#include <string>
 #include "Lecture.h"
 
 Major::Major(wstring name, int credit, wstring prior_lecture, bool must, bool completed) {
@@ -29,8 +29,12 @@ bool Major::getCompleted() {
 	return completed;
 }
 
-void Major::setCompleted(Major& m) {
-	m.completed = 1;
+//void Major::setCompleted(Major& m) {
+//	m.completed = 1;
+//}
+
+void Major::setCompleted() {
+	this->completed = true;
 }
 
 //=======================================================================================================================================//

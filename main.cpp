@@ -1,4 +1,4 @@
-ï»¿#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -6,72 +6,75 @@
 #include "Lecture.h"
 #include "MajorFunction.h"
 
+#define HASH_SIZE 100
+
 using namespace std;
 
 int main() {
 
-	// í•œê¸€ ìœ ë‹ˆì½”ë“œ ì‚¬ìš©ì„ ìœ„í•´ wstringì„ ì‚¬ìš©
-	// cin -> wcin, cout -> wcout ì‚¬ìš©
-	locale::global(locale("ko_KR.UTF-8"));		
+	// ÇÑ±Û À¯´ÏÄÚµå »ç¿ëÀ» À§ÇØ wstringÀ» »ç¿ë
+	// cin -> wcin, cout -> wcout »ç¿ë
+	locale::global(locale("ko_KR.UTF-8"));
+	setlocale(LC_ALL, "korean");
 
-	// ì „ê³µ
-	Major M1(L"ê¸°ì´ˆí”„ë¡œê·¸ë˜ë°", 3, L"", true, false);	// L"~"ì˜ í˜•íƒœë¡œ ì‚¬ìš©
-	Major M2(L"ê³„ì‚°ì ì‚¬ê³ ë²•", 3, L"", true, false);
-	Major M3(L"ì°½ì˜ì ê³µí•™ì„¤ê³„", 3, L"", true, false);
-	Major M4(L"ì´ì‚°êµ¬ì¡°", 3, L"", true, false);
-	Major M5(L"ì‹¬í™”í”„ë¡œê·¸ë˜ë°", 3, L"ê¸°ì´ˆí”„ë¡œê·¸ë˜ë°", false, false);
-	Major M6(L"ê°ì²´ì§€í–¥ì–¸ì–´ì™€ì‹¤ìŠµ", 3, L"ê¸°ì´ˆí”„ë¡œê·¸ë˜ë°", false, false);
-	Major M7(L"ìë£Œêµ¬ì¡°ì™€ì‹¤ìŠµ", 3, L"ê¸°ì´ˆí”„ë¡œê·¸ë˜ë°", true, false);
-	Major M11(L"ì»´í“¨í„°êµ¬ì„±", 3, L"ì´ì‚°êµ¬ì¡°", true, false);
-	Major M8(L"ì›¹í”„ë¡œê·¸ë˜ë°", 3, L"ê°ì²´ì§€í–¥ì–¸ì–´ì™€ì‹¤ìŠµ", false, false);
-	Major M9(L"ê°ì²´ì§€í–¥ìœˆë„ìš°ì¦ˆí”„ë¡œê·¸ë˜ë°", 3, L"ê°ì²´ì§€í–¥ì–¸ì–´ì™€ì‹¤ìŠµ", false, false);
-	Major M10(L"í”„ë¡œê·¸ë˜ë°ì–¸ì–´ê°œë…", 3, L"ê¸°ì´ˆí”„ë¡œê·¸ë˜ë°", false, false);
-	Major M12(L"ì‹œìŠ¤í…œì†Œí”„íŠ¸ì›¨ì–´ì™€ì‹¤ìŠµ", 3, L"ìë£Œêµ¬ì¡°ì™€ì‹¤ìŠµ", true, false);
-	Major M13(L"ê³µê°œSWí”„ë¡œì íŠ¸", 3, L"ì°½ì˜ì ê³µí•™ì„¤ê³„", true, false);
-	Major M14(L"ì¸ê°„ì»´í“¨í„°ìƒí˜¸ì‘ìš©ì‹œìŠ¤í…œ", 3, L"ìë£Œêµ¬ì¡°ì™€ì‹¤ìŠµ", false, false);
-	Major M15(L"ì»´í“¨í„°ê·¸ë˜í”½ìŠ¤ì…ë¬¸", 3, L"ìë£Œêµ¬ì¡°ì™€ì‹¤ìŠµ", false, false);
-	Major M16(L"ë°ì´í„°ë² ì´ìŠ¤ì‹œìŠ¤í…œ", 3, L"ìë£Œêµ¬ì¡°ì™€ì‹¤ìŠµ", false, false);
-	Major M17(L"í˜•ì‹ì–¸ì–´", 3, L"ì´ì‚°êµ¬ì¡°", false, false);
-	Major M18(L"ìš´ì˜ì²´ì œ", 3, L"ì‹œìŠ¤í…œì†Œí”„íŠ¸ì›¨ì–´ì™€ì‹¤ìŠµ", false, false);
-	Major M20(L"ì»´í“¨í„°ì•Œê³ ë¦¬ì¦˜ê³¼ì‹¤ìŠµ", 3, L"ìë£Œêµ¬ì¡°ì™€ì‹¤ìŠµ", false, false);
-	Major M21(L"ì†Œí”„íŠ¸ì›¨ì–´ê³µí•™ê°œë¡ ", 3, L"ê°ì²´ì§€í–¥ì–¸ì–´ì™€ì‹¤ìŠµ", false, false);
-	Major M22(L"ë°ì´í„°í†µì‹ ì…ë¬¸", 3, L"ê¸°ì´ˆí”„ë¡œê·¸ë˜ë°", false, false);
-	Major M23(L"ë°ì´í„°ë² ì´ìŠ¤í”„ë¡œê·¸ë˜ë°", 3, L"ìë£Œêµ¬ì¡°ì™€ì‹¤ìŠµ", false, false);
-	Major M24(L"ì»´í“¨í„°êµ¬ì¡°", 3, L"ì»´í“¨í„°êµ¬ì„±", false, false);
-	Major M25(L"ì»´íŒŒì¼ëŸ¬êµ¬ì„±", 3, L"í˜•ì‹ì–¸ì–´", false, false);
-	Major M26(L"ì„ë² ë””ë“œì†Œí”„íŠ¸ì›¨ì–´ì…ë¬¸", 3, L"ìš´ì˜ì²´ì œ", false, false);
-	Major M27(L"ì¸ê³µì§€ëŠ¥", 3, L"ìë£Œêµ¬ì¡°ì™€ì‹¤ìŠµ", false, false);
-	Major M28(L"ê°ì²´ì§€í–¥ì„¤ê³„ì™€íŒ¨í„´", 3, L"ê°ì²´ì§€í–¥ì–¸ì–´ì™€ì‹¤ìŠµ", false, false);
-	Major M29(L"S/Wí’ˆì§ˆê´€ë¦¬ë°í…ŒìŠ¤íŒ…", 3, L"", false, false);
-	Major M30(L"ì»´í“¨í„°ë³´ì•ˆ", 3, L"", false, false);
-	Major M31(L"ì»´í“¨í„°ë„¤íŠ¸ì›Œí‚¹", 3, L"", false, false);
-	Major M32(L"í˜„ì¥ì‹¤ìŠµ", 3, L"ìë£Œêµ¬ì¡°ì™€ì‹¤ìŠµ", false, false);
-	Major M33(L"ë°”ì´ì˜¤ë¹…ë°ì´í„°ë¶„ì„íŠ¹ë¡ ", 3, L"", false, false);
-	Major M34(L"ë¸”ë¡ì²´ì¸ë³´ì¸", 3, L"", false, false);
-	Major M35(L"ì‚¬ë¬¼ì¸í„°ë„·", 3, L"ì„ë² ë””ë“œì†Œí”„íŠ¸ì›¨ì–´ì…ë¬¸", false, false);
-	Major M36(L"ë¨¸ì‹ ëŸ¬ë‹", 3, L"ì¸ê³µì§€ëŠ¥", false, false);
-	Major M37(L"ëª¨ë°”ì¼ì»´í“¨íŒ…", 3, L"", false, false);
-	Major M38(L"ì•”í˜¸í•™ê³¼ë„¤íŠ¸ì›Œí¬ë³´ì•ˆ", 3, L"", false, false);
-	Major M39(L"SWë¹„ì§€ë‹ˆìŠ¤ì™€ì°½ì—…", 3, L"", false, false);
-	Major M40(L"í…Œí¬ë‹ˆì»¬í”„ë¦¬ì  í…Œì´ì…˜", 3, L"", false, false);
-	Major M41(L"í´ë¼ìš°ë“œì»´í“¨íŒ…", 3, L"", false, false);
-	Major M42(L"ë¡œë´‡í”„ë¡œê·¸ë˜ë°", 3, L"", false, false);
-	Major M43(L"ë°”ì´ì˜¤ë¹…ë°ì´í„°ë¶„ì„ì•Œê³ ë¦¬ì¦˜", 3, L"", false, false);
-	Major M44(L"ì‹œíì–´ì½”ë”©", 3, L"", false, false);
-	Major M45(L"ë¹…ë°ì´í„°ë¶„ì„", 3, L"", false, false);
-	Major M46(L"ì»´í“¨í„°ê³µí•™ì¢…í•©ì„¤ê³„1", 3, L"ê³µê°œSWí”„ë¡œì íŠ¸", true, false);
-	Major M47(L"ì»´í“¨í„°ê³µí•™ì¢…í•©ì„¤ê³„2", 3, L"ê³µê°œSWì»´í“¨í„°ê³µí•™ì¢…í•©ì„¤ê³„1", true, false);
-	Major M48(L"ê°œë³„ì—°êµ¬1", 1, L"", true, false);
-	Major M49(L"ê°œë³„ì—°êµ¬2", 1, L"", true, false);
-	Major M50(L"ê°œë³„ì—°êµ¬3", 1, L"", false, false);
-	Major M51(L"ì»¤ë¦¬ì–´ë©˜í† ë§", 3, L"", false, false);
-	Major M52(L"ë‹¤í•™ì œìº¡ìŠ¤í†¤ë””ìì¸", 3, L"", false, false);
-	Major M53(L"ì°½ì—…ìº¡ìŠ¤í†¤ë””ìì¸1", 3, L"", false, false);
-	Major M54(L"ì°½ì—…ìº¡ìŠ¤í†¤ë””ìì¸2", 3, L"", false, false);
-	Major M55(L"ê¸°ì—…ì‚¬íšŒë§ì¶¤í˜•í”„ë¡œì íŠ¸1", 3, L"", false, false);
-	Major M56(L"ê¸°ì—…ì‚¬íšŒë§ì¶¤í˜•í”„ë¡œì íŠ¸2", 3, L"", false, false);
+	// Àü°ø
+	Major M1(L"±âÃÊÇÁ·Î±×·¡¹Ö", 3, L"", true, false);	// L"~"ÀÇ ÇüÅÂ·Î »ç¿ë
+	Major M2(L"°è»êÀû»ç°í¹ı", 3, L"", true, false);
+	Major M3(L"Ã¢ÀÇÀû°øÇĞ¼³°è", 3, L"", true, false);
+	Major M4(L"ÀÌ»ê±¸Á¶", 3, L"", true, false);
+	Major M5(L"½ÉÈ­ÇÁ·Î±×·¡¹Ö", 3, L"±âÃÊÇÁ·Î±×·¡¹Ö", false, false);
+	Major M6(L"°´Ã¼ÁöÇâ¾ğ¾î¿Í½Ç½À", 3, L"±âÃÊÇÁ·Î±×·¡¹Ö", false, false);
+	Major M7(L"ÀÚ·á±¸Á¶¿Í½Ç½À", 3, L"±âÃÊÇÁ·Î±×·¡¹Ö", true, false);
+	Major M11(L"ÄÄÇ»ÅÍ±¸¼º", 3, L"ÀÌ»ê±¸Á¶", true, false);
+	Major M8(L"À¥ÇÁ·Î±×·¡¹Ö", 3, L"°´Ã¼ÁöÇâ¾ğ¾î¿Í½Ç½À", false, false);
+	Major M9(L"°´Ã¼ÁöÇâÀ©µµ¿ìÁîÇÁ·Î±×·¡¹Ö", 3, L"°´Ã¼ÁöÇâ¾ğ¾î¿Í½Ç½À", false, false);
+	Major M10(L"ÇÁ·Î±×·¡¹Ö¾ğ¾î°³³ä", 3, L"±âÃÊÇÁ·Î±×·¡¹Ö", false, false);
+	Major M12(L"½Ã½ºÅÛ¼ÒÇÁÆ®¿ş¾î¿Í½Ç½À", 3, L"ÀÚ·á±¸Á¶¿Í½Ç½À", true, false);
+	Major M13(L"°ø°³SWÇÁ·ÎÁ§Æ®", 3, L"Ã¢ÀÇÀû°øÇĞ¼³°è", true, false);
+	Major M14(L"ÀÎ°£ÄÄÇ»ÅÍ»óÈ£ÀÛ¿ë½Ã½ºÅÛ", 3, L"ÀÚ·á±¸Á¶¿Í½Ç½À", false, false);
+	Major M15(L"ÄÄÇ»ÅÍ±×·¡ÇÈ½ºÀÔ¹®", 3, L"ÀÚ·á±¸Á¶¿Í½Ç½À", false, false);
+	Major M16(L"µ¥ÀÌÅÍº£ÀÌ½º½Ã½ºÅÛ", 3, L"ÀÚ·á±¸Á¶¿Í½Ç½À", false, false);
+	Major M17(L"Çü½Ä¾ğ¾î", 3, L"ÀÌ»ê±¸Á¶", false, false);
+	Major M18(L"¿î¿µÃ¼Á¦", 3, L"½Ã½ºÅÛ¼ÒÇÁÆ®¿ş¾î¿Í½Ç½À", false, false);
+	Major M20(L"ÄÄÇ»ÅÍ¾Ë°í¸®Áò°ú½Ç½À", 3, L"ÀÚ·á±¸Á¶¿Í½Ç½À", false, false);
+	Major M21(L"¼ÒÇÁÆ®¿ş¾î°øÇĞ°³·Ğ", 3, L"°´Ã¼ÁöÇâ¾ğ¾î¿Í½Ç½À", false, false);
+	Major M22(L"µ¥ÀÌÅÍÅë½ÅÀÔ¹®", 3, L"±âÃÊÇÁ·Î±×·¡¹Ö", false, false);
+	Major M23(L"µ¥ÀÌÅÍº£ÀÌ½ºÇÁ·Î±×·¡¹Ö", 3, L"ÀÚ·á±¸Á¶¿Í½Ç½À", false, false);
+	Major M24(L"ÄÄÇ»ÅÍ±¸Á¶", 3, L"ÄÄÇ»ÅÍ±¸¼º", false, false);
+	Major M25(L"ÄÄÆÄÀÏ·¯±¸¼º", 3, L"Çü½Ä¾ğ¾î", false, false);
+	Major M26(L"ÀÓº£µğµå¼ÒÇÁÆ®¿ş¾îÀÔ¹®", 3, L"¿î¿µÃ¼Á¦", false, false);
+	Major M27(L"ÀÎ°øÁö´É", 3, L"ÀÚ·á±¸Á¶¿Í½Ç½À", false, false);
+	Major M28(L"°´Ã¼ÁöÇâ¼³°è¿ÍÆĞÅÏ", 3, L"°´Ã¼ÁöÇâ¾ğ¾î¿Í½Ç½À", false, false);
+	Major M29(L"S/WÇ°Áú°ü¸®¹×Å×½ºÆÃ", 3, L"", false, false);
+	Major M30(L"ÄÄÇ»ÅÍº¸¾È", 3, L"", false, false);
+	Major M31(L"ÄÄÇ»ÅÍ³×Æ®¿öÅ·", 3, L"", false, false);
+	Major M32(L"ÇöÀå½Ç½À", 3, L"ÀÚ·á±¸Á¶¿Í½Ç½À", false, false);
+	Major M33(L"¹ÙÀÌ¿Àºòµ¥ÀÌÅÍºĞ¼®Æ¯·Ğ", 3, L"", false, false);
+	Major M34(L"ºí·ÏÃ¼ÀÎº¸ÀÎ", 3, L"", false, false);
+	Major M35(L"»ç¹°ÀÎÅÍ³İ", 3, L"ÀÓº£µğµå¼ÒÇÁÆ®¿ş¾îÀÔ¹®", false, false);
+	Major M36(L"¸Ó½Å·¯´×", 3, L"ÀÎ°øÁö´É", false, false);
+	Major M37(L"¸ğ¹ÙÀÏÄÄÇ»ÆÃ", 3, L"", false, false);
+	Major M38(L"¾ÏÈ£ÇĞ°ú³×Æ®¿öÅ©º¸¾È", 3, L"", false, false);
+	Major M39(L"SWºñÁö´Ï½º¿ÍÃ¢¾÷", 3, L"", false, false);
+	Major M40(L"Å×Å©´ÏÄÃÇÁ¸®Á¨Å×ÀÌ¼Ç", 3, L"", false, false);
+	Major M41(L"Å¬¶ó¿ìµåÄÄÇ»ÆÃ", 3, L"", false, false);
+	Major M42(L"·Îº¿ÇÁ·Î±×·¡¹Ö", 3, L"", false, false);
+	Major M43(L"¹ÙÀÌ¿Àºòµ¥ÀÌÅÍºĞ¼®¾Ë°í¸®Áò", 3, L"", false, false);
+	Major M44(L"½ÃÅ¥¾îÄÚµù", 3, L"", false, false);
+	Major M45(L"ºòµ¥ÀÌÅÍºĞ¼®", 3, L"", false, false);
+	Major M46(L"ÄÄÇ»ÅÍ°øÇĞÁ¾ÇÕ¼³°è1", 3, L"°ø°³SWÇÁ·ÎÁ§Æ®", true, false);
+	Major M47(L"ÄÄÇ»ÅÍ°øÇĞÁ¾ÇÕ¼³°è2", 3, L"°ø°³SWÄÄÇ»ÅÍ°øÇĞÁ¾ÇÕ¼³°è1", true, false);
+	Major M48(L"°³º°¿¬±¸1", 1, L"", true, false);
+	Major M49(L"°³º°¿¬±¸2", 1, L"", true, false);
+	Major M50(L"°³º°¿¬±¸3", 1, L"", false, false);
+	Major M51(L"Ä¿¸®¾î¸àÅä¸µ", 3, L"", false, false);
+	Major M52(L"´ÙÇĞÁ¦Ä¸½ºÅæµğÀÚÀÎ", 3, L"", false, false);
+	Major M53(L"Ã¢¾÷Ä¸½ºÅæµğÀÚÀÎ1", 3, L"", false, false);
+	Major M54(L"Ã¢¾÷Ä¸½ºÅæµğÀÚÀÎ2", 3, L"", false, false);
+	Major M55(L"±â¾÷»çÈ¸¸ÂÃãÇüÇÁ·ÎÁ§Æ®1", 3, L"", false, false);
+	Major M56(L"±â¾÷»çÈ¸¸ÂÃãÇüÇÁ·ÎÁ§Æ®2", 3, L"", false, false);
 
-	// ëª¨ë“  ì „ê³µ ê°ì²´ë¥¼ ë‹´ì€ ë²¡í„°ë¥¼ ìƒì„±(íƒìƒ‰ì— ì“°ì¼ í•¨ìˆ˜ì˜ íŒŒë¼ë¯¸í„°ë¡œ ì“°ì„)
+	// ¸ğµç Àü°ø °´Ã¼¸¦ ´ãÀº º¤ÅÍ¸¦ »ı¼º(Å½»ö¿¡ ¾²ÀÏ ÇÔ¼öÀÇ ÆÄ¶ó¹ÌÅÍ·Î ¾²ÀÓ)
 	vector<Major> majorList;
 	majorList.push_back(M1);
 	majorList.push_back(M2);
@@ -129,70 +132,78 @@ int main() {
 	majorList.push_back(M55);
 	majorList.push_back(M56);
 
-	// í•„ìˆ˜êµì–‘
-	/*Liberal L1("ë‚˜ì˜ì‚¶ë‚˜ì˜ë¹„ì „", 1, true, false);
-	Liberal L2("ë¶ˆêµì™€ì¸ê°„", 2, true, false);
-	Liberal L3("ê¸°ìˆ ë³´ê³ ì„œì‘ì„±ë°ë°œí‘œ", 3, true, false);
-	Liberal L4("ìì•„ì™€ëª…ìƒ1", 1, true, false);
-	Liberal L5("ìì•„ì™€ëª…ìƒ2", 1, true, false);
+	//¸ğµç Àü°ø °´Ã¼¸¦ ´ãÀº ÇØ½¬ Å×ÀÌºí »ı¼º
+	vector<Major> majorHash[HASH_SIZE];
+	make_HT(majorHash, majorList);
+
+	//for (int i = 0; i < 100; i++) {
+	//	wcout << majorHash[i].at(0).getName() << "\n";
+	//}
+
+	// ÇÊ¼ö±³¾ç
+	/*Liberal L1("³ªÀÇ»î³ªÀÇºñÀü", 1, true, false);
+	Liberal L2("ºÒ±³¿ÍÀÎ°£", 2, true, false);
+	Liberal L3("±â¼úº¸°í¼­ÀÛ¼º¹×¹ßÇ¥", 3, true, false);
+	Liberal L4("ÀÚ¾Æ¿Í¸í»ó1", 1, true, false);
+	Liberal L5("ÀÚ¾Æ¿Í¸í»ó2", 1, true, false);
 	Liberal L6("EAS1", 3, true, false);
 	Liberal L8("EAS2", 3, true, false);
-	Liberal L9("ì†Œì…œì•™íŠ¸ë ˆí”„ë ˆë„ˆì‹­ê³¼ë¦¬ë”ì‹­", 2, false, false);
-	Liberal L10("ê¸€ë¡œë²Œì•™íŠ¸ë ˆí”„ë ˆë„ˆì‹­ê³¼ë¦¬ë”ì‹­", 2, false, false);
-	Liberal L11("í…Œí¬ë…¸ì•™íŠ¸ë ˆí”„ë ˆë„ˆì‹­ê³¼ë¦¬ë”ì‹­", 2, false, false);*/
+	Liberal L9("¼Ò¼È¾ÓÆ®·¹ÇÁ·¹³Ê½Ê°ú¸®´õ½Ê", 2, false, false);
+	Liberal L10("±Û·Î¹ú¾ÓÆ®·¹ÇÁ·¹³Ê½Ê°ú¸®´õ½Ê", 2, false, false);
+	Liberal L11("Å×Å©³ë¾ÓÆ®·¹ÇÁ·¹³Ê½Ê°ú¸®´õ½Ê", 2, false, false);*/
 
 	// MSC
-	Liberal L12("ë¯¸ì ë¶„í•™ë°ì—°ìŠµ1", 3, true, false);
-	Liberal L13("í™•ë¥ ë°í†µê³„í•™", 3, true, false);
-	Liberal L14("ê³µí•™ì„ í˜•ëŒ€ìˆ˜í•™", 3, true, false);
-	Liberal L15("ë¯¸ì ë¶„í•™ë°ì—°ìŠµ2", 3, false, false);
-	Liberal L16("ê³µí•™ìˆ˜í•™1", 3, false, false);
-	Liberal L17("ìˆ˜ì¹˜í•´ì„ë°ì‹¤ìŠµ", 3, false, false);
-	Liberal L18("ì‚°ì—…ìˆ˜í•™", 3, false, false);
-	Liberal L19("ì¼ë°˜ë¬¼ë¦¬í•™ë°ì‹¤í—˜1", 4, false, false);
-	Liberal L20("ì¼ë°˜ë¬¼ë¦¬í•™ë°ì‹¤í—˜2", 4, false, false);
-	Liberal L21("ì¼ë°˜í™”í•™ë°ì‹¤í—˜1", 4, false, false);
-	Liberal L22("ì¼ë°˜í™”í•™ë°ì‹¤í—˜2", 4, false, false);
-	Liberal L23("ì¼ë°˜ìƒë¬¼í•™ë°ì‹¤í—˜1", 4, false, false);
-	Liberal L24("ì¼ë°˜ìƒë¬¼í•™ë°ì‹¤í—˜2", 4, false, false);
-	Liberal L25("ë¬¼ë¦¬í•™ê°œë¡ ", 3, false, false);
-	Liberal L26("í™”í•™ê°œë¡ ", 3, false, false);
-	Liberal L27("ìƒë¬¼í•™ê°œë¡ ", 3, false, false);
-	Liberal L28("ì§€êµ¬í™˜ê²½ê³¼í•™", 3, false, false);
+	Liberal L12("¹ÌÀûºĞÇĞ¹×¿¬½À1", 3, true, false);
+	Liberal L13("È®·ü¹×Åë°èÇĞ", 3, true, false);
+	Liberal L14("°øÇĞ¼±Çü´ë¼öÇĞ", 3, true, false);
+	Liberal L15("¹ÌÀûºĞÇĞ¹×¿¬½À2", 3, false, false);
+	Liberal L16("°øÇĞ¼öÇĞ1", 3, false, false);
+	Liberal L17("¼öÄ¡ÇØ¼®¹×½Ç½À", 3, false, false);
+	Liberal L18("»ê¾÷¼öÇĞ", 3, false, false);
+	Liberal L19("ÀÏ¹İ¹°¸®ÇĞ¹×½ÇÇè1", 4, false, false);
+	Liberal L20("ÀÏ¹İ¹°¸®ÇĞ¹×½ÇÇè2", 4, false, false);
+	Liberal L21("ÀÏ¹İÈ­ÇĞ¹×½ÇÇè1", 4, false, false);
+	Liberal L22("ÀÏ¹İÈ­ÇĞ¹×½ÇÇè2", 4, false, false);
+	Liberal L23("ÀÏ¹İ»ı¹°ÇĞ¹×½ÇÇè1", 4, false, false);
+	Liberal L24("ÀÏ¹İ»ı¹°ÇĞ¹×½ÇÇè2", 4, false, false);
+	Liberal L25("¹°¸®ÇĞ°³·Ğ", 3, false, false);
+	Liberal L26("È­ÇĞ°³·Ğ", 3, false, false);
+	Liberal L27("»ı¹°ÇĞ°³·Ğ", 3, false, false);
+	Liberal L28("Áö±¸È¯°æ°úÇĞ", 3, false, false);
 
-	// ê¸°ë³¸ì†Œì–‘
-	Liberal L29("ê¸°ìˆ ì°½ì¡°ì™€íŠ¹í—ˆ", 3, false, false);
-	Liberal L30("ê³µí•™ê²½ì œ", 3, false, false);
-	Liberal L31("ê³µí•™ìœ¤ë¦¬", 3, false, false);
-	Liberal L32("ê¸°ìˆ ê³¼ì‚¬íšŒ", 3, false, false);
-	Liberal L33("ì§€ì†ê°€ëŠ¥í•œë°œì „ê³¼ì¸ê°„", 3, false, false);
+	// ±âº»¼Ò¾ç
+	Liberal L29("±â¼úÃ¢Á¶¿ÍÆ¯Çã", 3, false, false);
+	Liberal L30("°øÇĞ°æÁ¦", 3, false, false);
+	Liberal L31("°øÇĞÀ±¸®", 3, false, false);
+	Liberal L32("±â¼ú°ú»çÈ¸", 3, false, false);
+	Liberal L33("Áö¼Ó°¡´ÉÇÑ¹ßÀü°úÀÎ°£", 3, false, false);
 
-	// íŒŒì¼ ì…ë ¥
-	wifstream fmajor("input_major.txt"); // ìˆ˜ê°•í•œ ì „ê³µê³¼ëª©ì´ ë‹´ê¸´ txt
-	//ifstream fliberal("input_liberal.txt"); // ìˆ˜ê°•í•œ êµì–‘ê³¼ëª©ì´ ë‹´ê¸´ txt
+	// ÆÄÀÏ ÀÔ·Â
+	wifstream fmajor("input_major.txt"); // ¼ö°­ÇÑ Àü°ø°ú¸ñÀÌ ´ã±ä txt
+	//ifstream fliberal("input_liberal.txt"); // ¼ö°­ÇÑ ±³¾ç°ú¸ñÀÌ ´ã±ä txt
 
-	// íŒŒì¼ ì…ë ¥ ì—ëŸ¬
+	// ÆÄÀÏ ÀÔ·Â ¿¡·¯
 	if (fmajor.fail()) {
-		cerr << "íŒŒì¼ì„ ë¶ˆëŸ¬ì˜¬ ìˆ˜ ì—†ìŠµë‹ˆë‹¤." << endl;
+		cerr << "ÆÄÀÏÀ» ºÒ·¯¿Ã ¼ö ¾ø½À´Ï´Ù." << endl;
 	}
 	//if (fliberal.fail()) {
-	//	cerr << "íŒŒì¼ì„ ë¶ˆëŸ¬ì˜¬ ìˆ˜ ì—†ìŠµë‹ˆë‹¤." << endl;
+	//	cerr << "ÆÄÀÏÀ» ºÒ·¯¿Ã ¼ö ¾ø½À´Ï´Ù." << endl;
 	//}
 
 	//string line;
 
-	wstring line_m;		// wstring í˜•íƒœì˜ ì„ì‹œ íŒŒì¼ ì½ê¸° ë³€ìˆ˜ ì‚¬ìš©
+	wstring line_m;		// wstring ÇüÅÂÀÇ ÀÓ½Ã ÆÄÀÏ ÀĞ±â º¯¼ö »ç¿ë
 	//string line_l;		
 
-	vector <wstring> input_major; // ìˆ˜ê°•í•œ ì „ê³µ ê³¼ëª©ë“¤ì„ ë‹´ëŠ” ë²¡í„°
-	//vector <string> input_liberal; // ìˆ˜ê°•í•œ êµì–‘ ê³¼ëª©ë“¤ì„ ë‹´ëŠ” ë²¡í„°
+	vector <wstring> input_major; // ¼ö°­ÇÑ Àü°ø °ú¸ñµéÀ» ´ã´Â º¤ÅÍ
+	//vector <string> input_liberal; // ¼ö°­ÇÑ ±³¾ç °ú¸ñµéÀ» ´ã´Â º¤ÅÍ
 
 	//while (fmajor.peek() != EOF) {
 	//	getline(fmajor, line);
 	//	input_major.push_back(line);
 	//}
 
-	while (getline(fmajor, line_m))	// wstringí˜•ìœ¼ë¡œ íŒŒì¼ì„ ì½ì–´ì•¼ í•´ì„œ ë°”ê¿ˆ
+	while (getline(fmajor, line_m))	// wstringÇüÀ¸·Î ÆÄÀÏÀ» ÀĞ¾î¾ß ÇØ¼­ ¹Ù²Ş
 	{
 		input_major.push_back(line_m);
 	}
@@ -202,28 +213,43 @@ int main() {
 	//	input_liberal.push_back(line_l);
 	//}
 
-	// ìˆœì°¨ íƒìƒ‰ í›„ test printê¹Œì§€
+	// ¼øÂ÷ Å½»ö ÈÄ test print±îÁö
 	//linearSearch(majorList, input_major);
 	//for (int i = 0; i < majorList.size(); i++)
 	//{
-	//	if (majorList[i].getCompleted() == true)		// ë“¤ì€ ê³¼ëª©ë§Œ ì¶œë ¥
+	//	if (majorList[i].getCompleted() == true)		// µéÀº °ú¸ñ¸¸ Ãâ·Â
 	//		wcout << majorList[i].getName() << endl;
 	//}
 
-	// ì´ì§„ íƒìƒ‰ í›„ test printê¹Œì§€
+	// ÀÌÁø Å½»ö ÈÄ test print±îÁö
 	//BinarySearch(majorList, input_major);
 	//for (int i = 0; i < majorList.size(); i++)
 	//{
-	//	if (majorList[i].getCompleted() == true)		// ë“¤ì€ ê³¼ëª©ë§Œ ì¶œë ¥
+	//	if (majorList[i].getCompleted() == true)		// µéÀº °ú¸ñ¸¸ Ãâ·Â
 	//		wcout << majorList[i].getName() << endl;
 	//}
 
+	//ÀÔ·Â ¹ŞÀº °ú¸ñÀ» hashÅ½»öÇÏ¿© complete 1·Î °»½Å
+	set_Complete_Hash(majorHash, input_major);
+	vector<Major>::iterator iter;
+	for (int i = 0; i < HASH_SIZE; i++)
+	{
+		if (majorHash[i].size() > 0) {
+			wcout << majorHash[i].size() << "\n";
+			for (int j = 0; j < majorHash[i].size(); j++) {
+				//if (majorHash[i].at(j).getCompleted())
+					wcout << majorHash[i].at(j).getName() << "\n";
+			}
+		}
+	}
+	
+
 	// test print
-	wcout << L"ì „ê³µ:" << endl;
+	wcout << L"Àü°ø:" << endl;
 	for (int i = 0; i < input_major.size(); i++)
 		wcout << input_major[i] << endl;
 
-	//cout << "êµì–‘: " << endl;
+	//cout << "±³¾ç: " << endl;
 	//for (int i = 0; i < input_liberal.size(); i++)
 	//	cout << input_liberal[i] << endl;
 

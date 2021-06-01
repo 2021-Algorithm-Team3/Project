@@ -3,7 +3,13 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include <locale>
+
 using namespace std;
+
+#define MIN_KOR 44032
+#define MAX_KOR 55203
+#define HASH_SIZE 100
 
 void linearSearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 {
@@ -12,20 +18,20 @@ void linearSearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 		for (int j = 0; j < majorList.size(); j++)
 		{
 			if (inputMajor[i] == majorList[j].getName())
-				majorList[j].setCompleted(majorList[j]);
+				//majorList[j].setCompleted(majorList[j]);
+				majorList[j].setCompleted();
 		}
-
 	}
 }
 
 bool compare(Major m1, Major m2)
 {
-	return m1.getName() < m2.getName();		// ê°•ì˜ëª…ìœ¼ë¡œ ã„±ã„´ã„· ì •ë ¬
+	return m1.getName() < m2.getName();		// °­ÀÇ¸íÀ¸·Î ¤¡¤¤¤§ Á¤·Ä
 }
 
 void BinarySearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 {
-	sort(majorList.begin(), majorList.end(), compare);		// ì´ì§„ íƒìƒ‰ì„ ìœ„í•´ ì •ë ¬ ë¨¼ì € ì§„í–‰
+	sort(majorList.begin(), majorList.end(), compare);		// ÀÌÁø Å½»öÀ» À§ÇØ Á¤·Ä ¸ÕÀú ÁøÇà
 
 	for (int i = 0; i < inputMajor.size(); i++)
 	{
@@ -38,7 +44,8 @@ void BinarySearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 
 			if (majorList[mid].getName() == inputMajor[i])
 			{
-				majorList[mid].setCompleted(majorList[mid]);
+				//majorList[mid].setCompleted(majorList[mid]);
+				majorList[mid].setCompleted();
 				break;
 			}
 			else if (majorList[mid].getName() > inputMajor[i])
@@ -47,9 +54,57 @@ void BinarySearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 				start = mid + 1;
 		}
 	}
-
-
-
 }
 
+int hashing(wstring name) {
+	int kor_value = 0, other_value = 0;
+	int length;
+	length = name.length();
 
+	for (int i = 0; i < name.length(); i++) {
+		int temp = name[i];
+
+		if (temp >= MIN_KOR && temp <= MAX_KOR) {  // ÇöÀç º¸°í ÀÖ´Â ¹®ÀÚ°¡ ÇÑ±ÛÀÌ¸é kor_value¿¡ ´õÇÔ
+			kor_value += temp;
+		}
+		else {
+			other_value += temp;   // ¾Æ´Ï¸é other_value¿¡ ´õÇÔ
+			length--;  // ÇÑ±ÛÀÌ ¾Æ´Ñ ¹®ÀÚ¸¸Å­ length-1
+		}
+	}
+	return (kor_value / length + other_value - MIN_KOR) % HASH_SIZE;
+}
+
+void make_HT(vector<Major> *majorHash, vector<Major> &majorList) {
+	int hash = 0;
+
+	//ÇØ½ÃÅ×ÀÌºí ±¸¼º
+	for (int i = 0; i < majorList.size(); i++) {
+		hash = hashing(majorList[i].getName());
+
+		majorHash[hash].push_back(majorList[i]);   // °¢ vectorÀÇ ±æÀÌ°¡ Àß¸ø ³ª¿À´Â ¿À·ù ¹ß»ı Áß
+	}
+}
+
+void set_Complete_Hash(vector<Major> *majorHash, vector<wstring> &inputList) {
+	int hash = 0;
+
+	setlocale(LC_ALL, "korean");
+
+	for (int i = 0; i < inputList.size(); i++) {
+		hash = hashing(inputList[i]);
+		// ÇÏ³ª »ÓÀÌ¸é ¹Ù·Î °»½Å
+		if (majorHash[hash].size() == 0) {
+			majorHash[hash].at(0).setCompleted();
+		}
+		// ¿©·¯ °³¸é chainÀ» Å½»öÇÏ¿© °»½Å
+		else {
+			wstring name = inputList[i];
+			for (int i = 0; i < majorHash[hash].size(); i++) {
+				if (majorHash[hash].at(i).getName() == name) {
+					majorHash[hash].at(i).setCompleted();
+				}
+			}
+		}
+	}
+}
