@@ -1,7 +1,7 @@
 ﻿#include <string>
 #include "Lecture.h"
 
-Major::Major(string name, int credit, string prior_lecture, bool must, bool completed) {
+Major::Major(wstring name, int credit, wstring prior_lecture, bool must, bool completed) {
 	this->name = name;
 	this->credit = credit;
 	this->prior_lecture = prior_lecture;
@@ -9,7 +9,7 @@ Major::Major(string name, int credit, string prior_lecture, bool must, bool comp
 	this->completed = completed;
 }
 
-string Major::getName() {
+wstring Major::getName() {
 	return name;
 }
 
@@ -17,7 +17,7 @@ int Major::getCredit() {
 	return credit;
 }
 
-string Major::getPriorLecture() {
+wstring Major::getPriorLecture() {
 	return prior_lecture;
 }
 
@@ -29,9 +29,11 @@ bool Major::getCompleted() {
 	return completed;
 }
 
-void Major::setCompleted(Major m) {
+void Major::setCompleted(Major& m) {
 	m.completed = 1;
 }
+
+//=======================================================================================================================================//
 
 Liberal::Liberal(string name, int credit, bool must, bool completed) {
 	this->name = name;
