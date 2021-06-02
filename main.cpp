@@ -18,17 +18,17 @@ int main() {
 	setlocale(LC_ALL, "korean");
 
 	// 전공
-	Major M1(L"기초프로그래밍", 3, L"", true, false);	// L"~"의 형태로 사용
+	Major M1(L"기초프로그래밍", 3, L"", false, false);	// L"~"의 형태로 사용
 	Major M2(L"계산적사고법", 3, L"", true, false);
 	Major M3(L"창의적공학설계", 3, L"", true, false);
 	Major M4(L"이산구조", 3, L"", true, false);
 	Major M5(L"심화프로그래밍", 3, L"기초프로그래밍", false, false);
 	Major M6(L"객체지향언어와실습", 3, L"기초프로그래밍", false, false);
 	Major M7(L"자료구조와실습", 3, L"기초프로그래밍", true, false);
-	Major M11(L"컴퓨터구성", 3, L"이산구조", true, false);
-	Major M8(L"웹프로그래밍", 3, L"객체지향언어와실습", false, false);
-	Major M9(L"객체지향윈도우즈프로그래밍", 3, L"객체지향언어와실습", false, false);
-	Major M10(L"프로그래밍언어개념", 3, L"기초프로그래밍", false, false);
+	Major M8(L"컴퓨터구성", 3, L"이산구조", true, false);
+	Major M9(L"웹프로그래밍", 3, L"객체지향언어와실습", false, false);
+	Major M10(L"객체지향윈도우즈프로그래밍", 3, L"객체지향언어와실습", false, false);
+	Major M11(L"프로그래밍언어개념", 3, L"기초프로그래밍", false, false);
 	Major M12(L"시스템소프트웨어와실습", 3, L"자료구조와실습", true, false);
 	Major M13(L"공개SW프로젝트", 3, L"창의적공학설계", true, false);
 	Major M14(L"인간컴퓨터상호작용시스템", 3, L"자료구조와실습", false, false);
@@ -36,21 +36,22 @@ int main() {
 	Major M16(L"데이터베이스시스템", 3, L"자료구조와실습", false, false);
 	Major M17(L"형식언어", 3, L"이산구조", false, false);
 	Major M18(L"운영체제", 3, L"시스템소프트웨어와실습", false, false);
-	Major M20(L"컴퓨터알고리즘과실습", 3, L"자료구조와실습", false, false);
-	Major M21(L"소프트웨어공학개론", 3, L"객체지향언어와실습", false, false);
-	Major M22(L"데이터통신입문", 3, L"기초프로그래밍", false, false);
-	Major M23(L"데이터베이스프로그래밍", 3, L"자료구조와실습", false, false);
-	Major M24(L"컴퓨터구조", 3, L"컴퓨터구성", false, false);
-	Major M25(L"컴파일러구성", 3, L"형식언어", false, false);
-	Major M26(L"임베디드소프트웨어입문", 3, L"운영체제", false, false);
-	Major M27(L"인공지능", 3, L"자료구조와실습", false, false);
-	Major M28(L"객체지향설계와패턴", 3, L"객체지향언어와실습", false, false);
-	Major M29(L"S/W품질관리및테스팅", 3, L"", false, false);
-	Major M30(L"컴퓨터보안", 3, L"", false, false);
+	Major M19(L"컴퓨터알고리즘과실습", 3, L"자료구조와실습", false, false);
+	Major M20(L"소프트웨어공학개론", 3, L"객체지향언어와실습", false, false);
+	Major M21(L"데이터통신입문", 3, L"기초프로그래밍", false, false);
+	Major M22(L"데이터베이스프로그래밍", 3, L"자료구조와실습", false, false);
+	Major M23(L"컴퓨터구조", 3, L"컴퓨터구성", false, false);
+	Major M24(L"컴파일러구성", 3, L"형식언어", false, false);
+	Major M25(L"임베디드소프트웨어입문", 3, L"운영체제", false, false);
+	Major M26(L"인공지능", 3, L"자료구조와실습", false, false);
+	Major M27(L"객체지향설계와패턴", 3, L"객체지향언어와실습", false, false);
+	Major M28(L"S/W품질관리및테스팅", 3, L"", false, false);
+	Major M29(L"컴퓨터보안", 3, L"", false, false);
+	Major M30(L"동시성프로그래밍", 3, L"", false, false);
 	Major M31(L"컴퓨터네트워킹", 3, L"", false, false);
 	Major M32(L"현장실습", 3, L"자료구조와실습", false, false);
 	Major M33(L"바이오빅데이터분석특론", 3, L"", false, false);
-	Major M34(L"블록체인보인", 3, L"", false, false);
+	Major M34(L"블록체인보안", 3, L"", false, false);
 	Major M35(L"사물인터넷", 3, L"임베디드소프트웨어입문", false, false);
 	Major M36(L"머신러닝", 3, L"인공지능", false, false);
 	Major M37(L"모바일컴퓨팅", 3, L"", false, false);
@@ -83,10 +84,10 @@ int main() {
 	majorList.push_back(M5);
 	majorList.push_back(M6);
 	majorList.push_back(M7);
-	majorList.push_back(M11);
 	majorList.push_back(M8);
 	majorList.push_back(M9);
 	majorList.push_back(M10);
+	majorList.push_back(M11);
 	majorList.push_back(M12);
 	majorList.push_back(M13);
 	majorList.push_back(M14);
@@ -94,6 +95,7 @@ int main() {
 	majorList.push_back(M16);
 	majorList.push_back(M17);
 	majorList.push_back(M18);
+	majorList.push_back(M19);
 	majorList.push_back(M20);
 	majorList.push_back(M21);
 	majorList.push_back(M22);
@@ -132,16 +134,27 @@ int main() {
 	majorList.push_back(M55);
 	majorList.push_back(M56);
 
-	//모든 전공 객체를 담은 해쉬 테이블 생성
-	vector<Major> majorHash[HASH_SIZE];
-	make_HT(majorHash, majorList);
+	vector<Major> freshman1 = { M1, M2 };
+	vector<Major> freshman2 = { M3, M4, M5 };
+	vector<Major> sophomore1 = { M6, M7, M8 };
+	vector<Major> sophorore2 = { M9, M10, M11, M12 };
+	vector<Major> junior1 = { M13, M14, M15, M16, M17, M18, M19 };
+	vector<Major> junior2 = { M20, M21, M22, M23, M24, M25, M26 };
+	vector<Major> senior1 = { M46, M27, M28, M29, M30, M31, M32, M33, M34, M35, M36 };
+	vector<Major> senior2 = { M47, M37, M38, M39, M40, M41, M42, M43, M44, M45, M46, M47 };
+	vector<Major> engineering = { M48, M49, M50, M51, M52, M53, M54, M55, M56 };
 
-	//for (int i = 0; i < 100; i++) {
-	//	wcout << majorHash[i].at(0).getName() << "\n";
-	//}
+	vector<vector<Major>> tempInfo;
+
+	tempInfo.push_back(freshman1); tempInfo.push_back(freshman2);
+	tempInfo.push_back(sophomore1); tempInfo.push_back(sophorore2);
+	tempInfo.push_back(junior1); tempInfo.push_back(junior2);
+	tempInfo.push_back(senior1); tempInfo.push_back(senior2);
+	tempInfo.push_back(engineering);
+
 
 	// 필수교양
-	/*Liberal L1("나의삶나의비전", 1, true, false);
+	Liberal L1("나의삶나의비전", 1, true, false);
 	Liberal L2("불교와인간", 2, true, false);
 	Liberal L3("기술보고서작성및발표", 3, true, false);
 	Liberal L4("자아와명상1", 1, true, false);
@@ -150,7 +163,7 @@ int main() {
 	Liberal L8("EAS2", 3, true, false);
 	Liberal L9("소셜앙트레프레너십과리더십", 2, false, false);
 	Liberal L10("글로벌앙트레프레너십과리더십", 2, false, false);
-	Liberal L11("테크노앙트레프레너십과리더십", 2, false, false);*/
+	Liberal L11("테크노앙트레프레너십과리더십", 2, false, false);
 
 	// MSC
 	Liberal L12("미적분학및연습1", 3, true, false);
@@ -178,80 +191,79 @@ int main() {
 	Liberal L32("기술과사회", 3, false, false);
 	Liberal L33("지속가능한발전과인간", 3, false, false);
 
+	int year, semester;
+
 	// 파일 입력
-	wifstream fmajor("input_major.txt"); // 수강한 전공과목이 담긴 txt
-	//ifstream fliberal("input_liberal.txt"); // 수강한 교양과목이 담긴 txt
+	wifstream fin("input.txt"); // 수강한 전체과목이 담긴 txt
 
 	// 파일 입력 에러
-	if (fmajor.fail()) {
+	if (fin.fail()) {
 		cerr << "파일을 불러올 수 없습니다." << endl;
+		exit(100);
 	}
-	//if (fliberal.fail()) {
-	//	cerr << "파일을 불러올 수 없습니다." << endl;
-	//}
 
-	//string line;
-
-	wstring line_m;		// wstring 형태의 임시 파일 읽기 변수 사용
-	//string line_l;		
-
+	wstring line_m;		// wstring 형태의 임시 파일 읽기 변수 사용		
 	vector <wstring> input_major; // 수강한 전공 과목들을 담는 벡터
-	//vector <string> input_liberal; // 수강한 교양 과목들을 담는 벡터
 
-	//while (fmajor.peek() != EOF) {
-	//	getline(fmajor, line);
-	//	input_major.push_back(line);
-	//}
+	vector<vector<Major>> majorInfo[3]; // 탐색을 통해 만들어진 벡터를 토대로 2차원 벡터 생성
+	vector<Major> output_major[3]; // 수강할 전공 과목들을 담는 벡터
+	vector<Major> replace_major[3]; // 대체 가능 과목들을 담는 벡터
 
-	while (getline(fmajor, line_m))	// wstring형으로 파일을 읽어야 해서 바꿈
+	fin >> year >> semester;
+	while (getline(fin, line_m))	// wstring형으로 파일을 읽어야 해서 바꿈
 	{
 		input_major.push_back(line_m);
 	}
 
-	//while (fliberal.peek() != EOF) {
-	//	getline(fliberal, line_l);
-	//	input_liberal.push_back(line_l);
+	// [1] 순차 탐색 후 추천과목 리스트 추출
+	linearSearch(majorList, input_major);
+	make2Dvector(majorList, tempInfo, majorInfo[0]);
+	subjectExtraction(year, semester, majorInfo[0], input_major, output_major[0], replace_major[0]);
+
+	// [2] 이진 탐색 후 추천과목 리스트 추출
+	BinarySearch(majorList, input_major);
+	make2Dvector(majorList, tempInfo, majorInfo[1]);
+	subjectExtraction(year, semester, majorInfo[1], input_major, output_major[1], replace_major[1]);
+
+
+	// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
+	// 모든 전공 객체를 담은 해쉬 테이블 생성
+	//vector<Major> majorHash[HASH_SIZE];
+	//make_HT(majorHash, majorList);
+
+	//set_Complete_Hash(majorHash, input_major);
+	//make2Dvector(majorList, tempInfo, majorInfo[2]);
+	//subjectExtraction(year, semester, majorInfo[2], input_major, output_major[2], replace_major[2]);
+
+	//for (int i = 0; i < output_major[2].size(); i++) {
+	//	wcout << output_major[2][i].getName() << endl;
 	//}
 
-	// 순차 탐색 후 test print까지
-	//linearSearch(majorList, input_major);
-	//for (int i = 0; i < majorList.size(); i++)
-	//{
-	//	if (majorList[i].getCompleted() == true)		// 들은 과목만 출력
-	//		wcout << majorList[i].getName() << endl;
-	//}
-
-	// 이진 탐색 후 test print까지
-	//BinarySearch(majorList, input_major);
-	//for (int i = 0; i < majorList.size(); i++)
-	//{
-	//	if (majorList[i].getCompleted() == true)		// 들은 과목만 출력
-	//		wcout << majorList[i].getName() << endl;
-	//}
-
-	//입력 받은 과목을 hash탐색하여 complete 1로 갱신
-	set_Complete_Hash(majorHash, input_major);
-	vector<Major>::iterator iter;
-	for (int i = 0; i < HASH_SIZE; i++)
-	{
-		if (majorHash[i].size() > 0) {
-			wcout << majorHash[i].size() << "\n";
-			for (int j = 0; j < majorHash[i].size(); j++) {
-				//if (majorHash[i].at(j).getCompleted())
-					wcout << majorHash[i].at(j).getName() << "\n";
-			}
-		}
-	}
 	
+	// 파일 출력
+	wofstream fout("output.txt"); // 수강한 전체과목이 담긴 txt
 
-	// test print
-	wcout << L"전공:" << endl;
-	for (int i = 0; i < input_major.size(); i++)
-		wcout << input_major[i] << endl;
+	// 파일 입력 에러
+	if (fout.fail()) {
+		cerr << "파일을 불러올 수 없습니다." << endl;
+		exit(100);
+	}
 
-	//cout << "교양: " << endl;
-	//for (int i = 0; i < input_liberal.size(); i++)
-	//	cout << input_liberal[i] << endl;
+	// 출력 결과 확인([1])
+	fout << "Recommend:" << endl;
+
+	for (int i = 0; i < output_major[0].size(); i++) {
+		fout << output_major[0][i].getName() << endl;
+	}
+
+	fout << endl << "Replaceable:" << endl;
+
+	for (int i = 0; i < replace_major[0].size(); i++) {
+		fout << replace_major[0][i].getName() << endl;
+	}
+
+	fout.close();
+	
 
 	return 0;
 }

@@ -18,7 +18,6 @@ void linearSearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 		for (int j = 0; j < majorList.size(); j++)
 		{
 			if (inputMajor[i] == majorList[j].getName())
-				//majorList[j].setCompleted(majorList[j]);
 				majorList[j].setCompleted();
 		}
 	}
@@ -31,6 +30,7 @@ bool compare(Major m1, Major m2)
 
 void BinarySearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 {
+
 	sort(majorList.begin(), majorList.end(), compare);		// 이진 탐색을 위해 정렬 먼저 진행
 
 	for (int i = 0; i < inputMajor.size(); i++)
@@ -44,7 +44,6 @@ void BinarySearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 
 			if (majorList[mid].getName() == inputMajor[i])
 			{
-				//majorList[mid].setCompleted(majorList[mid]);
 				majorList[mid].setCompleted();
 				break;
 			}
@@ -72,10 +71,11 @@ int hashing(wstring name) {
 			length--;  // 한글이 아닌 문자만큼 length-1
 		}
 	}
+	
 	return (kor_value / length + other_value - MIN_KOR) % HASH_SIZE;
 }
 
-void make_HT(vector<Major> *majorHash, vector<Major> &majorList) {
+void make_HT(vector<Major>* majorHash, vector<Major>& majorList) {
 	int hash = 0;
 
 	//해시테이블 구성
@@ -86,7 +86,7 @@ void make_HT(vector<Major> *majorHash, vector<Major> &majorList) {
 	}
 }
 
-void set_Complete_Hash(vector<Major> *majorHash, vector<wstring> &inputList) {
+void set_Complete_Hash(vector<Major>* majorHash, vector<wstring>& inputList) {
 	int hash = 0;
 
 	setlocale(LC_ALL, "korean");
@@ -106,5 +106,106 @@ void set_Complete_Hash(vector<Major> *majorHash, vector<wstring> &inputList) {
 				}
 			}
 		}
+	}
+}
+
+void make2Dvector(vector<Major>& majorList, vector<vector<Major>>& tempInfo, vector<vector<Major>>& majorInfo) { // 과목 추출 시 필요한 2차원 벡터(majorInfo) 생성
+	majorInfo = tempInfo;
+	for (int i = 0; i < tempInfo.size(); i++) {
+		for (int j = 0; j < tempInfo[i].size(); j++) {
+			int k;
+			for (k = 0; k < majorList.size(); k++) {
+				if (tempInfo[i][j].getName() == majorList[k].getName()) { break; }
+			}
+			majorInfo[i][j] = majorList[k];
+		}
+	}
+}
+
+void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<wstring>& inputList, vector<Major>& outputList, vector<Major>& replaceList) {
+	int end_idx, maxCredit, sumOfCredit = 0;
+	end_idx = (s == 1 ? 2 * (y - 1) : 2 * (y - 1) + 1); //등록 예정 학년학기에 따라 majorInfo 검사 시 몇번째 index까지 검사할지를 결정
+	vector<Major> tempList; // 임시 벡터
+
+	for (int i = 0; i <= end_idx; i++) {
+		for (int j = 0; j < majorInfo[i].size(); j++) {
+			if (majorInfo[i][j].getCompleted() == false) { 
+				if (majorInfo[i][j].getPriorLecture() == L"") { 
+					tempList.push_back(majorInfo[i][j]);
+					sumOfCredit += majorInfo[i][j].getCredit();
+				}
+				else { // 선이수과목이 있는 경우
+					int flag = 0;
+					for (int k = 0; k < inputList.size(); k++) {
+						if (majorInfo[i][j].getPriorLecture() == inputList[k]) { flag = 1; break;} // 선이수과목을 수강한 경우
+					}
+					if (flag == 1) {
+						tempList.push_back(majorInfo[i][j]);
+						sumOfCredit += majorInfo[i][j].getCredit();
+					}
+				}
+			}
+		}
+	}
+
+	/*
+	(1) 1,2학년이면서 추천 전공 학점이 15학점 이상인 경우
+	(2) 3,4학년이면서 추천 전공 학점이 21학점 이상인 경우
+	등록예정 학년, 학기 가운데 필수 전공 과목이 아닌 과목 가운데 일부를 제외하고
+	이를 대체 가능 리스트에 넣어줌
+	*/
+
+	if (end_idx < 4) maxCredit = 15; // (1)
+	else maxCredit = 24; // (2)
+
+	if (sumOfCredit >= maxCredit) { 
+
+		for (int i = tempList.size() - 1; i >= 0; i--) {
+			if (sumOfCredit < maxCredit) break;
+			if (tempList[i].getMust() == false) { // 필수 전공이 아니면 대체 가능 리스트(replaceList)에 추가
+				replaceList.push_back(tempList[i]);
+				sumOfCredit -= tempList[i].getCredit();
+			}
+		}
+	}
+
+	// 공대 공통 전공은 3~4학년에 한해 학점이 남는 경우 학기당 한 과목 추가
+	if (sumOfCredit < maxCredit && end_idx >= 4) {
+		if (maxCredit - sumOfCredit < 3) { // 1학점 과목(개별연구) 추가
+			for (int i = 0; i <= 2; i++) {
+				if (majorInfo[8][i].getCompleted() == false) {
+					tempList.push_back(majorInfo[8][i]);
+					break;
+				}
+			}
+		}
+		else { // 넣을 수 있는 학점이 3학점이 넘는 경우
+			int i;
+			for (i = 3; i < 9; i++) {
+				if (majorInfo[8][i].getCompleted() == false) {
+					tempList.push_back(majorInfo[8][i]);
+					break;
+				}
+			}
+			for (int j = 0; j <= 2; j++) { // 대체 가능 리스트에 개별연구 과목도 포함
+				if (majorInfo[8][j].getCompleted() == false) {
+					replaceList.push_back(majorInfo[8][j]);
+				}
+			}
+			for (int j = i + 1; j < 9; j++) {
+				if (majorInfo[8][j].getCompleted() == false) {
+					replaceList.push_back(majorInfo[8][j]);
+				}
+			}
+		}
+	}
+
+	// replaceList에 들어간 과목을 제외하고 outputList에 추가
+	for (int i = 0; i < tempList.size(); i++) {
+		int flag = 0;
+		for (int j = 0; j < replaceList.size(); j++) {
+			if (tempList[i].getName() == replaceList[j].getName()) { flag = 1; break; }
+		}
+		if (flag == 0) outputList.push_back(tempList[i]);
 	}
 }

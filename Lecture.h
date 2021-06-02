@@ -19,7 +19,7 @@ public:
 	//void setCompleted(Major& m);
 	void setCompleted();
 
-	Major *next = NULL;
+	Major* next = NULL;
 };
 
 class Liberal {
@@ -34,7 +34,7 @@ public:
 	int getCredit();
 	bool getMust();
 	bool getCompleted();
-	void setCompleted(Liberal l);
+	void setCompleted();
 };
 
 

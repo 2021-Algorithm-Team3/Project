@@ -29,10 +29,6 @@ bool Major::getCompleted() {
 	return completed;
 }
 
-//void Major::setCompleted(Major& m) {
-//	m.completed = 1;
-//}
-
 void Major::setCompleted() {
 	this->completed = true;
 }
@@ -62,6 +58,6 @@ bool Liberal::getCompleted() {
 	return completed;
 }
 
-void Liberal::setCompleted(Liberal l) {
-	l.completed = 1;
+void Liberal::setCompleted() {
+	this->completed = true;
 }
