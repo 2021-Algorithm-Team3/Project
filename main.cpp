@@ -71,8 +71,8 @@ int main() {
 	Major M51(L"커리어멘토링", 3, L"", false, false);
 	Major M52(L"다학제캡스톤디자인", 3, L"", false, false);
 	Major M53(L"창업캡스톤디자인1", 3, L"", false, false);
-	Major M54(L"창업캡스톤디자인2", 3, L"", false, false);
-	Major M55(L"기업사회맞춤형프로젝트1", 3, L"", false, false);
+	Major M54(L"기업사회맞춤형프로젝트1", 3, L"", false, false);
+	Major M55(L"창업캡스톤디자인2", 3, L"", false, false);
 	Major M56(L"기업사회맞춤형프로젝트2", 3, L"", false, false);
 
 	// 모든 전공 객체를 담은 벡터를 생성(탐색에 쓰일 함수의 파라미터로 쓰임)
@@ -204,16 +204,26 @@ int main() {
 
 	wstring line_m;		// wstring 형태의 임시 파일 읽기 변수 사용		
 	vector <wstring> input_major; // 수강한 전공 과목들을 담는 벡터
+	vector <wstring> input_liberal; // 수강한 교양 과목들을 담는 벡터
 
 	vector<vector<Major>> majorInfo[3]; // 탐색을 통해 만들어진 벡터를 토대로 2차원 벡터 생성
 	vector<Major> output_major[3]; // 수강할 전공 과목들을 담는 벡터
 	vector<Major> replace_major[3]; // 대체 가능 과목들을 담는 벡터
 
 	fin >> year >> semester;
+	int flag = 0;
+
 	while (getline(fin, line_m))	// wstring형으로 파일을 읽어야 해서 바꿈
 	{
 		if (line_m == L"") continue;
-		input_major.push_back(line_m);
+		else if (line_m == L"전공:") { flag = 1; continue; }
+		else if (line_m == L"교양:") { flag = 2; continue; }
+		if (flag == 1) {
+			input_major.push_back(line_m);
+		}
+		else if (flag == 2) {
+			input_liberal.push_back(line_m);
+		}
 	}
 
 	// [1] 순차 탐색 후 추천과목 리스트 추출
@@ -228,13 +238,13 @@ int main() {
 
 	// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
 	// 모든 전공 객체를 담은 해쉬 테이블 생성
-	vector<Major> majorHash[HASH_SIZE];
+	/*vector<Major> majorHash[HASH_SIZE];
 	make_HT(majorHash, majorList);
 
 
 	set_Complete_Hash(majorHash, input_major);
 	make2Dvector(majorList, tempInfo, majorInfo[2]);
-	subjectExtraction(year, semester, majorInfo[2], input_major, output_major[2], replace_major[2]);
+	subjectExtraction(year, semester, majorInfo[2], input_major, output_major[2], replace_major[2]);*/
 
 	// 출력용도
 	//for (int i = 0; i < output_major[2].size(); i++) {
@@ -258,14 +268,14 @@ int main() {
 	// 출력 결과 확인([1])
 	fout << "Recommend:" << endl;
 
-	for (int i = 0; i < output_major[2].size(); i++) {
-		fout << output_major[2][i].getName() << endl;
+	for (int i = 0; i < output_major[1].size(); i++) {
+		fout << output_major[1][i].getName() << endl;
 	}
 
 	fout << endl << "Replaceable:" << endl;
 
-	for (int i = 0; i < replace_major[2].size(); i++) {
-		fout << replace_major[2][i].getName() << endl;
+	for (int i = 0; i < replace_major[1].size(); i++) {
+		fout << replace_major[1][i].getName() << endl;
 	}
 
 	fout.close();

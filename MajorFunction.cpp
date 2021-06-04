@@ -71,7 +71,6 @@ int hashing(wstring name) {
 			length--;  // 한글이 아닌 문자만큼 length-1
 		}
 	}
-	
 	return (kor_value / length + other_value - MIN_KOR) % HASH_SIZE;
 }
 
@@ -150,7 +149,7 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 
 	/*
 	(1) 1,2학년이면서 추천 전공 학점이 15학점 이상인 경우
-	(2) 3,4학년이면서 추천 전공 학점이 21학점 이상인 경우
+	(2) 3,4학년이면서 추천 전공 학점이 24학점 이상인 경우
 	등록예정 학년, 학기 가운데 필수 전공 과목이 아닌 과목 가운데 일부를 제외하고
 	이를 대체 가능 리스트에 넣어줌
 	*/
@@ -169,6 +168,7 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 		}
 	}
 
+
 	// 공대 공통 전공은 3~4학년에 한해 학점이 남는 경우 학기당 한 과목 추가
 	if (sumOfCredit < maxCredit && end_idx >= 4) {
 		if (maxCredit - sumOfCredit < 3) { // 1학점 과목(개별연구) 추가
@@ -179,22 +179,49 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 				}
 			}
 		}
-		else { // 넣을 수 있는 학점이 3학점이 넘는 경우
+		// 1,2학기 별 열리는 공대 전공 과목에 대해 s값(학기)에 따라 구분 필요
+		else { // 넣을 수 있는 학점이 3학점이 넘는 경우 3학점 과목 우선 추천 후 1학점 과목은 대체 가능 리스트에 추가
+			// tempList에 추가하는 과정
 			int i;
-			for (i = 3; i < 9; i++) {
-				if (majorInfo[8][i].getCompleted() == false) {
-					tempList.push_back(majorInfo[8][i]);
-					break;
+			if (s == 1) { // 1학기 수강 예정의 경우
+				for (i = 3; i < 7; i++) { 
+					if (majorInfo[8][i].getCompleted() == false) {
+						tempList.push_back(majorInfo[8][i]);
+						break;
+					}
 				}
 			}
-			for (int j = 0; j <= 2; j++) { // 대체 가능 리스트에 개별연구 과목도 포함
-				if (majorInfo[8][j].getCompleted() == false) {
-					replaceList.push_back(majorInfo[8][j]);
+			else if (s == 2) { // 2학기 수강 예정의 경우
+				for (i = 3; i < 9; i++) {
+					if (i == 5) i++;
+					if (majorInfo[8][i].getCompleted() == false) {
+						tempList.push_back(majorInfo[8][i]);
+						break;
+					}
 				}
 			}
-			for (int j = i + 1; j < 9; j++) {
+
+			// replaceList에 개별연구 과목도 포함
+			for (int j = 0; j <= 2; j++) {
 				if (majorInfo[8][j].getCompleted() == false) {
-					replaceList.push_back(majorInfo[8][j]);
+					replaceList.push_back(majorInfo[8][j]); break;
+				}
+			}
+
+			// replaceList에 추가하는 과정
+			if (s == 1) { // 1학기 수강 예정의 경우
+				for (int j = i + 1; j < 7; j++) {
+					if (majorInfo[8][j].getCompleted() == false) {
+						replaceList.push_back(majorInfo[8][j]);
+					}
+				}
+			}
+			else if (s == 2) { // 2학기 수강 예정의 경우
+				for (int j = i + 1; j < 9; j++) {
+					if (j == 5) j++;
+					if (majorInfo[8][j].getCompleted() == false) {
+						replaceList.push_back(majorInfo[8][j]);
+					}
 				}
 			}
 		}
