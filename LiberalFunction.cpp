@@ -111,7 +111,7 @@ void set_Complete_Hash(vector<Liberal*>* liberalHash, vector<wstring>& inputList
 	}
 }
 
-void extractCommon(vector<Liberal> &liberalList, vector<Liberal> &liberalCommon, int semester, int year) {
+void extractCommon(vector<Liberal>& liberalList, vector<Liberal>& liberalCommon, int semester, int year) {
 	int i;
 
 	for (i = 0; i < 10; i++) {
@@ -134,40 +134,38 @@ void extractCommon(vector<Liberal> &liberalList, vector<Liberal> &liberalCommon,
 				liberalCommon.push_back(temp);
 		}
 	}
+}
 
-void extractNormal(vector<Liberal>& liberalList, vector<wstring>& normalLiberal, int& n)
-{
-	int totalCredit = 9;		// �Ҿ� ���� �� 3��, 9���� ���� ��
+void extractNormal(vector<Liberal>& liberalList, vector<wstring>& normalLiberal, int& n) {
+	int totalCredit = 9;
 	int cnt = 0;
-	for (int i = 27; i < 32; i++)
-	{
-		if (liberalList[i].getCompleted() == 1)
-		{
-			if (totalCredit == 0)		// ���� �� ������ �� �̻� �˻��� �ʿ� ���
+	for (int i = 27; i < 32; i++) {
+		if (liberalList[i].getCompleted() == 1) {
+			if (totalCredit == 0)
 				break;
 
-			totalCredit -= liberalList[i].getCredit();		// ���� ����̸� ��ü 9������� �ش� ��� ��ŭ ����
-			cnt++;		// ��� ����� ���� ��
+			totalCredit -= liberalList[i].getCredit();
+			cnt++;
 		}
 			
 	}
 
-	if (totalCredit > 0)		// 9������� ����� ���Ҵٸ� ���� �� ����� �ִٴ� ��
-	{
-		for (int i = 27; i < 32; i++)
-		{
+	if (totalCredit > 0) {
+		for (int i = 27; i < 32; i++) {
 			if (liberalList[i].getCompleted() == 0)
-				normalLiberal.push_back(liberalList[i].getName());		// �� ��� ���� ���Ϳ� �����
+				normalLiberal.push_back(liberalList[i].getName());	
 		}
 		if (cnt <= 3)
-			n = 3 - cnt;		// �� ��� ��� �߿� �� ���� ���� �ϴ��� ���
+			n = 3 - cnt;
 	}
+}
 
 void extrachMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMath_must, vector<Liberal>& liberalMath, int& n) {
 	vector<Liberal> liberalMath_;
 	for (int i = 10; i < 17; i++) {
 		liberalMath_.push_back(liberalList[i]);
 	}
+
 
 	int sumOfCredit = 0;
 	int haveTo = 15;
@@ -200,7 +198,8 @@ void extrachMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMa
 	}
 	else
 		n = 0;
-	
+}
+
 void extractScience(vector<Liberal>& liberalList, vector<Liberal>& liberalExperiment, vector<Liberal>& liberalTheory, int n[2]) {
 	n[0] = 0; n[1] = 0;
 	vector<Liberal> experiment; // 들은 실험 과목 

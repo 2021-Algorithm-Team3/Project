@@ -13,13 +13,11 @@ using namespace std;
 
 int main() {
 
-	// 한글 유니코드 사용을 위해 wstring을 사용
-	// cin -> wcin, cout -> wcout 사용
 	locale::global(locale("ko_KR.UTF-8"));
 	setlocale(LC_ALL, "korean");
 
 	// 전공
-	Major M1(L"기초프로그래밍", 3, L"", false, false);	// L"~"의 형태로 사용
+	Major M1(L"기초프로그래밍", 3, L"", false, false);	
 	Major M2(L"계산적사고법", 3, L"", true, false);
 	Major M3(L"창의적공학설계", 3, L"", true, false);
 	Major M4(L"이산구조", 3, L"", true, false);
@@ -156,6 +154,7 @@ int main() {
 
 	// 필수교양
 	Liberal L1(L"나의삶나의비전", 1, true, false);
+
 	Liberal L2(L"불교와인간", 2, true, false);
 	Liberal L3(L"기술보고서작성및발표", 3, true, false);
 	Liberal L4(L"자아와명상1", 1, true, false);
@@ -241,10 +240,6 @@ int main() {
 	vector <wstring> input_major; // 수강한 전공 과목들을 담는 벡터
 	vector <wstring> input_liberal; // 수강한 교양 과목들을 담는 벡터
 
-	vector<Liberal> liberalScience;
-	vector<Liberal> liberalCommon;
-	vector<wstring> liberalNormal;
-  int cnt_Normal;
 	vector<vector<Major>> majorInfo[3]; // 탐색을 통해 만들어진 벡터를 토대로 2차원 벡터 생성
 	vector<Major> output_major[3]; // 수강할 전공 과목들을 담는 벡터
 	vector<Major> replace_major[3]; // 대체 가능 과목들을 담는 벡터
@@ -268,101 +263,130 @@ int main() {
 
 	// 전공
 	// [1] 순차 탐색 후 추천과목 리스트 추출
-	// linearSearch(majorList, input_major);
-	// make2Dvector(majorList, tempInfo, majorInfo[0]);
-	// subjectExtraction(year, semester, majorInfo[0], input_major, output_major[0], replace_major[0]);
+	linearSearch(majorList, input_major);
+	make2Dvector(majorList, tempInfo, majorInfo[0]);
+	subjectExtraction(year, semester, majorInfo[0], input_major, output_major[0], replace_major[0]);
 
 	// [2] 이진 탐색 후 추천과목 리스트 추출
 	// BinarySearch(majorList, input_major);
-	 //make2Dvector(majorList, tempInfo, majorInfo[1]);
-	 //subjectExtraction(year, semester, majorInfo[1], input_major, output_major[1], replace_major[1]);
+	//make2Dvector(majorList, tempInfo, majorInfo[1]);
+	//subjectExtraction(year, semester, majorInfo[1], input_major, output_major[1], replace_major[1]);
 
-  // [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
+	// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
 	// 모든 전공 객체를 담은 해쉬 테이블 생성
-	vector<Major*> majorHash[HASH_SIZE];
-	make_HT(majorHash, majorList);
-	set_Complete_Hash(majorHash, input_major);
+	//vector<Major*> majorHash[HASH_SIZE];
+	//make_HT(majorHash, majorList);
+	//set_Complete_Hash(majorHash, input_major);
 
 	//make2Dvector(majorList, tempInfo, majorInfo[2]);
 	//subjectExtraction(year, semester, majorInfo[2], input_major, output_major[2], replace_major[2]);
 
-	//// 출력용도
-	//for (int i = 0; i < output_major[2].size(); i++) {
-	//	wcout << output_major[2][i].getName() << endl;
-	//}
-	//wcout << endl;
-	//for (int i = 0; i < replace_major[2].size(); i++) {
-	//	wcout << replace_major[2][i].getName() << endl;
-	//}
-	//wcout << endl;
 
-	//linearSearch(majorList, input_liberal);
 	// 교양
+	vector<Liberal> liberalCommon;
+	vector<wstring> liberalNormal;
+	vector<Liberal> liberalExperiment, liberalTheory;
+	vector<Liberal> liberalMath_must, liberalMath;
+
+	int n_normal; int n_math; int n_science[2];
+
+
 	// [1] 순차 탐색 후 추천과목 리스트 추출
 	linearSearch(liberalList, input_liberal);
-	
-	// [2] 이진 탐색 후 추천과목 리스트 추출
-	BinarySearch(liberalList, input_liberal);
 
-	// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
-	// 모든 전공 객체를 담은 해쉬 테이블 생성
-  vector<Liberal*> liberalHash[HASH_SIZE];
-	make_HT(liberalHash, liberalList);
-	set_Complete_Hash(liberalHash, input_liberal);
+	extractCommon(liberalList, liberalCommon, semester, year);
+	extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
+	extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
+	extractNormal(liberalList, liberalNormal, n_normal);
 
-   vector<Liberal> liberalExperiment, liberalTheroy; int n[2];
-	 extractScience(liberalList, liberalExperiment, liberalTheroy, n);
+	//// [2] 이진 탐색 후 추천과목 리스트 추출
+	//BinarySearch(liberalList, input_liberal);
+	//extractScience(liberalList, liberalExperiment, liberalTheroy, n_science);
+	//extractNormal(liberalList, liberalNormal, n_normal);
+	//extractCommon(liberalList, liberalCommon, semester, year);
+	//extrachMath(year, liberalList, liberalMath_must, liberalMath, n_math);
 
-   extractNormal(liberalList, liberalNormal, cnt_Normal);
-
-	 extractCommon(liberalList, liberalCommon, semester, year);
-
-	vector<Liberal> liberalMath_must, liberalMath;
-	int n;
-	extrachMath(year, liberalList, liberalMath_must, liberalMath, n);
-
-	//// 파일 출력
-	//wofstream fout("output.txt"); // 수강한 전체과목이 담긴 txt
-
-	//// 파일 입력 에러
-	//if (fout.fail()) {
-	//	cerr << "파일을 불러올 수 없습니다." << endl;
-	//	exit(100);
-	//}
-
-	//// 출력 결과 확인([1])
-	//fout << endl << "----------------------------" << endl;
-	//fout << "Major" << endl;
-	//fout << "----------------------------" << endl;
-
-	//fout << "Recommend:" << endl;
-
-	//for (int i = 0; i < output_major[1].size(); i++) {
-	//	fout << output_major[1][i].getName() << endl;
-	//}
-
-	//fout << endl << "Replaceable:" << endl;
-
-	//for (int i = 0; i < replace_major[1].size(); i++) {
-	//	fout << replace_major[1][i].getName() << endl;
-	//}
-
-	//fout << endl << "----------------------------" << endl;
-	//fout << "Liberal" << endl;
-	//fout << "----------------------------" << endl;
-
-	//fout << "> 공통교양" << endl;
-
-
-	//fout << "> MSC" << endl;
-
-
-	//fout << "> 기본소양" << endl;
+	//// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
+	//// 모든 전공 객체를 담은 해쉬 테이블 생성
+	//vector<Liberal*> liberalHash[HASH_SIZE];
+	//make_HT(liberalHash, liberalList);
+	//set_Complete_Hash(liberalHash, input_liberal);
+	//extractScience(liberalList, liberalExperiment, liberalTheroy, n_science);
+	//extractNormal(liberalList, liberalNormal, n_normal);
+	//extractCommon(liberalList, liberalCommon, semester, year);
+	//extrachMath(year, liberalList, liberalMath_must, liberalMath, n_math);
 
 
 
-	//fout.close();
-	
+	// 파일 출력
+	wofstream fout("output.txt"); // 수강한 전체과목이 담긴 txt
+
+	// 파일 입력 에러
+	if (fout.fail()) {
+		cerr << "파일을 불러올 수 없습니다." << endl;
+		exit(100);
+	}
+
+	// 출력 결과 확인([1])
+	fout << "이번 학기 학우님께서 수강하셔야 할 과목입니다^^" << endl;
+	fout << "전공:" << endl;
+
+	fout << endl << "> 추천:" << endl;
+	for (int i = 0; i < output_major[0].size(); i++) {
+		fout << output_major[0][i].getName() << endl;
+	}
+
+	fout << endl << "> 대체가능:" << endl;
+	for (int i = 0; i < replace_major[0].size(); i++) {
+		fout << replace_major[0][i].getName() << endl;
+	}
+
+
+	fout << "----------------------------" << endl;
+	fout << "교양:" << endl;
+
+	fout << "> 공통교양" << endl;
+	for (int i = 0; i < liberalCommon.size(); i++) {
+		fout << liberalCommon[i].getName() << ' ';
+	}
+	fout << endl;
+
+	fout << "> 수학" << endl;
+	fout << "> 수학(필수)" << endl;
+	for (int i = 0; i < liberalMath_must.size(); i++) {
+		fout << liberalMath_must[i].getName() << ' ';
+	}
+	fout << endl;
+	fout << "> 수학(선택)" << endl;
+	for (int i = 0; i < liberalMath.size(); i++) {
+		fout << liberalMath[i].getName() << ' ';
+	}
+	fout << "중 " << n_math << endl;
+
+
+	fout << "> 과학" << endl;
+	fout << "> 과학(실험)" << endl;
+	for (int i = 0; i < liberalExperiment.size(); i++) {
+		fout << liberalExperiment[i].getName() << ' ';
+	}
+	fout << "중 " << n_science[0] << endl;
+	fout << "> 과학(이론)" << endl;
+	for (int i = 0; i < liberalTheory.size(); i++) {
+		fout << liberalTheory[i].getName() << ' ';
+	}
+	fout << "중 " << n_science[1] << endl;
+
+	fout << "> 기본소양" << endl;
+	for (int i = 0; i < liberalNormal.size(); i++) {
+		fout << liberalNormal[i] << ' ';
+	}
+	if (n_normal > 0)
+		fout << "중 " << n_normal << endl;
+
+
+
+	fout.close();
+
 
 	return 0;
 }

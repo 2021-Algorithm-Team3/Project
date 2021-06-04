@@ -25,5 +25,5 @@ void extractNormal(vector<Liberal>& liberalList, vector<wstring>& inputLiberal, 
 
 void extractScience(vector<Liberal>& liberalList, vector<Liberal>& liberalExperiment, vector<Liberal>& liberalTheory, int n[2]);
 
-void extrachMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMath_must, vector<Liberal>& liberalMath, int& n);
+void extractMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMath_must, vector<Liberal>& liberalMath, int& n);
 
