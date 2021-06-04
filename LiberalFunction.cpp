@@ -25,13 +25,13 @@ void linearSearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal)
 
 bool compare(Liberal l1, Liberal l2)
 {
-	return l1.getName() < l2.getName();		// °­ÀÇ¸íÀ¸·Î ¤¡¤¤¤§ Á¤·Ä
+	return l1.getName() < l2.getName();		// ê°•ì˜ëª…ìœ¼ë¡œ ã„±ã„´ã„· ì •ë ¬
 }
 
 void BinarySearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal)
 {
 
-	sort(liberalList.begin(), liberalList.end(), compare);		// ÀÌÁø Å½»öÀ» À§ÇØ Á¤·Ä ¸ÕÀú ÁøÇà
+	sort(liberalList.begin(), liberalList.end(), compare);		// ì´ì§„ íƒìƒ‰ì„ ìœ„í•´ ì •ë ¬ ë¨¼ì € ì§„í–‰
 
 	for (int i = 0; i < inputLiberal.size(); i++)
 	{
@@ -63,12 +63,12 @@ int hashing_L(wstring name) {
 	for (int i = 0; i < name.length(); i++) {
 		int temp = name[i];
 
-		if (temp >= MIN_KOR && temp <= MAX_KOR) {  // ÇöÀç º¸°í ÀÖ´Â ¹®ÀÚ°¡ ÇÑ±ÛÀÌ¸é kor_value¿¡ ´õÇÔ
+		if (temp >= MIN_KOR && temp <= MAX_KOR) {  // í˜„ì¬ ë³´ê³  ìˆëŠ” ë¬¸ìê°€ í•œê¸€ì´ë©´ kor_valueì— ë”í•¨
 			kor_value += temp;
 		}
 		else {
-			other_value += temp;   // ¾Æ´Ï¸é other_value¿¡ ´õÇÔ
-			length--;  // ÇÑ±ÛÀÌ ¾Æ´Ñ ¹®ÀÚ¸¸Å­ length-1
+			other_value += temp;   // ì•„ë‹ˆë©´ other_valueì— ë”í•¨
+			length--;  // í•œê¸€ì´ ì•„ë‹Œ ë¬¸ìë§Œí¼ length-1
 		}
 	}
 	if (length == 0)
@@ -79,9 +79,10 @@ int hashing_L(wstring name) {
 void make_HT(vector<Liberal*>* liberalHash, vector<Liberal>& liberalList) {
 	int hash = 0;
 
-	//ÇØ½ÃÅ×ÀÌºí ±¸¼º
+	//í•´ì‹œí…Œì´ë¸” êµ¬ì„±
 	for (int i = 0; i < liberalList.size(); i++) {
 		hash = hashing_L(liberalList[i].getName());
+
 
 		liberalHash[hash].push_back(&liberalList[i]);  
 	}
@@ -94,11 +95,11 @@ void set_Complete_Hash(vector<Liberal*>* liberalHash, vector<wstring>& inputList
 
 	for (int i = 0; i < inputList.size(); i++) {
 		hash = hashing_L(inputList[i]);
-		// ÇÏ³ª »ÓÀÌ¸é ¹Ù·Î °»½Å
+		// í•˜ë‚˜ ë¿ì´ë©´ ë°”ë¡œ ê°±ì‹ 
 		if (liberalHash[hash].size() == 0) {
 			liberalHash[hash].at(0)->setCompleted();
 		}
-		// ¿©·¯ °³¸é chainÀ» Å½»öÇÏ¿© °»½Å
+		// ì—¬ëŸ¬ ê°œë©´ chainì„ íƒìƒ‰í•˜ì—¬ ê°±ì‹ 
 		else {
 			wstring name = inputList[i];
 			for (int i = 0; i < liberalHash[hash].size(); i++) {
@@ -118,19 +119,119 @@ void extractCommon(vector<Liberal> &liberalList, vector<Liberal> &liberalCommon,
 			Liberal temp = liberalList[i];
 
 			if (i == 0) {
-				if (semester == 1) // ³ª»î³ªºñ
+				if (semester == 1) // ë‚˜ì‚¶ë‚˜ë¹„
 					liberalCommon.push_back(temp);
 			}
 			else if (i == 1) {
-				if (semester == 2)// ºÒ±³¿ÍÀÎ°£
+				if (semester == 2) // ë¶ˆêµì™€ì¸ê°„
 					liberalCommon.push_back(temp);
 			}
-			else if (i >= 7 && i <= 9) {    //¸®´õ½Ê
+			else if (i >= 7 && i <= 9) {    //ë¦¬ë”ì‹­
 				if (semester == 2)
 					liberalCommon.push_back(temp);
 			}
-			else                                     // ³ª¸ÓÁö
+			else                                     // ë‚˜ë¨¸ì§€
 				liberalCommon.push_back(temp);
 		}
 	}
+
+void extractNormal(vector<Liberal>& liberalList, vector<wstring>& normalLiberal, int& n)
+{
+	int totalCredit = 9;		// ï¿½Ò¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 3ï¿½ï¿½, 9ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+	int cnt = 0;
+	for (int i = 27; i < 32; i++)
+	{
+		if (liberalList[i].getCompleted() == 1)
+		{
+			if (totalCredit == 0)		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì»ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½
+				break;
+
+			totalCredit -= liberalList[i].getCredit();		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½Ã¼ 9ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Å­ ï¿½ï¿½ï¿½ï¿½
+			cnt++;		// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+		}
+			
+	}
+
+	if (totalCredit > 0)		// 9ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ò´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù´ï¿½ ï¿½ï¿½
+	{
+		for (int i = 27; i < 32; i++)
+		{
+			if (liberalList[i].getCompleted() == 0)
+				normalLiberal.push_back(liberalList[i].getName());		// ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+		}
+		if (cnt <= 3)
+			n = 3 - cnt;		// ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ß¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	}
+
+void extrachMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMath_must, vector<Liberal>& liberalMath, int& n) {
+	vector<Liberal> liberalMath_;
+	for (int i = 10; i < 17; i++) {
+		liberalMath_.push_back(liberalList[i]);
+	}
+
+	int sumOfCredit = 0;
+	int haveTo = 15;
+	// ì´ ë“¤ì€ í•™ì  ê³„ì‚°
+	for (int i = 0; i < liberalMath_.size(); i++) {
+		if (liberalMath_[i].getCompleted())
+			sumOfCredit += liberalMath_[i].getCredit();
+	}
+
+	// ê³µì„ ëŒ€ì˜ ê²½ìš° ë”°ë¡œ ì²˜ë¦¬
+	if (y >= 2 && liberalMath_[2].getCompleted() == false) // 2í•™ë…„ ì´ìƒì´ì§€ë§Œ ê³µì„ ëŒ€ë¥¼ ì•ˆë“¤ì—ˆì„ ê²½ìš°
+		liberalMath_must.push_back(liberalMath_[2]); // ë¬´ì¡°ê±´ ë“¤ì–´ì•¼í•¨
+
+	// ìˆ˜í•™ê³¼ëª©ì„ í•„ìˆ˜ë§Œí¼ ìˆ˜ê°•í•˜ì§€ ì•ŠìŒ
+	if (sumOfCredit < haveTo) {
+		for (int i = 0; i < liberalMath_.size(); i++) {
+			if (i == 2) // ê³µì„ ëŒ€ ë›°ì–´ë„˜ìŒ
+				continue;
+			if (liberalMath_[i].getCompleted() == false) {
+				if (liberalMath_[i].getMust() == true) // í•„ìˆ˜ê³¼ëª© ì²˜ë¦¬
+					liberalMath_must.push_back(liberalMath_[i]);
+				else
+					liberalMath.push_back(liberalMath_[i]);
+			}
+		}
+		n = (haveTo - sumOfCredit) / 3;
+		n -= liberalMath_must.size();
+		if (y < 2) // ê³µì„ ëŒ€ ì²˜ë¦¬
+			n -= 1;
+	}
+	else
+		n = 0;
+	
+void extractScience(vector<Liberal>& liberalList, vector<Liberal>& liberalExperiment, vector<Liberal>& liberalTheory, int n[2]) {
+	n[0] = 0; n[1] = 0;
+	vector<Liberal> experiment; // ë“¤ì€ ì‹¤í—˜ ê³¼ëª© 
+	vector<Liberal> theory; // ì•ˆ ë“¤ì€ ì‹¤í—˜ ê³¼ëª© 
+	for (int i = 17; i <= 22; i++) { // ì‹¤í—˜ ê³¼ëª© ì¤‘ì— ë“¤ì€ ê³¼ëª© í™•ì¸
+		if (liberalList[i].getCompleted() == true) experiment.push_back(liberalList[i]);
+	}
+
+	if (experiment.size() == 0) {
+		for (int i = 17; i <= 22; i++) liberalExperiment.push_back(liberalList[i]); n[0] = 1;
+	}
+
+	for (int i = 23; i <= 26; i++) {  // ì´ë¡  ê³¼ëª© ì¤‘ì— ì•ˆ ë“¤ì€ ê³¼ëª©ì´ ìˆëŠ”ì§€ ì²´í¬
+		if (liberalList[i].getCompleted() == false) 
+			theory.push_back(liberalList[i]); 
+	}
+
+	if (theory.size() > 2) { // ì•ˆ ë“¤ì€ ê³¼ëª©ì´ 3, 4ê°œë©´ ìˆ˜ê°•í•´ì•¼ í•˜ëŠ” ê³¼ëª© ì¡´ì¬
+		if (experiment.size() > 0) { // ì‹¤í—˜ ê³¼ëª© ì¤‘ ë“¤ì€ ê³¼ëª©ì´ ìˆëŠ” ê²½ìš° ê²¹ì¹˜ëŠ” ê°œë¡  ê³¼ëª© ìˆ˜ê°• ë¶ˆê°€
+			wstring substr_experiment = experiment[0].getName().substr(2, 2);
+			for (int i = 0; i < theory.size(); i++) {
+				if (theory[i].getName().substr(0, 2) != substr_experiment) {
+					liberalTheory.push_back(theory[i]);
+				}
+			}
+		}
+		else {
+			for (int i = 0; i < theory.size(); i++) liberalTheory.push_back(theory[i]);
+		}
+	}
+
+	n[1] = theory.size() - 2;
+
 }

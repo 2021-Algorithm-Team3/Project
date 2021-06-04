@@ -18,8 +18,6 @@ public:
 	bool getCompleted();
 	//void setCompleted(Major& m);
 	void setCompleted();
-
-	Major* next = NULL;
 };
 
 class Liberal {
