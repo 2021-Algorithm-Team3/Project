@@ -24,18 +24,17 @@ public:
 
 class Liberal {
 private:
-	string name; // 과목명
+	wstring name; // 과목명
 	int credit; // 학점
 	bool must; // 필수 여부
 	bool completed; // 들은 과목인지 여부
 public:
-	Liberal(string name, int credit, bool must, bool completed);
-	string getName();
+	Liberal(wstring name, int credit, bool must, bool completed);
+	wstring getName();
 	int getCredit();
 	bool getMust();
 	bool getCompleted();
 	void setCompleted();
 };
-
 
 #endif //LECTURE_H

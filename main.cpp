@@ -137,7 +137,7 @@ int main() {
 	vector<Major> freshman1 = { M1, M2 };
 	vector<Major> freshman2 = { M3, M4, M5 };
 	vector<Major> sophomore1 = { M6, M7, M8 };
-	vector<Major> sophorore2 = { M9, M10, M11, M12 };
+	vector<Major> sophomore2 = { M9, M10, M11, M12 };
 	vector<Major> junior1 = { M13, M14, M15, M16, M17, M18, M19 };
 	vector<Major> junior2 = { M20, M21, M22, M23, M24, M25, M26 };
 	vector<Major> senior1 = { M46, M27, M28, M29, M30, M31, M32, M33, M34, M35, M36 };
@@ -147,52 +147,86 @@ int main() {
 	vector<vector<Major>> tempInfo;
 
 	tempInfo.push_back(freshman1); tempInfo.push_back(freshman2);
-	tempInfo.push_back(sophomore1); tempInfo.push_back(sophorore2);
+	tempInfo.push_back(sophomore1); tempInfo.push_back(sophomore2);
 	tempInfo.push_back(junior1); tempInfo.push_back(junior2);
 	tempInfo.push_back(senior1); tempInfo.push_back(senior2);
 	tempInfo.push_back(engineering);
 
 
 	// 필수교양
-	Liberal L1("나의삶나의비전", 1, true, false);
-	Liberal L2("불교와인간", 2, true, false);
-	Liberal L3("기술보고서작성및발표", 3, true, false);
-	Liberal L4("자아와명상1", 1, true, false);
-	Liberal L5("자아와명상2", 1, true, false);
-	Liberal L6("EAS1", 3, true, false);
-	Liberal L8("EAS2", 3, true, false);
-	Liberal L9("소셜앙트레프레너십과리더십", 2, false, false);
-	Liberal L10("글로벌앙트레프레너십과리더십", 2, false, false);
-	Liberal L11("테크노앙트레프레너십과리더십", 2, false, false);
+	Liberal L1(L"나의삶나의비전", 1, true, false);
+
+	Liberal L2(L"불교와인간", 2, true, false);
+	Liberal L3(L"기술보고서작성및발표", 3, true, false);
+	Liberal L4(L"자아와명상1", 1, true, false);
+	Liberal L5(L"자아와명상2", 1, true, false);
+	Liberal L6(L"EAS1", 3, true, false);
+	Liberal L7(L"EAS2", 3, true, false);
+	Liberal L8(L"소셜앙트레프레너십과리더십", 2, false, false);
+	Liberal L9(L"글로벌앙트레프레너십과리더십", 2, false, false);
+	Liberal L10(L"테크노앙트레프레너십과리더십", 2, false, false);
 
 	// MSC
-	Liberal L12("미적분학및연습1", 3, true, false);
-	Liberal L13("확률및통계학", 3, true, false);
-	Liberal L14("공학선형대수학", 3, true, false);
-	Liberal L15("미적분학및연습2", 3, false, false);
-	Liberal L16("공학수학1", 3, false, false);
-	Liberal L17("수치해석및실습", 3, false, false);
-	Liberal L18("산업수학", 3, false, false);
-	Liberal L19("일반물리학및실험1", 4, false, false);
-	Liberal L20("일반물리학및실험2", 4, false, false);
-	Liberal L21("일반화학및실험1", 4, false, false);
-	Liberal L22("일반화학및실험2", 4, false, false);
-	Liberal L23("일반생물학및실험1", 4, false, false);
-	Liberal L24("일반생물학및실험2", 4, false, false);
-	Liberal L25("물리학개론", 3, false, false);
-	Liberal L26("화학개론", 3, false, false);
-	Liberal L27("생물학개론", 3, false, false);
-	Liberal L28("지구환경과학", 3, false, false);
+	Liberal L11(L"미적분학및연습1", 3, true, false);
+	Liberal L12(L"확률및통계학", 3, true, false);
+	Liberal L13(L"공학선형대수학", 3, true, false);
+	Liberal L14(L"미적분학및연습2", 3, false, false);
+	Liberal L15(L"공학수학1", 3, false, false);
+	Liberal L16(L"수치해석및실습", 3, false, false);
+	Liberal L17(L"산업수학", 3, false, false);
+	Liberal L18(L"일반물리학및실험1", 4, false, false);
+	Liberal L19(L"일반물리학및실험2", 4, false, false);
+	Liberal L20(L"일반화학및실험1", 4, false, false);
+	Liberal L21(L"일반화학및실험2", 4, false, false);
+	Liberal L22(L"일반생물학및실험1", 4, false, false);
+	Liberal L23(L"일반생물학및실험2", 4, false, false);
+	Liberal L24(L"물리학개론", 3, false, false);
+	Liberal L25(L"화학개론", 3, false, false);
+	Liberal L26(L"생물학개론", 3, false, false);
+	Liberal L27(L"지구환경과학", 3, false, false);
 
 	// 기본소양
-	Liberal L29("기술창조와특허", 3, false, false);
-	Liberal L30("공학경제", 3, false, false);
-	Liberal L31("공학윤리", 3, false, false);
-	Liberal L32("기술과사회", 3, false, false);
-	Liberal L33("지속가능한발전과인간", 3, false, false);
+	Liberal L28(L"기술창조와특허", 3, false, false);
+	Liberal L29(L"공학경제", 3, false, false);
+	Liberal L30(L"공학윤리", 3, false, false);
+	Liberal L31(L"기술과사회", 3, false, false);
+	Liberal L32(L"지속가능한발전과인간", 3, false, false);
+
+	vector<Liberal> liberalList;
+
+	liberalList.push_back(L1);
+	liberalList.push_back(L2);
+	liberalList.push_back(L3);
+	liberalList.push_back(L4);
+	liberalList.push_back(L5);
+	liberalList.push_back(L6);
+	liberalList.push_back(L7);
+	liberalList.push_back(L8);
+	liberalList.push_back(L9);
+	liberalList.push_back(L10);
+	liberalList.push_back(L11);
+	liberalList.push_back(L12);
+	liberalList.push_back(L13);
+	liberalList.push_back(L14);
+	liberalList.push_back(L15);
+	liberalList.push_back(L16);
+	liberalList.push_back(L17);
+	liberalList.push_back(L18);
+	liberalList.push_back(L19);
+	liberalList.push_back(L20);
+	liberalList.push_back(L21);
+	liberalList.push_back(L23);
+	liberalList.push_back(L24);
+	liberalList.push_back(L25);
+	liberalList.push_back(L26);
+	liberalList.push_back(L27);
+	liberalList.push_back(L28);
+	liberalList.push_back(L29);
+	liberalList.push_back(L30);
+	liberalList.push_back(L31);
+	liberalList.push_back(L32);
 
 	int year, semester;
-
 	// 파일 입력
 	wifstream fin("input.txt"); // 수강한 전체과목이 담긴 txt
 
@@ -226,25 +260,26 @@ int main() {
 		}
 	}
 
+	// 전공
 	// [1] 순차 탐색 후 추천과목 리스트 추출
 	// linearSearch(majorList, input_major);
 	// make2Dvector(majorList, tempInfo, majorInfo[0]);
 	// subjectExtraction(year, semester, majorInfo[0], input_major, output_major[0], replace_major[0]);
 
 	// [2] 이진 탐색 후 추천과목 리스트 추출
-	 BinarySearch(majorList, input_major);
-	 make2Dvector(majorList, tempInfo, majorInfo[1]);
-	 subjectExtraction(year, semester, majorInfo[1], input_major, output_major[1], replace_major[1]);
+	 //BinarySearch(majorList, input_major);
+	 //make2Dvector(majorList, tempInfo, majorInfo[1]);
+	 //subjectExtraction(year, semester, majorInfo[1], input_major, output_major[1], replace_major[1]);
 
 	// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
 	// 모든 전공 객체를 담은 해쉬 테이블 생성
-	/*vector<Major> majorHash[HASH_SIZE];
-	make_HT(majorHash, majorList);
+	//vector<Major> majorHash[HASH_SIZE];
+	//make_HT(majorHash, majorList);
 
 
-	set_Complete_Hash(majorHash, input_major);
-	make2Dvector(majorList, tempInfo, majorInfo[2]);
-	subjectExtraction(year, semester, majorInfo[2], input_major, output_major[2], replace_major[2]);*/
+	//set_Complete_Hash(majorHash, input_major);
+	//make2Dvector(majorList, tempInfo, majorInfo[2]);
+	//subjectExtraction(year, semester, majorInfo[2], input_major, output_major[2], replace_major[2]);
 
 	// 출력용도
 	//for (int i = 0; i < output_major[2].size(); i++) {
@@ -256,29 +291,67 @@ int main() {
 	//}
 	//wcout << endl;
 
-	// 파일 출력
-	wofstream fout("output.txt"); // 수강한 전체과목이 담긴 txt
 
-	// 파일 입력 에러
-	if (fout.fail()) {
-		cerr << "파일을 불러올 수 없습니다." << endl;
-		exit(100);
-	}
+	// 교양
+	// [1] 순차 탐색 후 추천과목 리스트 추출
+	linearSearch(majorList, input_liberal);
 
-	// 출력 결과 확인([1])
-	fout << "Recommend:" << endl;
 
-	for (int i = 0; i < output_major[1].size(); i++) {
-		fout << output_major[1][i].getName() << endl;
-	}
+	// [2] 이진 탐색 후 추천과목 리스트 추출
+	BinarySearch(majorList, input_liberal);
 
-	fout << endl << "Replaceable:" << endl;
 
-	for (int i = 0; i < replace_major[1].size(); i++) {
-		fout << replace_major[1][i].getName() << endl;
-	}
+	// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
+	// 모든 전공 객체를 담은 해쉬 테이블 생성
+	vector<Major> majorHash[HASH_SIZE];
+	make_HT(majorHash, majorList);
 
-	fout.close();
+	set_Complete_Hash(majorHash, input_liberal);
+
+
+
+
+	//// 파일 출력
+	//wofstream fout("output.txt"); // 수강한 전체과목이 담긴 txt
+
+	//// 파일 입력 에러
+	//if (fout.fail()) {
+	//	cerr << "파일을 불러올 수 없습니다." << endl;
+	//	exit(100);
+	//}
+
+	//// 출력 결과 확인([1])
+	//fout << endl << "----------------------------" << endl;
+	//fout << "Major" << endl;
+	//fout << "----------------------------" << endl;
+
+	//fout << "Recommend:" << endl;
+
+	//for (int i = 0; i < output_major[1].size(); i++) {
+	//	fout << output_major[1][i].getName() << endl;
+	//}
+
+	//fout << endl << "Replaceable:" << endl;
+
+	//for (int i = 0; i < replace_major[1].size(); i++) {
+	//	fout << replace_major[1][i].getName() << endl;
+	//}
+
+	//fout << endl << "----------------------------" << endl;
+	//fout << "Liberal" << endl;
+	//fout << "----------------------------" << endl;
+
+	//fout << "> 공통교양" << endl;
+
+
+	//fout << "> MSC" << endl;
+
+
+	//fout << "> 기본소양" << endl;
+
+
+
+	//fout.close();
 	
 
 	return 0;

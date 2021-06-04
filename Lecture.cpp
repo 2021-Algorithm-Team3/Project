@@ -35,14 +35,14 @@ void Major::setCompleted() {
 
 //=======================================================================================================================================//
 
-Liberal::Liberal(string name, int credit, bool must, bool completed) {
+Liberal::Liberal(wstring name, int credit, bool must, bool completed) {
 	this->name = name;
 	this->credit = credit;
 	this->must = must;
 	this->completed = completed;
 }
 
-string Liberal::getName() {
+wstring Liberal::getName() {
 	return name;
 }
 
