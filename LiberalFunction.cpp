@@ -107,3 +107,40 @@ void set_Complete_Hash(vector<Liberal>* liberalHash, vector<wstring>& inputList)
 		}
 	}
 }
+
+void extractScience(vector<Liberal>& liberalList, vector<Liberal>& liberalExperiment, vector<Liberal>& liberalTheory, int n[2]) {
+	n[0] = 0; n[1] = 0;
+	vector<Liberal> experiment; // 들은 실험 과목 
+	vector<Liberal> theory; // 안 들은 실험 과목 
+	for (int i = 17; i <= 22; i++) { // 실험 과목 중에 들은 과목 확인
+		if (liberalList[i].getCompleted() == true) experiment.push_back(liberalList[i]);
+	}
+
+	if (experiment.size() == 0) {
+		for (int i = 17; i <= 22; i++) liberalExperiment.push_back(liberalList[i]); n[0] = 1;
+	}
+
+	for (int i = 23; i <= 26; i++) {  // 이론 과목 중에 안 들은 과목이 있는지 체크
+		if (liberalList[i].getCompleted() == false) 
+			theory.push_back(liberalList[i]); 
+	}
+
+	if (theory.size() > 2) { // 안 들은 과목이 3, 4개면 수강해야 하는 과목 존재
+		if (experiment.size() > 0) { // 실험 과목 중 들은 과목이 있는 경우 겹치는 개론 과목 수강 불가
+			wstring substr_experiment = experiment[0].getName().substr(2, 2);
+			for (int i = 0; i < theory.size(); i++) {
+				if (theory[i].getName().substr(0, 2) != substr_experiment) {
+					liberalTheory.push_back(theory[i]);
+				}
+			}
+		}
+		else {
+			for (int i = 0; i < theory.size(); i++) liberalTheory.push_back(theory[i]);
+		}
+	}
+
+	n[1] = theory.size() - 2;
+
+
+		
+}
