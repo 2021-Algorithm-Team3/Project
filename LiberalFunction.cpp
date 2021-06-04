@@ -84,7 +84,7 @@ void make_HT(vector<Liberal*>* liberalHash, vector<Liberal>& liberalList) {
 		hash = hashing_L(liberalList[i].getName());
 
 
-		liberalHash[hash].push_back(&liberalList[i]);  
+		liberalHash[hash].push_back(&liberalList[i]);
 	}
 }
 
@@ -147,20 +147,20 @@ void extractNormal(vector<Liberal>& liberalList, vector<wstring>& normalLiberal,
 			totalCredit -= liberalList[i].getCredit();
 			cnt++;
 		}
-			
+
 	}
 
 	if (totalCredit > 0) {
 		for (int i = 27; i < 32; i++) {
 			if (liberalList[i].getCompleted() == 0)
-				normalLiberal.push_back(liberalList[i].getName());	
+				normalLiberal.push_back(liberalList[i].getName());
 		}
 		if (cnt <= 3)
 			n = 3 - cnt;
 	}
 }
 
-void extrachMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMath_must, vector<Liberal>& liberalMath, int& n) {
+void extractMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMath_must, vector<Liberal>& liberalMath, int& n) {
 	vector<Liberal> liberalMath_;
 	for (int i = 10; i < 17; i++) {
 		liberalMath_.push_back(liberalList[i]);
@@ -213,8 +213,8 @@ void extractScience(vector<Liberal>& liberalList, vector<Liberal>& liberalExperi
 	}
 
 	for (int i = 23; i <= 26; i++) {  // 이론 과목 중에 안 들은 과목이 있는지 체크
-		if (liberalList[i].getCompleted() == false) 
-			theory.push_back(liberalList[i]); 
+		if (liberalList[i].getCompleted() == false)
+			theory.push_back(liberalList[i]);
 	}
 
 	if (theory.size() > 2) { // 안 들은 과목이 3, 4개면 수강해야 하는 과목 존재

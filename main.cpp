@@ -17,7 +17,7 @@ int main() {
 	setlocale(LC_ALL, "korean");
 
 	// 전공
-	Major M1(L"기초프로그래밍", 3, L"", false, false);	
+	Major M1(L"기초프로그래밍", 3, L"", false, false);
 	Major M2(L"계산적사고법", 3, L"", true, false);
 	Major M3(L"창의적공학설계", 3, L"", true, false);
 	Major M4(L"이산구조", 3, L"", true, false);
@@ -151,10 +151,8 @@ int main() {
 	tempInfo.push_back(senior1); tempInfo.push_back(senior2);
 	tempInfo.push_back(engineering);
 
-
 	// 필수교양
 	Liberal L1(L"나의삶나의비전", 1, true, false);
-
 	Liberal L2(L"불교와인간", 2, true, false);
 	Liberal L3(L"기술보고서작성및발표", 3, true, false);
 	Liberal L4(L"자아와명상1", 1, true, false);
@@ -192,7 +190,6 @@ int main() {
 	Liberal L32(L"지속가능한발전과인간", 3, false, false);
 
 	vector<Liberal> liberalList;
-
 	liberalList.push_back(L1);
 	liberalList.push_back(L2);
 	liberalList.push_back(L3);
@@ -232,7 +229,7 @@ int main() {
 
 	// 파일 입력 에러
 	if (fin.fail()) {
-		cerr << "파일을 불러올 수 없습니다." << endl;
+		cerr << L"파일을 불러올 수 없습니다." << endl;
 		exit(100);
 	}
 
@@ -290,10 +287,8 @@ int main() {
 
 	int n_normal; int n_math; int n_science[2];
 
-
 	// [1] 순차 탐색 후 추천과목 리스트 추출
 	linearSearch(liberalList, input_liberal);
-
 	extractCommon(liberalList, liberalCommon, semester, year);
 	extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
 	extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
@@ -317,73 +312,70 @@ int main() {
 	//extrachMath(year, liberalList, liberalMath_must, liberalMath, n_math);
 
 
-
 	// 파일 출력
 	wofstream fout("output.txt"); // 수강한 전체과목이 담긴 txt
 
 	// 파일 입력 에러
 	if (fout.fail()) {
-		cerr << "파일을 불러올 수 없습니다." << endl;
+		cerr << L"파일을 불러올 수 없습니다." << endl;
 		exit(100);
 	}
 
 	// 출력 결과 확인([1])
-	fout << "이번 학기 학우님께서 수강하셔야 할 과목입니다^^" << endl;
-	fout << "전공:" << endl;
+	fout << L"이번 학기 학우님께서 수강하셔야 할 과목입니다^^" << endl;
+	fout << L"전공:" << endl;
 
-	fout << endl << "> 추천:" << endl;
+	fout << endl << L"> 추천:" << endl;
 	for (int i = 0; i < output_major[0].size(); i++) {
 		fout << output_major[0][i].getName() << endl;
 	}
 
-	fout << endl << "> 대체가능:" << endl;
+	fout << endl << L"> 대체가능:" << endl;
 	for (int i = 0; i < replace_major[0].size(); i++) {
 		fout << replace_major[0][i].getName() << endl;
 	}
 
 
-	fout << "----------------------------" << endl;
-	fout << "교양:" << endl;
+	fout << L"----------------------------" << endl;
+	fout << L"교양:" << endl;
 
-	fout << "> 공통교양" << endl;
+	fout << L"> 공통교양" << endl;
 	for (int i = 0; i < liberalCommon.size(); i++) {
 		fout << liberalCommon[i].getName() << ' ';
 	}
 	fout << endl;
 
-	fout << "> 수학" << endl;
-	fout << "> 수학(필수)" << endl;
+	fout << L"> 수학" << endl;
+	fout << L"> 수학(필수)" << endl;
 	for (int i = 0; i < liberalMath_must.size(); i++) {
 		fout << liberalMath_must[i].getName() << ' ';
 	}
 	fout << endl;
-	fout << "> 수학(선택)" << endl;
+	fout << L"> 수학(선택)" << endl;
 	for (int i = 0; i < liberalMath.size(); i++) {
 		fout << liberalMath[i].getName() << ' ';
 	}
-	fout << "중 " << n_math << endl;
+	fout << L"중 " << n_math << endl;
 
 
-	fout << "> 과학" << endl;
-	fout << "> 과학(실험)" << endl;
+	fout << L"> 과학" << endl;
+	fout << L"> 과학(실험)" << endl;
 	for (int i = 0; i < liberalExperiment.size(); i++) {
 		fout << liberalExperiment[i].getName() << ' ';
 	}
-	fout << "중 " << n_science[0] << endl;
-	fout << "> 과학(이론)" << endl;
+	fout << L"중 " << n_science[0] << endl;
+	fout << L"> 과학(이론)" << endl;
 	for (int i = 0; i < liberalTheory.size(); i++) {
 		fout << liberalTheory[i].getName() << ' ';
 	}
-	fout << "중 " << n_science[1] << endl;
+	fout << L"중 " << n_science[1] << endl;
 
-	fout << "> 기본소양" << endl;
+	fout << L"> 기본소양" << endl;
 	for (int i = 0; i < liberalNormal.size(); i++) {
 		fout << liberalNormal[i] << ' ';
 	}
 	if (n_normal > 0)
-		fout << "중 " << n_normal << endl;
-
-
+		fout << L"중 " << n_normal << endl;
 
 	fout.close();
 
