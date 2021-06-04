@@ -20,3 +20,4 @@ void set_Complete_Hash(vector<Liberal>* liberalHash, vector<wstring>& inputList)
 
 // 과목 추출
 
+void extrachMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMath_must, vector<Liberal>& liberalMath, int& n);

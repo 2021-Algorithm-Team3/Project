@@ -107,3 +107,43 @@ void set_Complete_Hash(vector<Liberal>* liberalHash, vector<wstring>& inputList)
 		}
 	}
 }
+
+void extrachMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMath_must, vector<Liberal>& liberalMath, int& n) {
+	vector<Liberal> liberalMath_;
+	for (int i = 10; i < 17; i++) {
+		liberalMath_.push_back(liberalList[i]);
+	}
+
+	int sumOfCredit = 0;
+	int haveTo = 15;
+	// 총 들은 학점 계산
+	for (int i = 0; i < liberalMath_.size(); i++) {
+		if (liberalMath_[i].getCompleted())
+			sumOfCredit += liberalMath_[i].getCredit();
+	}
+
+	// 공선대의 경우 따로 처리
+	if (y >= 2 && liberalMath_[2].getCompleted() == false) // 2학년 이상이지만 공선대를 안들었을 경우
+		liberalMath_must.push_back(liberalMath_[2]); // 무조건 들어야함
+
+	// 수학과목을 필수만큼 수강하지 않음
+	if (sumOfCredit < haveTo) {
+		for (int i = 0; i < liberalMath_.size(); i++) {
+			if (i == 2) // 공선대 뛰어넘음
+				continue;
+			if (liberalMath_[i].getCompleted() == false) {
+				if (liberalMath_[i].getMust() == true) // 필수과목 처리
+					liberalMath_must.push_back(liberalMath_[i]);
+				else
+					liberalMath.push_back(liberalMath_[i]);
+			}
+		}
+		n = (haveTo - sumOfCredit) / 3;
+		n -= liberalMath_must.size();
+		if (y < 2) // 공선대 처리
+			n -= 1;
+	}
+	else
+		n = 0;
+	
+}

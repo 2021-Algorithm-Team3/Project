@@ -5,6 +5,7 @@
 #include <locale>
 #include "Lecture.h"
 #include "MajorFunction.h"
+#include "LiberalFunction.h"
 
 #define HASH_SIZE 100
 
@@ -155,7 +156,6 @@ int main() {
 
 	// 필수교양
 	Liberal L1(L"나의삶나의비전", 1, true, false);
-
 	Liberal L2(L"불교와인간", 2, true, false);
 	Liberal L3(L"기술보고서작성및발표", 3, true, false);
 	Liberal L4(L"자아와명상1", 1, true, false);
@@ -188,7 +188,7 @@ int main() {
 	// 기본소양
 	Liberal L28(L"기술창조와특허", 3, false, false);
 	Liberal L29(L"공학경제", 3, false, false);
-	Liberal L30(L"공학윤리", 3, false, false);
+	Liberal L30(L"공학법제", 3, false, false);
 	Liberal L31(L"기술과사회", 3, false, false);
 	Liberal L32(L"지속가능한발전과인간", 3, false, false);
 
@@ -297,22 +297,21 @@ int main() {
 
 	// 교양
 	// [1] 순차 탐색 후 추천과목 리스트 추출
-	linearSearch(majorList, input_liberal);
-
-
+	linearSearch(liberalList, input_liberal);
+	
 	// [2] 이진 탐색 후 추천과목 리스트 추출
-	BinarySearch(majorList, input_liberal);
-
+	BinarySearch(liberalList, input_liberal);
 
 	// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
 	// 모든 전공 객체를 담은 해쉬 테이블 생성
-	vector<Major> majorHash[HASH_SIZE];
-	make_HT(majorHash, majorList);
+	vector<Liberal> liberalHash[HASH_SIZE];
+	make_HT(liberalHash, liberalList);
 
-	set_Complete_Hash(majorHash, input_liberal);
+	set_Complete_Hash(liberalHash, input_liberal);
 
-
-
+	vector<Liberal> liberalMath_must, liberalMath;
+	int n;
+	extrachMath(year, liberalList, liberalMath_must, liberalMath, n);
 
 	//// 파일 출력
 	//wofstream fout("output.txt"); // 수강한 전체과목이 담긴 txt
