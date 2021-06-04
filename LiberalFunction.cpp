@@ -9,7 +9,7 @@ using namespace std;
 
 #define MIN_KOR 44032
 #define MAX_KOR 55203
-#define HASH_SIZE 100
+#define HASH_SIZE 50
 
 void linearSearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal)
 {
@@ -55,7 +55,7 @@ void BinarySearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal)
 	}
 }
 
-int hashing(wstring name) {
+int hashing_L(wstring name) {
 	int kor_value = 0, other_value = 0;
 	int length;
 	length = name.length();
@@ -79,7 +79,7 @@ void make_HT(vector<Liberal>* liberalHash, vector<Liberal>& liberalList) {
 
 	//해시테이블 구성
 	for (int i = 0; i < liberalList.size(); i++) {
-		hash = hashing(liberalList[i].getName());
+		hash = hashing_L(liberalList[i].getName());
 
 		liberalHash[hash].push_back(liberalList[i]);   // 각 vector의 길이가 잘못 나오는 오류 발생 중
 	}
@@ -91,7 +91,7 @@ void set_Complete_Hash(vector<Liberal>* liberalHash, vector<wstring>& inputList)
 	setlocale(LC_ALL, "korean");
 
 	for (int i = 0; i < inputList.size(); i++) {
-		hash = hashing(inputList[i]);
+		hash = hashing_L(inputList[i]);
 		// 하나 뿐이면 바로 갱신
 		if (liberalHash[hash].size() == 0) {
 			liberalHash[hash].at(0).setCompleted();

@@ -12,7 +12,7 @@ void BinarySearch(vector<Major>& majorList, vector<wstring>& inputMajor);
 bool compare(Major m1, Major m2);
 
 // 해시를 이용한 탐색
-int hashing(wstring name);
+int hashing_M(wstring name);
 
 void make_HT(vector<Major>* majorHash, vector<Major>& majorList);
 

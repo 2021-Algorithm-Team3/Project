@@ -55,7 +55,7 @@ void BinarySearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 	}
 }
 
-int hashing(wstring name) {
+int hashing_M(wstring name) {
 	int kor_value = 0, other_value = 0;
 	int length;
 	length = name.length();
@@ -79,7 +79,7 @@ void make_HT(vector<Major>* majorHash, vector<Major>& majorList) {
 
 	//해시테이블 구성
 	for (int i = 0; i < majorList.size(); i++) {
-		hash = hashing(majorList[i].getName());
+		hash = hashing_M(majorList[i].getName());
 
 		majorHash[hash].push_back(majorList[i]);   // 각 vector의 길이가 잘못 나오는 오류 발생 중
 	}
@@ -91,7 +91,7 @@ void set_Complete_Hash(vector<Major>* majorHash, vector<wstring>& inputList) {
 	setlocale(LC_ALL, "korean");
 
 	for (int i = 0; i < inputList.size(); i++) {
-		hash = hashing(inputList[i]);
+		hash = hashing_M(inputList[i]);
 		// 하나 뿐이면 바로 갱신
 		if (majorHash[hash].size() == 0) {
 			majorHash[hash].at(0).setCompleted();
@@ -128,15 +128,15 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 
 	for (int i = 0; i <= end_idx; i++) {
 		for (int j = 0; j < majorInfo[i].size(); j++) {
-			if (majorInfo[i][j].getCompleted() == false) { 
-				if (majorInfo[i][j].getPriorLecture() == L"") { 
+			if (majorInfo[i][j].getCompleted() == false) {
+				if (majorInfo[i][j].getPriorLecture() == L"") {
 					tempList.push_back(majorInfo[i][j]);
 					sumOfCredit += majorInfo[i][j].getCredit();
 				}
 				else { // 선이수과목이 있는 경우
 					int flag = 0;
 					for (int k = 0; k < inputList.size(); k++) {
-						if (majorInfo[i][j].getPriorLecture() == inputList[k]) { flag = 1; break;} // 선이수과목을 수강한 경우
+						if (majorInfo[i][j].getPriorLecture() == inputList[k]) { flag = 1; break; } // 선이수과목을 수강한 경우
 					}
 					if (flag == 1) {
 						tempList.push_back(majorInfo[i][j]);
@@ -157,7 +157,7 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 	if (end_idx < 4) maxCredit = 15; // (1)
 	else maxCredit = 24; // (2)
 
-	if (sumOfCredit >= maxCredit) { 
+	if (sumOfCredit >= maxCredit) {
 
 		for (int i = tempList.size() - 1; i >= 0; i--) {
 			if (sumOfCredit < maxCredit) break;
@@ -184,7 +184,7 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 			// tempList에 추가하는 과정
 			int i;
 			if (s == 1) { // 1학기 수강 예정의 경우
-				for (i = 3; i < 7; i++) { 
+				for (i = 3; i < 7; i++) {
 					if (majorInfo[8][i].getCompleted() == false) {
 						tempList.push_back(majorInfo[8][i]);
 						break;
