@@ -107,3 +107,32 @@ void set_Complete_Hash(vector<Liberal>* liberalHash, vector<wstring>& inputList)
 		}
 	}
 }
+
+void extractNormal(vector<Liberal>& liberalList, vector<wstring>& normalLiberal, int& n)
+{
+	int totalCredit = 9;		// 소양 과목은 총 3개, 9학점을 들어야 함
+	int cnt = 0;
+	for (int i = 27; i < 32; i++)
+	{
+		if (liberalList[i].getCompleted() == 1)
+		{
+			if (totalCredit == 0)		// 만약 다 들었으면 더 이상 검사할 필요 없음
+				break;
+
+			totalCredit -= liberalList[i].getCredit();		// 수강한 과목이면 전체 9학점에서 해당 학점 만큼 빼줌
+			cnt++;		// 들은 과목의 갯수를 셈
+		}
+			
+	}
+
+	if (totalCredit > 0)		// 9학점에서 학점이 남았다면 들어야 할 과목이 있다는 것
+	{
+		for (int i = 27; i < 32; i++)
+		{
+			if (liberalList[i].getCompleted() == 0)
+				normalLiberal.push_back(liberalList[i].getName());		// 안 들은 과목을 벡터에 담아줌
+		}
+		if (cnt <= 3)
+			n = 3 - cnt;		// 안 들은 과목 중에 몇 개를 들어야 하는지 계산
+	}
+}

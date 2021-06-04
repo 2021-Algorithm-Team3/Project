@@ -5,6 +5,7 @@
 #include <locale>
 #include "Lecture.h"
 #include "MajorFunction.h"
+#include "LiberalFunction.h"
 
 #define HASH_SIZE 100
 
@@ -188,7 +189,7 @@ int main() {
 	// 기본소양
 	Liberal L28(L"기술창조와특허", 3, false, false);
 	Liberal L29(L"공학경제", 3, false, false);
-	Liberal L30(L"공학윤리", 3, false, false);
+	Liberal L30(L"공학법제", 3, false, false);
 	Liberal L31(L"기술과사회", 3, false, false);
 	Liberal L32(L"지속가능한발전과인간", 3, false, false);
 
@@ -245,6 +246,8 @@ int main() {
 	vector<Major> replace_major[3]; // 대체 가능 과목들을 담는 벡터
 
 	vector<Liberal> liberalScience;
+	vector<wstring> liberalNormal;
+    int cnt_Normal;
 
 
 	fin >> year >> semester;
@@ -311,7 +314,10 @@ int main() {
 
 	set_Complete_Hash(majorHash, input_liberal);
 
+    extractNormal(liberalList, liberalNormal, cnt_Normal);
 
+    //if (cnt_Normal > 0)
+    //    cout << "中 " << cnt_Normal << "개" << endl;      // 만약 들어야 할 과목이 있다면 추천 과목 중에 몇 개를 들어야 하는지 출력
 
 
 	//// 파일 출력
