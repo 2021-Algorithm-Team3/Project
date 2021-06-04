@@ -3,22 +3,26 @@
 #include <string>
 #include "Lecture.h"
 
-// ¼±Çü Å½»ö
+// ì„ í˜• íƒìƒ‰
 void linearSearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal);
 
-// ÀÌÁø Å½»ö
+// ì´ì§„ íƒìƒ‰
 void BinarySearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal);
 
 bool compare(Liberal l1, Liberal l2);
 
-// ÇØ½Ã¸¦ ÀÌ¿ëÇÑ Å½»ö
+// í•´ì‹œë¥¼ ì´ìš©í•œ íƒìƒ‰
 int hashing_L(wstring name);
 
 void make_HT(vector<Liberal>* liberalHash, vector<Liberal>& liberalList);
 
 void set_Complete_Hash(vector<Liberal>* liberalHash, vector<wstring>& inputList);
 
-// °ú¸ñ ÃßÃâ
+// ê³¼ëª© ì¶”ì¶œ
+
+void extractNormal(vector<Liberal>& liberalList, vector<wstring>& inputLiberal, int& n);
+
 void extractScience(vector<Liberal>& liberalList, vector<Liberal>& liberalExperiment, vector<Liberal>& liberalTheory, int n[2]);
 
 void extrachMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMath_must, vector<Liberal>& liberalMath, int& n);
+

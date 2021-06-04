@@ -241,6 +241,9 @@ int main() {
 	vector <wstring> input_major; // 수강한 전공 과목들을 담는 벡터
 	vector <wstring> input_liberal; // 수강한 교양 과목들을 담는 벡터
 
+	vector<Liberal> liberalScience;
+	vector<wstring> liberalNormal;
+  int cnt_Normal;
 	vector<vector<Major>> majorInfo[3]; // 탐색을 통해 만들어진 벡터를 토대로 2차원 벡터 생성
 	vector<Major> output_major[3]; // 수강할 전공 과목들을 담는 벡터
 	vector<Major> replace_major[3]; // 대체 가능 과목들을 담는 벡터
@@ -315,12 +318,16 @@ int main() {
 	// BinarySearch(liberalList, input_liberal);
 
 
+
+    extractNormal(liberalList, liberalNormal, cnt_Normal);
+
 	// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
 	// 모든 교양 객체를 담은 해쉬 테이블 생성
 	// vector<Liberal> liberalhash[HASH_SIZE];
 	// make_HT(liberalhash, liberalList);
 
 	// set_Complete_Hash(liberalHash, input_liberal);
+
 
 	vector<Liberal> liberalMath_must, liberalMath;
 	int n;

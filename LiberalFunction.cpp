@@ -108,6 +108,35 @@ void set_Complete_Hash(vector<Liberal>* liberalHash, vector<wstring>& inputList)
 	}
 }
 
+
+void extractNormal(vector<Liberal>& liberalList, vector<wstring>& normalLiberal, int& n)
+{
+	int totalCredit = 9;		// �Ҿ� ���� �� 3��, 9���� ���� ��
+	int cnt = 0;
+	for (int i = 27; i < 32; i++)
+	{
+		if (liberalList[i].getCompleted() == 1)
+		{
+			if (totalCredit == 0)		// ���� �� ������ �� �̻� �˻��� �ʿ� ���
+				break;
+
+			totalCredit -= liberalList[i].getCredit();		// ���� ����̸� ��ü 9������� �ش� ��� ��ŭ ����
+			cnt++;		// ��� ����� ���� ��
+		}
+			
+	}
+
+	if (totalCredit > 0)		// 9������� ����� ���Ҵٸ� ���� �� ����� �ִٴ� ��
+	{
+		for (int i = 27; i < 32; i++)
+		{
+			if (liberalList[i].getCompleted() == 0)
+				normalLiberal.push_back(liberalList[i].getName());		// �� ��� ���� ���Ϳ� �����
+		}
+		if (cnt <= 3)
+			n = 3 - cnt;		// �� ��� ��� �߿� �� ���� ���� �ϴ��� ���
+	}
+
 void extrachMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMath_must, vector<Liberal>& liberalMath, int& n) {
 	vector<Liberal> liberalMath_;
 	for (int i = 10; i < 17; i++) {
