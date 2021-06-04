@@ -242,6 +242,7 @@ int main() {
 	vector <wstring> input_liberal; // 수강한 교양 과목들을 담는 벡터
 
 	vector<Liberal> liberalScience;
+	vector<Liberal> liberalCommon;
 	vector<wstring> liberalNormal;
   int cnt_Normal;
 	vector<vector<Major>> majorInfo[3]; // 탐색을 통해 만들어진 벡터를 토대로 2차원 벡터 생성
@@ -276,13 +277,12 @@ int main() {
 	 //make2Dvector(majorList, tempInfo, majorInfo[1]);
 	 //subjectExtraction(year, semester, majorInfo[1], input_major, output_major[1], replace_major[1]);
 
-	// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
+  // [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
 	// 모든 전공 객체를 담은 해쉬 테이블 생성
-	//vector<Major> majorHash[HASH_SIZE];
-	//make_HT(majorHash, majorList);
+	vector<Major*> majorHash[HASH_SIZE];
+	make_HT(majorHash, majorList);
+	set_Complete_Hash(majorHash, input_major);
 
-
-	//set_Complete_Hash(majorHash, input_major);
 	//make2Dvector(majorList, tempInfo, majorInfo[2]);
 	//subjectExtraction(year, semester, majorInfo[2], input_major, output_major[2], replace_major[2]);
 
@@ -296,7 +296,7 @@ int main() {
 	//}
 	//wcout << endl;
 
-
+	//linearSearch(majorList, input_liberal);
 	// 교양
 	// [1] 순차 탐색 후 추천과목 리스트 추출
 	linearSearch(liberalList, input_liberal);
@@ -306,28 +306,16 @@ int main() {
 
 	// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
 	// 모든 전공 객체를 담은 해쉬 테이블 생성
-	vector<Liberal> liberalHash[HASH_SIZE];
+  vector<Liberal*> liberalHash[HASH_SIZE];
 	make_HT(liberalHash, liberalList);
-  
-	vector<Liberal> liberalExperiment, liberalTheroy; int n[2];
-	extractScience(liberalList, liberalExperiment, liberalTheroy, n);
+	set_Complete_Hash(liberalHash, input_liberal);
 
+   vector<Liberal> liberalExperiment, liberalTheroy; int n[2];
+	 extractScience(liberalList, liberalExperiment, liberalTheroy, n);
 
+   extractNormal(liberalList, liberalNormal, cnt_Normal);
 
-	// [2] 이진 탐색 후 추천과목 리스트 추출
-	// BinarySearch(liberalList, input_liberal);
-
-
-
-    extractNormal(liberalList, liberalNormal, cnt_Normal);
-
-	// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
-	// 모든 교양 객체를 담은 해쉬 테이블 생성
-	// vector<Liberal> liberalhash[HASH_SIZE];
-	// make_HT(liberalhash, liberalList);
-
-	// set_Complete_Hash(liberalHash, input_liberal);
-
+	 extractCommon(liberalList, liberalCommon, semester, year);
 
 	vector<Liberal> liberalMath_must, liberalMath;
 	int n;

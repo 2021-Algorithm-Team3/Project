@@ -14,9 +14,9 @@ bool compare(Major m1, Major m2);
 // 해시를 이용한 탐색
 int hashing_M(wstring name);
 
-void make_HT(vector<Major>* majorHash, vector<Major>& majorList);
+void make_HT(vector<Major*>* majorHash, vector<Major>& majorList);
 
-void set_Complete_Hash(vector<Major>* majorHash, vector<wstring>& inputList);
+void set_Complete_Hash(vector<Major*>* majorHash, vector<wstring>& inputList);
 
 // 과목 추출
 void make2Dvector(vector<Major>& majorList, vector<vector<Major>>& tempInfo, vector<vector<Major>>& majorInfo);

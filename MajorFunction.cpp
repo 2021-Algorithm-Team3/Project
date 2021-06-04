@@ -74,18 +74,18 @@ int hashing_M(wstring name) {
 	return (kor_value / length + other_value - MIN_KOR) % HASH_SIZE;
 }
 
-void make_HT(vector<Major>* majorHash, vector<Major>& majorList) {
+void make_HT(vector<Major*>* majorHash, vector<Major>& majorList) {
 	int hash = 0;
 
 	//해시테이블 구성
 	for (int i = 0; i < majorList.size(); i++) {
 		hash = hashing_M(majorList[i].getName());
 
-		majorHash[hash].push_back(majorList[i]);   // 각 vector의 길이가 잘못 나오는 오류 발생 중
+		majorHash[hash].push_back(&majorList[i]);   // 각 vector의 길이가 잘못 나오는 오류 발생 중
 	}
 }
 
-void set_Complete_Hash(vector<Major>* majorHash, vector<wstring>& inputList) {
+void set_Complete_Hash(vector<Major*>* majorHash, vector<wstring>& inputList) {
 	int hash = 0;
 
 	setlocale(LC_ALL, "korean");
@@ -94,14 +94,14 @@ void set_Complete_Hash(vector<Major>* majorHash, vector<wstring>& inputList) {
 		hash = hashing_M(inputList[i]);
 		// 하나 뿐이면 바로 갱신
 		if (majorHash[hash].size() == 0) {
-			majorHash[hash].at(0).setCompleted();
+			majorHash[hash].at(0)->setCompleted();
 		}
 		// 여러 개면 chain을 탐색하여 갱신
 		else {
 			wstring name = inputList[i];
 			for (int i = 0; i < majorHash[hash].size(); i++) {
-				if (majorHash[hash].at(i).getName() == name) {
-					majorHash[hash].at(i).setCompleted();
+				if (majorHash[hash].at(i)->getName() == name) {
+					majorHash[hash].at(i)->setCompleted();
 				}
 			}
 		}
