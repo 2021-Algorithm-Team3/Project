@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -280,16 +280,17 @@ int main() {
 
 
 	// 교양
-	vector<Liberal> liberalCommon;
+	vector<Liberal> liberalCommon, liberalCommon_cyber;
 	vector<wstring> liberalNormal;
 	vector<Liberal> liberalExperiment, liberalTheory;
 	vector<Liberal> liberalMath_must, liberalMath;
 
-	int n_normal; int n_math; int n_science[2];
+	int n_common, n_normal, n_math;
+	int n_science[2];
 
 	// [1] 순차 탐색 후 추천과목 리스트 추출
 	linearSearch(liberalList, input_liberal);
-	extractCommon(liberalList, liberalCommon, semester, year);
+	extractCommon(liberalList, liberalCommon, liberalCommon_cyber, semester, year, n_common);
 	extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
 	extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
 	extractNormal(liberalList, liberalNormal, n_normal);
@@ -322,30 +323,36 @@ int main() {
 	}
 
 	// 출력 결과 확인([1])
-	fout << L"이번 학기 학우님께서 수강하셔야 할 과목입니다^^" << endl;
-	fout << L"전공:" << endl;
+	fout << L"[전공]";
 
-	fout << endl << L"> 추천:" << endl;
+	fout << endl << L"> 추천" << endl;
 	for (int i = 0; i < output_major[0].size(); i++) {
 		fout << output_major[0][i].getName() << endl;
 	}
 
-	fout << endl << L"> 대체가능:" << endl;
+	fout << endl << L"> 대체가능" << endl;
 	for (int i = 0; i < replace_major[0].size(); i++) {
 		fout << replace_major[0][i].getName() << endl;
 	}
 
 
-	fout << L"----------------------------" << endl;
-	fout << L"교양:" << endl;
+	fout << endl << L"----------------------------" << endl;
+	fout << endl << L"[교양]" << endl;
 
 	fout << L"> 공통교양" << endl;
 	for (int i = 0; i < liberalCommon.size(); i++) {
 		fout << liberalCommon[i].getName() << ' ';
 	}
-	fout << endl;
+	
+	if (n_common > 0) {
+		fout << endl <<L"> 공통교양(리더십)" << endl;
+		for (int i = 0; i < liberalCommon_cyber.size(); i++) {
+			fout << liberalCommon_cyber[i].getName() << ' ';
+		}
+		fout << L"중 " << n_common << endl;
+	}
 
-	fout << L"> 수학" << endl;
+	fout << endl << L"> 수학" << endl;
 	fout << L"> 수학(필수)" << endl;
 	for (int i = 0; i < liberalMath_must.size(); i++) {
 		fout << liberalMath_must[i].getName() << ' ';
@@ -355,22 +362,25 @@ int main() {
 	for (int i = 0; i < liberalMath.size(); i++) {
 		fout << liberalMath[i].getName() << ' ';
 	}
-	fout << L"중 " << n_math << endl;
+	if (n_math > 0)
+		fout << L"중 " << n_math << endl;
 
 
-	fout << L"> 과학" << endl;
+	fout << endl << L"> 과학" << endl;
 	fout << L"> 과학(실험)" << endl;
 	for (int i = 0; i < liberalExperiment.size(); i++) {
 		fout << liberalExperiment[i].getName() << ' ';
 	}
-	fout << L"중 " << n_science[0] << endl;
+	if(n_science[0]>0)
+		fout << L"중 " << n_science[0] << endl;
 	fout << L"> 과학(이론)" << endl;
 	for (int i = 0; i < liberalTheory.size(); i++) {
 		fout << liberalTheory[i].getName() << ' ';
 	}
-	fout << L"중 " << n_science[1] << endl;
+	if(n_science[1]>0)
+		fout << L"중 " << n_science[1] << endl;
 
-	fout << L"> 기본소양" << endl;
+	fout << endl << L"> 기본소양" << endl;
 	for (int i = 0; i < liberalNormal.size(); i++) {
 		fout << liberalNormal[i] << ' ';
 	}

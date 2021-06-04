@@ -19,7 +19,7 @@ void make_HT(vector<Liberal*>* liberalHash, vector<Liberal>& liberalList);
 void set_Complete_Hash(vector<Liberal*>* liberalHash, vector<wstring>& inputList);
 
 // 과목 추출
-void extractCommon(vector<Liberal>& liberalList, vector<Liberal>& liberalCommon, int semester, int year);
+void extractCommon(vector<Liberal>& liberalList, vector<Liberal>& liberalCommon, vector<Liberal>& liberalCommon_cyber, int semester, int year, int& n);
 
 void extractNormal(vector<Liberal>& liberalList, vector<wstring>& inputLiberal, int& n);
 

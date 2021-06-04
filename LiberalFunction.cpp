@@ -111,28 +111,36 @@ void set_Complete_Hash(vector<Liberal*>* liberalHash, vector<wstring>& inputList
 	}
 }
 
-void extractCommon(vector<Liberal>& liberalList, vector<Liberal>& liberalCommon, int semester, int year) {
+void extractCommon(vector<Liberal>& liberalList, vector<Liberal>& liberalCommon, vector<Liberal>& liberalCommon_cyber, int semester, int year, int& n) {
 	int i;
+	int flag = 0;
+	n = 0;
 
 	for (i = 0; i < 10; i++) {
-		if (liberalList[i].getCompleted() == false) {
-			Liberal temp = liberalList[i];
-
+		Liberal temp = liberalList[i];
+		if (i >= 7 && i <= 9) { 
+			if (liberalList[i].getCompleted() == true)
+				flag = 1;
+		}
+		else if (liberalList[i].getCompleted() == false) {
 			if (i == 0) {
-				if (semester == 1) // 나삶나비
+				if (semester == 1) 
 					liberalCommon.push_back(temp);
 			}
 			else if (i == 1) {
-				if (semester == 2) // 불교와인간
+				if (semester == 2) 
 					liberalCommon.push_back(temp);
 			}
-			else if (i >= 7 && i <= 9) {    //리더십
-				if (semester == 2)
-					liberalCommon.push_back(temp);
-			}
-			else                                     // 나머지
+			else 
 				liberalCommon.push_back(temp);
 		}
+	}
+
+	if (flag == 0) {
+		for (int i = 7; i < 10; i++) {
+			liberalCommon_cyber.push_back(liberalList[i]);
+		}
+		n = 1;
 	}
 }
 
