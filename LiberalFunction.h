@@ -14,9 +14,9 @@ bool compare(Liberal l1, Liberal l2);
 // 해시를 이용한 탐색
 int hashing_L(wstring name);
 
-void make_HT(vector<Liberal>* liberalHash, vector<Liberal>& liberalList);
+void make_HT(vector<Liberal*>* liberalHash, vector<Liberal>& liberalList);
 
-void set_Complete_Hash(vector<Liberal>* liberalHash, vector<wstring>& inputList);
+void set_Complete_Hash(vector<Liberal*>* liberalHash, vector<wstring>& inputList);
 
 // 과목 추출
-
+void extractCommon(vector<Liberal> &liberalList, vector<Liberal> &liberalCommon, int semester, int year);

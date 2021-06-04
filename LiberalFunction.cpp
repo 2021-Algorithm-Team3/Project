@@ -71,21 +71,23 @@ int hashing_L(wstring name) {
 			length--;  // 한글이 아닌 문자만큼 length-1
 		}
 	}
+	if (length == 0)
+		return other_value % HASH_SIZE;
 	return (kor_value / length + other_value - MIN_KOR) % HASH_SIZE;
 }
 
-void make_HT(vector<Liberal>* liberalHash, vector<Liberal>& liberalList) {
+void make_HT(vector<Liberal*>* liberalHash, vector<Liberal>& liberalList) {
 	int hash = 0;
 
 	//해시테이블 구성
 	for (int i = 0; i < liberalList.size(); i++) {
 		hash = hashing_L(liberalList[i].getName());
 
-		liberalHash[hash].push_back(liberalList[i]);   // 각 vector의 길이가 잘못 나오는 오류 발생 중
+		liberalHash[hash].push_back(&liberalList[i]);  
 	}
 }
 
-void set_Complete_Hash(vector<Liberal>* liberalHash, vector<wstring>& inputList) {
+void set_Complete_Hash(vector<Liberal*>* liberalHash, vector<wstring>& inputList) {
 	int hash = 0;
 
 	setlocale(LC_ALL, "korean");
@@ -94,16 +96,41 @@ void set_Complete_Hash(vector<Liberal>* liberalHash, vector<wstring>& inputList)
 		hash = hashing_L(inputList[i]);
 		// 하나 뿐이면 바로 갱신
 		if (liberalHash[hash].size() == 0) {
-			liberalHash[hash].at(0).setCompleted();
+			liberalHash[hash].at(0)->setCompleted();
 		}
 		// 여러 개면 chain을 탐색하여 갱신
 		else {
 			wstring name = inputList[i];
 			for (int i = 0; i < liberalHash[hash].size(); i++) {
-				if (liberalHash[hash].at(i).getName() == name) {
-					liberalHash[hash].at(i).setCompleted();
+				if (liberalHash[hash].at(i)->getName() == name) {
+					liberalHash[hash].at(i)->setCompleted();
 				}
 			}
+		}
+	}
+}
+
+void extractCommon(vector<Liberal> &liberalList, vector<Liberal> &liberalCommon, int semester, int year) {
+	int i;
+
+	for (i = 0; i < 10; i++) {
+		if (liberalList[i].getCompleted() == false) {
+			Liberal temp = liberalList[i];
+
+			if (i == 0) {
+				if (semester == 1) // 나삶나비
+					liberalCommon.push_back(temp);
+			}
+			else if (i == 1) {
+				if (semester == 2)// 불교와인간
+					liberalCommon.push_back(temp);
+			}
+			else if (i >= 7 && i <= 9) {    //리더십
+				if (semester == 2)
+					liberalCommon.push_back(temp);
+			}
+			else                                     // 나머지
+				liberalCommon.push_back(temp);
 		}
 	}
 }
