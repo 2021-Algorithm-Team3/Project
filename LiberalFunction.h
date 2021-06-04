@@ -19,5 +19,6 @@ void make_HT(vector<Liberal>* liberalHash, vector<Liberal>& liberalList);
 void set_Complete_Hash(vector<Liberal>* liberalHash, vector<wstring>& inputList);
 
 // 과목 추출
+void extractScience(vector<Liberal>& liberalList, vector<Liberal>& liberalExperiment, vector<Liberal>& liberalTheory, int n[2]);
 
 void extrachMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMath_must, vector<Liberal>& liberalMath, int& n);
