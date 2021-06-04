@@ -244,6 +244,9 @@ int main() {
 	vector<Major> output_major[3]; // 수강할 전공 과목들을 담는 벡터
 	vector<Major> replace_major[3]; // 대체 가능 과목들을 담는 벡터
 
+	vector<Liberal> liberalScience;
+
+
 	fin >> year >> semester;
 	int flag = 0;
 
