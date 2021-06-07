@@ -25,13 +25,13 @@ void linearSearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 
 bool compare(Major m1, Major m2)
 {
-	return m1.getName() < m2.getName();		// 강의명으로 ㄱㄴㄷ 정렬
+	return m1.getName() < m2.getName();      // 강의명으로 ㄱㄴㄷ 정렬
 }
 
 void BinarySearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 {
 
-	sort(majorList.begin(), majorList.end(), compare);		// 이진 탐색을 위해 정렬 먼저 진행
+	sort(majorList.begin(), majorList.end(), compare);      // 이진 탐색을 위해 정렬 먼저 진행
 
 	for (int i = 0; i < inputMajor.size(); i++)
 	{
@@ -128,19 +128,22 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 
 	for (int i = 0; i <= end_idx; i++) {
 		for (int j = 0; j < majorInfo[i].size(); j++) {
-			if (majorInfo[i][j].getCompleted() == false) {
-				if (majorInfo[i][j].getPriorLecture() == L"") {
-					tempList.push_back(majorInfo[i][j]);
-					sumOfCredit += majorInfo[i][j].getCredit();
-				}
-				else { // 선이수과목이 있는 경우
-					int flag = 0;
-					for (int k = 0; k < inputList.size(); k++) {
-						if (majorInfo[i][j].getPriorLecture() == inputList[k]) { flag = 1; break; } // 선이수과목을 수강한 경우
-					}
-					if (flag == 1) {
+			int semester = majorInfo[i][j].getSemester();
+			if (semester == 0 || semester == s) {
+				if (majorInfo[i][j].getCompleted() == false) {
+					if (majorInfo[i][j].getPriorLecture() == L"") {
 						tempList.push_back(majorInfo[i][j]);
 						sumOfCredit += majorInfo[i][j].getCredit();
+					}
+					else { // 선이수과목이 있는 경우
+						int flag = 0;
+						for (int k = 0; k < inputList.size(); k++) {
+							if (majorInfo[i][j].getPriorLecture() == inputList[k]) { flag = 1; break; } // 선이수과목을 수강한 경우
+						}
+						if (flag == 1) {
+							tempList.push_back(majorInfo[i][j]);
+							sumOfCredit += majorInfo[i][j].getCredit();
+						}
 					}
 				}
 			}
@@ -181,7 +184,7 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 		}
 		// 1,2학기 별 열리는 공대 전공 과목에 대해 s값(학기)에 따라 구분 필요
 		else { // 넣을 수 있는 학점이 3학점이 넘는 경우 3학점 과목 우선 추천 후 1학점 과목은 대체 가능 리스트에 추가
-			// tempList에 추가하는 과정
+		   // tempList에 추가하는 과정
 			int i;
 			if (s == 1) { // 1학기 수강 예정의 경우
 				for (i = 3; i < 7; i++) {

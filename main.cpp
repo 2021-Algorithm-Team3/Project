@@ -8,7 +8,6 @@
 #include "LiberalFunction.h"
 
 #define HASH_SIZE 100
-#define HASH_SIZE_2 50
 
 using namespace std;
 
@@ -18,62 +17,62 @@ int main() {
 	setlocale(LC_ALL, "korean");
 
 	// 전공
-	Major M1(L"기초프로그래밍", 3, L"", false, false);
-	Major M2(L"계산적사고법", 3, L"", true, false);
-	Major M3(L"창의적공학설계", 3, L"", true, false);
-	Major M4(L"이산구조", 3, L"", true, false);
-	Major M5(L"심화프로그래밍", 3, L"기초프로그래밍", false, false);
-	Major M6(L"객체지향언어와실습", 3, L"기초프로그래밍", false, false);
-	Major M7(L"자료구조와실습", 3, L"기초프로그래밍", true, false);
-	Major M8(L"컴퓨터구성", 3, L"이산구조", true, false);
-	Major M9(L"웹프로그래밍", 3, L"객체지향언어와실습", false, false);
-	Major M10(L"객체지향윈도우즈프로그래밍", 3, L"객체지향언어와실습", false, false);
-	Major M11(L"프로그래밍언어개념", 3, L"기초프로그래밍", false, false);
-	Major M12(L"시스템소프트웨어와실습", 3, L"자료구조와실습", true, false);
-	Major M13(L"공개SW프로젝트", 3, L"창의적공학설계", true, false);
-	Major M14(L"인간컴퓨터상호작용시스템", 3, L"자료구조와실습", false, false);
-	Major M15(L"컴퓨터그래픽스입문", 3, L"자료구조와실습", false, false);
-	Major M16(L"데이터베이스시스템", 3, L"자료구조와실습", false, false);
-	Major M17(L"형식언어", 3, L"이산구조", false, false);
-	Major M18(L"운영체제", 3, L"시스템소프트웨어와실습", false, false);
-	Major M19(L"컴퓨터알고리즘과실습", 3, L"자료구조와실습", false, false);
-	Major M20(L"소프트웨어공학개론", 3, L"객체지향언어와실습", false, false);
-	Major M21(L"데이터통신입문", 3, L"기초프로그래밍", false, false);
-	Major M22(L"데이터베이스프로그래밍", 3, L"자료구조와실습", false, false);
-	Major M23(L"컴퓨터구조", 3, L"컴퓨터구성", false, false);
-	Major M24(L"컴파일러구성", 3, L"형식언어", false, false);
-	Major M25(L"임베디드소프트웨어입문", 3, L"운영체제", false, false);
-	Major M26(L"인공지능", 3, L"자료구조와실습", false, false);
-	Major M27(L"객체지향설계와패턴", 3, L"객체지향언어와실습", false, false);
-	Major M28(L"S/W품질관리및테스팅", 3, L"", false, false);
-	Major M29(L"컴퓨터보안", 3, L"", false, false);
-	Major M30(L"동시성프로그래밍", 3, L"", false, false);
-	Major M31(L"컴퓨터네트워킹", 3, L"", false, false);
-	Major M32(L"현장실습", 3, L"자료구조와실습", false, false);
-	Major M33(L"바이오빅데이터분석특론", 3, L"", false, false);
-	Major M34(L"블록체인보안", 3, L"", false, false);
-	Major M35(L"사물인터넷", 3, L"임베디드소프트웨어입문", false, false);
-	Major M36(L"머신러닝", 3, L"인공지능", false, false);
-	Major M37(L"모바일컴퓨팅", 3, L"", false, false);
-	Major M38(L"암호학과네트워크보안", 3, L"", false, false);
-	Major M39(L"SW비지니스와창업", 3, L"", false, false);
-	Major M40(L"테크니컬프리젠테이션", 3, L"", false, false);
-	Major M41(L"클라우드컴퓨팅", 3, L"", false, false);
-	Major M42(L"로봇프로그래밍", 3, L"", false, false);
-	Major M43(L"바이오빅데이터분석알고리즘", 3, L"", false, false);
-	Major M44(L"시큐어코딩", 3, L"", false, false);
-	Major M45(L"빅데이터분석", 3, L"", false, false);
-	Major M46(L"컴퓨터공학종합설계1", 3, L"공개SW프로젝트", true, false);
-	Major M47(L"컴퓨터공학종합설계2", 3, L"공개SW컴퓨터공학종합설계1", true, false);
-	Major M48(L"개별연구1", 1, L"", true, false);
-	Major M49(L"개별연구2", 1, L"", true, false);
-	Major M50(L"개별연구3", 1, L"", false, false);
-	Major M51(L"커리어멘토링", 3, L"", false, false);
-	Major M52(L"다학제캡스톤디자인", 3, L"", false, false);
-	Major M53(L"창업캡스톤디자인1", 3, L"", false, false);
-	Major M54(L"기업사회맞춤형프로젝트1", 3, L"", false, false);
-	Major M55(L"창업캡스톤디자인2", 3, L"", false, false);
-	Major M56(L"기업사회맞춤형프로젝트2", 3, L"", false, false);
+	Major M1(L"기초프로그래밍", 3, L"", false, false, 0);
+	Major M2(L"계산적사고법", 3, L"", true, false, 0);
+	Major M3(L"창의적공학설계", 3, L"", true, false, 0);
+	Major M4(L"이산구조", 3, L"", true, false, 0);
+	Major M5(L"심화프로그래밍", 3, L"기초프로그래밍", false, false, 0);
+	Major M6(L"객체지향언어와실습", 3, L"기초프로그래밍", false, false, 0);
+	Major M7(L"자료구조와실습", 3, L"기초프로그래밍", true, false, 0);
+	Major M8(L"컴퓨터구성", 3, L"이산구조", true, false, 1);
+	Major M9(L"웹프로그래밍", 3, L"객체지향언어와실습", false, false, 2);
+	Major M10(L"객체지향윈도우즈프로그래밍", 3, L"객체지향언어와실습", false, false, 2);
+	Major M11(L"프로그래밍언어개념", 3, L"기초프로그래밍", false, false, 2);
+	Major M12(L"시스템소프트웨어와실습", 3, L"자료구조와실습", true, false, 2);
+	Major M13(L"공개SW프로젝트", 3, L"창의적공학설계", true, false, 0);
+	Major M14(L"인간컴퓨터상호작용시스템", 3, L"자료구조와실습", false, false, 1);
+	Major M15(L"컴퓨터그래픽스입문", 3, L"자료구조와실습", false, false, 1);
+	Major M16(L"데이터베이스시스템", 3, L"자료구조와실습", false, false, 1);
+	Major M17(L"형식언어", 3, L"이산구조", false, false, 1);
+	Major M18(L"운영체제", 3, L"시스템소프트웨어와실습", false, false, 1);
+	Major M19(L"컴퓨터알고리즘과실습", 3, L"자료구조와실습", false, false, 1);
+	Major M20(L"소프트웨어공학개론", 3, L"객체지향언어와실습", false, false, 2);
+	Major M21(L"데이터통신입문", 3, L"기초프로그래밍", false, false, 2);
+	Major M22(L"데이터베이스프로그래밍", 3, L"자료구조와실습", false, false, 2);
+	Major M23(L"컴퓨터구조", 3, L"컴퓨터구성", false, false, 2);
+	Major M24(L"컴파일러구성", 3, L"형식언어", false, false, 2);
+	Major M25(L"임베디드소프트웨어입문", 3, L"운영체제", false, false, 2);
+	Major M26(L"인공지능", 3, L"자료구조와실습", false, false, 2);
+	Major M27(L"객체지향설계와패턴", 3, L"객체지향언어와실습", false, false, 1);
+	Major M28(L"S/W품질관리및테스팅", 3, L"", false, false, 1);
+	Major M29(L"컴퓨터보안", 3, L"", false, false, 1);
+	Major M30(L"동시성프로그래밍", 3, L"", false, false, 1);
+	Major M31(L"컴퓨터네트워킹", 3, L"", false, false, 1);
+	Major M32(L"현장실습", 3, L"자료구조와실습", false, false, 1);
+	Major M33(L"바이오빅데이터분석특론", 3, L"", false, false, 1);
+	Major M34(L"블록체인보안", 3, L"", false, false, 1);
+	Major M35(L"사물인터넷", 3, L"임베디드소프트웨어입문", false, false, 1);
+	Major M36(L"머신러닝", 3, L"인공지능", false, false, 1);
+	Major M37(L"모바일컴퓨팅", 3, L"", false, false, 2);
+	Major M38(L"암호학과네트워크보안", 3, L"", false, false, 2);
+	Major M39(L"SW비지니스와창업", 3, L"", false, false, 2);
+	Major M40(L"테크니컬프리젠테이션", 3, L"", false, false, 2);
+	Major M41(L"클라우드컴퓨팅", 3, L"", false, false, 2);
+	Major M42(L"로봇프로그래밍", 3, L"", false, false, 2);
+	Major M43(L"바이오빅데이터분석알고리즘", 3, L"", false, false, 2);
+	Major M44(L"시큐어코딩", 3, L"", false, false, 2);
+	Major M45(L"빅데이터분석", 3, L"", false, false, 2);
+	Major M46(L"컴퓨터공학종합설계1", 3, L"공개SW프로젝트", true, false, 0);
+	Major M47(L"컴퓨터공학종합설계2", 3, L"공개SW컴퓨터공학종합설계1", true, false, 0);
+	Major M48(L"개별연구1", 1, L"", true, false, 0);
+	Major M49(L"개별연구2", 1, L"", true, false, 0);
+	Major M50(L"개별연구3", 1, L"", false, false, 0);
+	Major M51(L"커리어멘토링", 3, L"", false, false, 0);
+	Major M52(L"다학제캡스톤디자인", 3, L"", false, false, 0);
+	Major M53(L"창업캡스톤디자인1", 3, L"", false, false, 1);
+	Major M54(L"기업사회맞춤형프로젝트1", 3, L"", false, false, 1);
+	Major M55(L"창업캡스톤디자인2", 3, L"", false, false, 2);
+	Major M56(L"기업사회맞춤형프로젝트2", 3, L"", false, false, 2);
 
 	// 모든 전공 객체를 담은 벡터를 생성(탐색에 쓰일 함수의 파라미터로 쓰임)
 	vector<Major> majorList;
@@ -305,7 +304,7 @@ int main() {
 
 	//// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
 	//// 모든 전공 객체를 담은 해쉬 테이블 생성
-	//vector<Liberal*> liberalHash[HASH_SIZE_2];
+	//vector<Liberal*> liberalHash[HASH_SIZE];
 	//make_HT(liberalHash, liberalList);
 	//set_Complete_Hash(liberalHash, input_liberal);
 	//extractScience(liberalList, liberalExperiment, liberalTheroy, n_science);

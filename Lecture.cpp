@@ -1,12 +1,13 @@
 #include <string>
 #include "Lecture.h"
 
-Major::Major(wstring name, int credit, wstring prior_lecture, bool must, bool completed) {
+Major::Major(wstring name, int credit, wstring prior_lecture, bool must, bool completed, int semester) {
 	this->name = name;
 	this->credit = credit;
 	this->prior_lecture = prior_lecture;
 	this->must = must;
 	this->completed = completed;
+	this -> semester = semester;
 }
 
 wstring Major::getName() {
@@ -31,6 +32,10 @@ bool Major::getCompleted() {
 
 void Major::setCompleted() {
 	this->completed = true;
+}
+
+int Major::getSemester() {
+	return semester;
 }
 
 //=======================================================================================================================================//
