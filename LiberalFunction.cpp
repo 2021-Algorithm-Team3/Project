@@ -149,11 +149,13 @@ void extractCommon(vector<Liberal>& liberalList, vector<Liberal>& liberalCommon,
 		}
 	}
 
-	if (flag == 0) { // 사이버 강의
-		for (int i = 7; i < 10; i++) {
-			liberalCommon_cyber.push_back(liberalList[i]);
+	if (semester == 2) {
+		if (flag == 0) { // 사이버 강의
+			for (int i = 7; i < 10; i++) {
+				liberalCommon_cyber.push_back(liberalList[i]);
+			}
+			n = 1;
 		}
-		n = 1;
 	}
 }
 
@@ -190,7 +192,7 @@ void extractMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMa
 	}
 
 	int sumOfCredit = 0;
-	int haveTo = 15;
+	int haveTo = 12;
 	// 총 들은 학점 계산
 	for (int i = 0; i < liberalMath_.size(); i++) {
 		if (liberalMath_[i].getCompleted())

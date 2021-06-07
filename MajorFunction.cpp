@@ -170,7 +170,7 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 	if (end_idx < 4) maxCredit = 15; // (1)
 	else maxCredit = 24; // (2)
 
-	if (sumOfCredit >= maxCredit) {
+	if (sumOfCredit > maxCredit) {
 
 		for (int i = tempList.size() - 1; i >= 0; i--) {
 			if (sumOfCredit < maxCredit) break;
@@ -178,21 +178,6 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 				replaceList.push_back(tempList[i]);
 				sumOfCredit -= tempList[i].getCredit();
 			}
-		}
-	}
-
-	// 공대전공 처리
-	for (int i = 0; i < majorInfo[8].size(); i++) {
-		if (i >= 0 && i <= 2 && majorInfo[8][i].getCompleted() == false ) { // 개별연구 필수 처리
-			if(majorInfo[8][i].getMust() == true)
-				outputList.push_back(majorInfo[8][i]);
-			else
-				replaceList.push_back(majorInfo[8][i]);
-			i = 2;
-		}
-		else if (majorInfo[8][i].getCompleted() == false) {
-			if (majorInfo[8][i].getSemester() == 0 || majorInfo[8][i].getSemester() == s)
-				replaceList.push_back(majorInfo[8][i]);
 		}
 	}
 
@@ -204,4 +189,22 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 		}
 		if (flag == 0) outputList.push_back(tempList[i]);
 	}
+
+	// 공대전공 처리
+	if (y >= 3) {
+		for (int i = 0; i < majorInfo[8].size(); i++) {
+			if (i >= 0 && i <= 2 && majorInfo[8][i].getCompleted() == false) { // 개별연구 필수 처리
+				if (majorInfo[8][i].getMust() == true)
+					outputList.push_back(majorInfo[8][i]);
+				else
+					replaceList.push_back(majorInfo[8][i]);
+				i = 2;
+			}
+			else if (majorInfo[8][i].getCompleted() == false) {
+				if (majorInfo[8][i].getSemester() == 0 || majorInfo[8][i].getSemester() == s)
+					replaceList.push_back(majorInfo[8][i]);
+			}
+		}
+	}
+	
 }

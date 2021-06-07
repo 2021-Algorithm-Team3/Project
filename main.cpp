@@ -18,7 +18,7 @@ int main() {
 	setlocale(LC_ALL, "korean");
 
 	// 전공
-	Major M1(L"기초프로그래밍", 3, L"", false, false, 0);
+	Major M1(L"기초프로그래밍", 3, L"", true, false, 0);
 	Major M2(L"계산적사고법", 3, L"", true, false, 0);
 	Major M3(L"창의적공학설계", 3, L"", true, false, 0);
 	Major M4(L"이산구조", 3, L"", true, false, 0);
@@ -333,7 +333,10 @@ int main() {
 
 	fout << endl << L"> 추천" << endl;
 	for (int i = 0; i < output_major.size(); i++) {
-		fout << output_major[i].getName() << endl;
+		if (output_major[i].getMust() == true)
+			fout << output_major[i].getName() << " * " << endl;
+		else
+			fout << output_major[i].getName() << endl;
 	}
 	fout << endl << L"> 대체가능" << endl;
 	for (int i = 0; i < replace_major.size(); i++) {
@@ -353,10 +356,10 @@ int main() {
 		for (int i = 0; i < liberalCommon_cyber.size(); i++) {
 			fout << liberalCommon_cyber[i].getName() << ' ';
 		}
-		fout << L"중 " << n_common << endl;
+		fout << L"중 " << n_common;
 	}
 
-	fout << endl << L"> 수학" << endl;
+	fout << endl << endl << L"> 수학" << endl;
 	fout << L"> 수학(필수)" << endl;
 	for (int i = 0; i < liberalMath_must.size(); i++) {
 		fout << liberalMath_must[i].getName() << ' ';
@@ -367,10 +370,10 @@ int main() {
 		fout << liberalMath[i].getName() << ' ';
 	}
 	if (n_math > 0)
-		fout << L"중 " << n_math << endl;
+		fout << L"중 " << n_math ;
 
 
-	fout << endl << L"> 과학" << endl;
+	fout << endl << endl << L"> 과학" << endl;
 	fout << L"> 과학(실험)" << endl;
 	for (int i = 0; i < liberalExperiment.size(); i++) {
 		fout << liberalExperiment[i].getName() << ' ';
@@ -382,15 +385,16 @@ int main() {
 		fout << liberalTheory[i].getName() << ' ';
 	}
 	if(n_science[1]>0)
-		fout << L"중 " << n_science[1] << endl;
+		fout << L"중 " << n_science[1] ;
 
-	fout << endl << L"> 기본소양" << endl;
+	fout << endl << endl << L"> 기본소양" << endl;
 	for (int i = 0; i < liberalNormal.size(); i++) {
 		fout << liberalNormal[i] << ' ';
 	}
 	if (n_normal > 0)
-		fout << L"중 " << n_normal << endl;
+		fout << L"중 " << n_normal ;
 
+	fout << endl;
 	fout.close();
 
 
