@@ -17,7 +17,6 @@ public:
 	wstring getPriorLecture();
 	bool getMust();
 	bool getCompleted();
-	//void setCompleted(Major& m);
 	void setCompleted();
 	int getSemester();
 };

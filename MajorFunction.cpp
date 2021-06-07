@@ -158,10 +158,6 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 		}
 	}
 
-	for (int i = 0; i < tempList.size(); i++) {
-		wcout << tempList[i].getName() << endl;
-	}
-
 	/*
 	(1) 1,2학년이면서 추천 전공 학점이 15학점 이상인 경우
 	(2) 3,4학년이면서 추천 전공 학점이 24학점 이상인 경우
