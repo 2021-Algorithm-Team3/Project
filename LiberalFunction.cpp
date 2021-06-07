@@ -73,7 +73,7 @@ int hashing_L(wstring name) {
 	}
 	if (length == 0)
 		return other_value % HASH_SIZE;
-	return (kor_value / length + other_value - MIN_KOR) % HASH_SIZE;
+	return (kor_value  + other_value + name.length()) % HASH_SIZE;
 }
 
 void make_HT(vector<Liberal*>* liberalHash, vector<Liberal>& liberalList) {

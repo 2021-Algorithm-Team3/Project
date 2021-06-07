@@ -4,11 +4,11 @@
 #define LECTURE_H
 using namespace std;
 class Major {
-	wstring name; // °ú¸ñ¸í
-	int credit; // ÇĞÁ¡
-	wstring prior_lecture; // Á÷Àü ¼± ÀÌ¼ö °ú¸ñ¸í
-	bool must; // ÇÊ¼ö ¿©ºÎ
-	bool completed; // µéÀº °ú¸ñÀÎÁö ¿©ºÎ
+	wstring name; // ê³¼ëª©ëª…
+	int credit; // í•™ì 
+	wstring prior_lecture; // ì§ì „ ì„  ì´ìˆ˜ ê³¼ëª©ëª…
+	bool must; // í•„ìˆ˜ ì—¬ë¶€
+	bool completed; // ë“¤ì€ ê³¼ëª©ì¸ì§€ ì—¬ë¶€
 	int semester;
 public:
 	Major(wstring name, int credit, wstring prior_lecture, bool must, bool completed, int semester);
@@ -24,10 +24,10 @@ public:
 
 class Liberal {
 private:
-	wstring name; // °ú¸ñ¸í
-	int credit; // ÇĞÁ¡
-	bool must; // ÇÊ¼ö ¿©ºÎ
-	bool completed; // µéÀº °ú¸ñÀÎÁö ¿©ºÎ
+	wstring name; // ê³¼ëª©ëª…
+	int credit; // í•™ì 
+	bool must; // í•„ìˆ˜ ì—¬ë¶€
+	bool completed; // ë“¤ì€ ê³¼ëª©ì¸ì§€ ì—¬ë¶€
 public:
 	Liberal(wstring name, int credit, bool must, bool completed);
 	wstring getName();

@@ -30,13 +30,14 @@ void linearSearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 
 bool compare(Major m1, Major m2)
 {
-	return m1.getName() < m2.getName();      // ���Ǹ����� ������ ����
+	return m1.getName() < m2.getName();      // 강의명으로 ㄱㄴㄷ 정렬
 }
 
 void BinarySearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 {
 
-	sort(majorList.begin(), majorList.end(), compare);      // ���� Ž���� ���� ���� ���� ����
+	sort(majorList.begin(), majorList.end(), compare);// 이진 탐색을 위해 정렬 먼저 진행
+
 
 	for (int i = 0; i < inputMajor.size(); i++)
 	{
@@ -69,25 +70,25 @@ int hashing_M(wstring name) {
 	for (int i = 0; i < name.length(); i++) {
 		int temp = name[i];
 
-		if (temp >= MIN_KOR && temp <= MAX_KOR) {  // ���� ���� �ִ� ���ڰ� �ѱ��̸� kor_value�� ����
+		if (temp >= MIN_KOR && temp <= MAX_KOR) {  // 현재 보고 있는 문자가 한글이면 kor_value에 더함
 			kor_value += temp;
 		}
 		else {
-			other_value += temp;   // �ƴϸ� other_value�� ����
-			length--;  // �ѱ��� �ƴ� ���ڸ�ŭ length-1
+			other_value += temp;   // 아니면 other_value에 더함
+			length--;   // 한글이 아닌 문자만큼 length-1
 		}
 	}
-	return (kor_value / length + other_value - MIN_KOR) % HASH_SIZE;
+	return (kor_value  + other_value + name.length()) % HASH_SIZE;
 }
 
 void make_HT(vector<Major*>* majorHash, vector<Major>& majorList) {
 	int hash = 0;
 
-	//�ؽ����̺� ����
+	//해시테이블 구성
 	for (int i = 0; i < majorList.size(); i++) {
 		hash = hashing_M(majorList[i].getName());
 
-		majorHash[hash].push_back(&majorList[i]);   // �� vector�� ���̰� �߸� ������ ���� �߻� ��
+		majorHash[hash].push_back(&majorList[i]);  
 	}
 }
 
@@ -98,12 +99,12 @@ void set_Complete_Hash(vector<Major*>* majorHash, vector<wstring>& inputList) {
 
 	for (int i = 0; i < inputList.size(); i++) {
 		hash = hashing_M(inputList[i]);
-		// �ϳ� ���̸� �ٷ� ����
+		// 하나 뿐이면 바로 갱신
 		if (majorHash[hash].size() == 0) {
 			majorHash[hash].at(0)->setCompleted();
 			totalCredit += majorHash[hash].at(0)->getCredit();
 		}
-		// ���� ���� chain�� Ž���Ͽ� ����
+		// 여러 개면 chain을 탐색하여 갱신
 		else {
 			wstring name = inputList[i];
 			for (int i = 0; i < majorHash[hash].size(); i++) {
@@ -116,7 +117,7 @@ void set_Complete_Hash(vector<Major*>* majorHash, vector<wstring>& inputList) {
 	}
 }
 
-void make2Dvector(vector<Major>& majorList, vector<vector<Major>>& tempInfo, vector<vector<Major>>& majorInfo) { // ���� ���� �� �ʿ��� 2���� ����(majorInfo) ����
+void make2Dvector(vector<Major>& majorList, vector<vector<Major>>& tempInfo, vector<vector<Major>>& majorInfo) { // 과목 추출 시 필요한 2차원 벡터(majorInfo) 생성
 	majorInfo = tempInfo;
 	for (int i = 0; i < tempInfo.size(); i++) {
 		for (int j = 0; j < tempInfo[i].size(); j++) {
@@ -131,8 +132,8 @@ void make2Dvector(vector<Major>& majorList, vector<vector<Major>>& tempInfo, vec
 
 void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<wstring>& inputList, vector<Major>& outputList, vector<Major>& replaceList) {
 	int end_idx, maxCredit, sumOfCredit = 0;
-	end_idx = (s == 1 ? 2 * (y - 1) : 2 * (y - 1) + 1); //��� ���� �г��б⿡ ���� majorInfo �˻� �� ���° index���� �˻������� ����
-	vector<Major> tempList; // �ӽ� ����
+	end_idx = (s == 1 ? 2 * (y - 1) : 2 * (y - 1) + 1); //등록 예정 학년학기에 따라 majorInfo 검사 시 몇번째 index까지 검사할지를 결정
+	vector<Major> tempList; // 임시 벡터
 
 	for (int i = 0; i <= end_idx; i++) {
 		for (int j = 0; j < majorInfo[i].size(); j++) {
@@ -143,7 +144,7 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 						tempList.push_back(majorInfo[i][j]);
 						sumOfCredit += majorInfo[i][j].getCredit();
 					}
-					else { // ���̼������� �ִ� ���
+					else { // 선이수과목이 있는 경우
 						int flag = 0;
 						for (int k = 0; k < inputList.size(); k++) {
 							if (majorInfo[i][j].getPriorLecture() == inputList[k]) { flag = 1; break; } // ���̼������� ������ ���
@@ -159,10 +160,10 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 	}
 
 	/*
-	(1) 1,2�г��̸鼭 ��õ ���� ������ 15���� �̻��� ���
-	(2) 3,4�г��̸鼭 ��õ ���� ������ 24���� �̻��� ���
-	��Ͽ��� �г�, �б� ��� �ʼ� ���� ������ �ƴ� ���� ��� �Ϻθ� �����ϰ�
-	�̸� ��ü ���� ����Ʈ�� �־���
+	(1) 1,2학년이면서 추천 전공 학점이 15학점 이상인 경우
+	(2) 3,4학년이면서 추천 전공 학점이 24학점 이상인 경우
+	등록예정 학년, 학기 가운데 필수 전공 과목이 아닌 과목 가운데 일부를 제외하고
+	이를 대체 가능 리스트에 넣어줌
 	*/
 
 	if (end_idx < 4) maxCredit = 15; // (1)
@@ -173,14 +174,14 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 
 		for (int i = tempList.size() - 1; i >= 0; i--) {
 			if (sumOfCredit < maxCredit) break;
-			if (tempList[i].getMust() == false) { // �ʼ� ������ �ƴϸ� ��ü ���� ����Ʈ(replaceList)�� �߰�
+			if (tempList[i].getMust() == false) { // 필수 전공이 아니면 대체 가능 리스트(replaceList)에 추가
 				replaceList.push_back(tempList[i]);
 				sumOfCredit -= tempList[i].getCredit();
 			}
 		}
 	}
 
-	// �������� ó��
+	
 	for (int i = 0; i < majorInfo[8].size(); i++) {
 		if (i >= 0 && i <= 2 && majorInfo[8][i].getCompleted() == false ) { // �������� �ʼ� ó��
 			if(majorInfo[8][i].getMust() == true)
@@ -195,7 +196,7 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 		}
 	}
 
-	// replaceList�� �� ������ �����ϰ� outputList�� �߰�
+	// replaceList에 들어간 과목을 제외하고 outputList에 추가
 	for (int i = 0; i < tempList.size(); i++) {
 		int flag = 0;
 		for (int j = 0; j < replaceList.size(); j++) {
