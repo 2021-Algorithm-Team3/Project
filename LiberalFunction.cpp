@@ -9,7 +9,7 @@ using namespace std;
 
 #define MIN_KOR 44032
 #define MAX_KOR 55203
-#define HASH_SIZE 50
+#define HASH_SIZE 700
 
 void linearSearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal)
 {
