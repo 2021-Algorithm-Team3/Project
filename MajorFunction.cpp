@@ -11,14 +11,19 @@ using namespace std;
 #define MAX_KOR 55203
 #define HASH_SIZE 100
 
+int totalCredit = 0;
+
 void linearSearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 {
 	for (int i = 0; i < inputMajor.size(); i++)
 	{
 		for (int j = 0; j < majorList.size(); j++)
 		{
-			if (inputMajor[i] == majorList[j].getName())
+			if (inputMajor[i] == majorList[j].getName()) {
 				majorList[j].setCompleted();
+				totalCredit += majorList[j].getCredit();
+			}
+				
 		}
 	}
 }
@@ -45,6 +50,7 @@ void BinarySearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 			if (majorList[mid].getName() == inputMajor[i])
 			{
 				majorList[mid].setCompleted();
+				totalCredit += majorList[mid].getCredit();
 				break;
 			}
 			else if (majorList[mid].getName() > inputMajor[i])
@@ -95,6 +101,7 @@ void set_Complete_Hash(vector<Major*>* majorHash, vector<wstring>& inputList) {
 		// 하나 뿐이면 바로 갱신
 		if (majorHash[hash].size() == 0) {
 			majorHash[hash].at(0)->setCompleted();
+			totalCredit += majorHash[hash].at(0)->getCredit();
 		}
 		// 여러 개면 chain을 탐색하여 갱신
 		else {
@@ -102,6 +109,7 @@ void set_Complete_Hash(vector<Major*>* majorHash, vector<wstring>& inputList) {
 			for (int i = 0; i < majorHash[hash].size(); i++) {
 				if (majorHash[hash].at(i)->getName() == name) {
 					majorHash[hash].at(i)->setCompleted();
+					totalCredit += majorHash[hash].at(i)->getCredit();
 				}
 			}
 		}
@@ -158,6 +166,7 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 	*/
 
 	if (end_idx < 4) maxCredit = 15; // (1)
+	else if (84 - totalCredit < 24) { maxCredit = 84 - totalCredit; }
 	else maxCredit = 24; // (2)
 
 	if (sumOfCredit >= maxCredit) {
@@ -171,62 +180,18 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 		}
 	}
 
-
-	// 공대 공통 전공은 3~4학년에 한해 학점이 남는 경우 학기당 한 과목 추가
-	if (sumOfCredit < maxCredit && end_idx >= 4) {
-		if (maxCredit - sumOfCredit < 3) { // 1학점 과목(개별연구) 추가
-			for (int i = 0; i <= 2; i++) {
-				if (majorInfo[8][i].getCompleted() == false) {
-					tempList.push_back(majorInfo[8][i]);
-					break;
-				}
-			}
+	// 공대전공 처리
+	for (int i = 0; i < majorInfo[8].size(); i++) {
+		if (i >= 0 && i <= 2 && majorInfo[8][i].getCompleted() == false ) { // 개별연구 필수 처리
+			if(majorInfo[8][i].getMust() == true)
+				outputList.push_back(majorInfo[8][i]);
+			else
+				replaceList.push_back(majorInfo[8][i]);
+			i = 2;
 		}
-		// 1,2학기 별 열리는 공대 전공 과목에 대해 s값(학기)에 따라 구분 필요
-		else { // 넣을 수 있는 학점이 3학점이 넘는 경우 3학점 과목 우선 추천 후 1학점 과목은 대체 가능 리스트에 추가
-		   // tempList에 추가하는 과정
-			int i;
-			if (s == 1) { // 1학기 수강 예정의 경우
-				for (i = 3; i < 7; i++) {
-					if (majorInfo[8][i].getCompleted() == false) {
-						tempList.push_back(majorInfo[8][i]);
-						break;
-					}
-				}
-			}
-			else if (s == 2) { // 2학기 수강 예정의 경우
-				for (i = 3; i < 9; i++) {
-					if (i == 5) i++;
-					if (majorInfo[8][i].getCompleted() == false) {
-						tempList.push_back(majorInfo[8][i]);
-						break;
-					}
-				}
-			}
-
-			// replaceList에 개별연구 과목도 포함
-			for (int j = 0; j <= 2; j++) {
-				if (majorInfo[8][j].getCompleted() == false) {
-					replaceList.push_back(majorInfo[8][j]); break;
-				}
-			}
-
-			// replaceList에 추가하는 과정
-			if (s == 1) { // 1학기 수강 예정의 경우
-				for (int j = i + 1; j < 7; j++) {
-					if (majorInfo[8][j].getCompleted() == false) {
-						replaceList.push_back(majorInfo[8][j]);
-					}
-				}
-			}
-			else if (s == 2) { // 2학기 수강 예정의 경우
-				for (int j = i + 1; j < 9; j++) {
-					if (j == 5) j++;
-					if (majorInfo[8][j].getCompleted() == false) {
-						replaceList.push_back(majorInfo[8][j]);
-					}
-				}
-			}
+		else if (majorInfo[8][i].getCompleted() == false) {
+			if (majorInfo[8][i].getSemester() == 0 || majorInfo[8][i].getSemester() == s)
+				replaceList.push_back(majorInfo[8][i]);
 		}
 	}
 
