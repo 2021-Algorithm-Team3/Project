@@ -7,6 +7,8 @@
 void linearSearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal);
 
 // 이진 탐색
+void make1DVector(vector<Liberal>& liberalList, vector<Liberal>& tempVector);
+
 void BinarySearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal);
 
 bool compare(Liberal l1, Liberal l2);

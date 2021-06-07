@@ -290,18 +290,20 @@ int main() {
 	int n_science[2];
 
 	// [1] 순차 탐색 후 추천과목 리스트 추출
-	//linearSearch(liberalList, input_liberal);
-	//extractCommon(liberalList, liberalCommon, liberalCommon_cyber, semester, year, n_common);
-	//extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
-	//extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
-	//extractNormal(liberalList, liberalNormal, n_normal);
-
-	//// [2] 이진 탐색 후 추천과목 리스트 추출
-	BinarySearch(liberalList, input_liberal);
-	extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
-	extractNormal(liberalList, liberalNormal, n_normal);
+	linearSearch(liberalList, input_liberal);
 	extractCommon(liberalList, liberalCommon, liberalCommon_cyber, semester, year, n_common);
 	extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
+	extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
+	extractNormal(liberalList, liberalNormal, n_normal);
+
+	//// [2] 이진 탐색 후 추천과목 리스트 추출
+	// vector<Liberal>tempVector = liberalList;
+	// BinarySearch(liberalList, input_liberal);
+	// make1DVector(liberalList, tempVector);
+	// extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
+	// extractNormal(liberalList, liberalNormal, n_normal);
+	// extractCommon(liberalList, liberalCommon, liberalCommon_cyber, semester, year, n_common);
+	// extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
 
 	//// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
 	//// 모든 전공 객체를 담은 해쉬 테이블 생성

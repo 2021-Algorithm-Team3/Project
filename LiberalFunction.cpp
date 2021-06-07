@@ -55,6 +55,18 @@ void BinarySearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal)
 	}
 }
 
+void make1DVector(vector<Liberal>& liberalList, vector<Liberal>& tempVector)
+{
+	for (int i = 0; i < liberalList.size(); i++)
+	{
+		for (int j = 0; j < tempVector.size(); j++)
+		{
+			if (liberalList[i].getCompleted() == true && liberalList[i].getName() == tempVector[j].getName())	// 정렬된 vector와 원래 순서를 가진 vector를 비교하여 원래 순서의 vector에서 setCompleted를 수행
+				tempVector[j].setCompleted();
+		}
+	}
+}
+
 int hashing_L(wstring name) {
 	int kor_value = 0, other_value = 0;
 	int length;
