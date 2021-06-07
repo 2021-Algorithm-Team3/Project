@@ -8,6 +8,7 @@
 #include "LiberalFunction.h"
 
 #define HASH_SIZE 100
+#define HASH_SIZE_2 50
 
 using namespace std;
 
@@ -304,7 +305,7 @@ int main() {
 
 	//// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
 	//// 모든 전공 객체를 담은 해쉬 테이블 생성
-	//vector<Liberal*> liberalHash[HASH_SIZE];
+	//vector<Liberal*> liberalHash[HASH_SIZE_2];
 	//make_HT(liberalHash, liberalList);
 	//set_Complete_Hash(liberalHash, input_liberal);
 	//extractScience(liberalList, liberalExperiment, liberalTheroy, n_science);
