@@ -7,13 +7,13 @@
 #include "MajorFunction.h"
 #include "LiberalFunction.h"
 
-#define HASH_SIZE 1000
-#define HASH_SIZE_2 700
+#define HASH_SIZE 1000 // major subjects - hash table size
+#define HASH_SIZE_2 700 // liberal subjects - hash table size
 
 using namespace std;
 
 int main() {
-
+	// 한글 유니코드 사용 목적
 	locale::global(locale("ko_KR.UTF-8"));
 	setlocale(LC_ALL, "korean");
 
@@ -134,6 +134,7 @@ int main() {
 	majorList.push_back(M55);
 	majorList.push_back(M56);
 
+	// 이수체계도 기반 전공 수강 과목에 대한 추천 우선순위 결정
 	vector<Major> freshman1 = { M1, M2 };
 	vector<Major> freshman2 = { M3, M4, M5 };
 	vector<Major> sophomore1 = { M6, M7, M8 };
@@ -144,7 +145,7 @@ int main() {
 	vector<Major> senior2 = { M47, M37, M38, M39, M40, M41, M42, M43, M44, M45};
 	vector<Major> engineering = { M48, M49, M50, M51, M52, M53, M54, M55, M56 };
 
-	vector<vector<Major>> tempInfo;
+	vector<vector<Major>> tempInfo; // 위의 데이터 기반 이차원 벡터 생성
 
 	tempInfo.push_back(freshman1); tempInfo.push_back(freshman2);
 	tempInfo.push_back(sophomore1); tempInfo.push_back(sophomore2);
@@ -190,6 +191,7 @@ int main() {
 	Liberal L31(L"기술과사회", 3, false, false);
 	Liberal L32(L"지속가능한발전과인간", 3, false, false);
 
+	// 모든 교양 객체를 담은 벡터를 생성(탐색에 쓰일 함수의 파라미터로 쓰임)
 	vector<Liberal> liberalList;
 	liberalList.push_back(L1);
 	liberalList.push_back(L2);
@@ -224,8 +226,23 @@ int main() {
 	liberalList.push_back(L31);
 	liberalList.push_back(L32);
 
-	int year, semester;
+	wstring line_m;		// wstring 형태의 임시 파일 읽기 변수 사용		
+	vector <wstring> input_major; // 수강한 전공 과목들을 담는 벡터
+	vector <wstring> input_liberal; // 수강한 교양 과목들을 담는 벡터
+	vector<vector<Major>> majorInfo[3]; // 탐색을 통해 만들어진 벡터를 토대로 2차원 벡터 생성
+	vector<Major> output_major; // 수강할 전공 과목들을 담는 벡터
+	vector<Major> replace_major; // 대체 가능 과목들을 담는 벡터
+
+	vector<Liberal> liberalCommon, liberalCommon_cyber; // 공통교양, 사이버 강의
+	vector<wstring> liberalNormal; // 기본소양
+	vector<Liberal> liberalExperiment, liberalTheory; // MSC 과학 실험, 이론
+	vector<Liberal> liberalMath_must, liberalMath; // MSC 수학 필수, 선택
+
+	int n_common, n_normal, n_math;
+	int n_science[2];
+
 	// 파일 입력
+	int year, semester; // 입력 받은 예정 학년, 학기
 	wifstream fin("input.txt"); // 수강한 전체과목이 담긴 txt
 
 	// 파일 입력 에러
@@ -234,19 +251,10 @@ int main() {
 		exit(100);
 	}
 
-	wstring line_m;		// wstring 형태의 임시 파일 읽기 변수 사용		
-	vector <wstring> input_major; // 수강한 전공 과목들을 담는 벡터
-	vector <wstring> input_liberal; // 수강한 교양 과목들을 담는 벡터
-
-	vector<vector<Major>> majorInfo[3]; // 탐색을 통해 만들어진 벡터를 토대로 2차원 벡터 생성
-	vector<Major> output_major[3]; // 수강할 전공 과목들을 담는 벡터
-	vector<Major> replace_major[3]; // 대체 가능 과목들을 담는 벡터
-
-
-	fin >> year >> semester;
+	fin >> year >> semester; // 학년, 학기
 	int flag = 0;
 
-	while (getline(fin, line_m))	// wstring형으로 파일을 읽어야 해서 바꿈
+	while (getline(fin, line_m)) // wstring형으로 파일을 읽어야 해서 바꿈
 	{
 		if (line_m == L"") continue;
 		else if (line_m == L"전공:") { flag = 1; continue; }
@@ -259,44 +267,40 @@ int main() {
 		}
 	}
 
+	/*
+	해당 프로젝트 실행을 위해서는 하단 전공([1]~[3]), 교양([1]~[3]) 가운데
+	각각 하나씩 주석을 제거한 상태에서 실행시켜야 함.
+	*/
+
 	// 전공
 	// [1] 순차 탐색 후 추천과목 리스트 추출
 	linearSearch(majorList, input_major);
 	make2Dvector(majorList, tempInfo, majorInfo[0]);
-	subjectExtraction(year, semester, majorInfo[0], input_major, output_major[0], replace_major[0]);
+	subjectExtraction(year, semester, majorInfo[0], input_major, output_major, replace_major);
 
 	// [2] 이진 탐색 후 추천과목 리스트 추출
-	//BinarySearch(majorList, input_major);
-	//make2Dvector(majorList, tempInfo, majorInfo[1]);
-	//subjectExtraction(year, semester, majorInfo[1], input_major, output_major[1], replace_major[1]);
+	// BinarySearch(majorList, input_major);
+	// make2Dvector(majorList, tempInfo, majorInfo[1]);
+	// subjectExtraction(year, semester, majorInfo[1], input_major, output_major, replace_major);
 
 	// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
 	// 모든 전공 객체를 담은 해쉬 테이블 생성
-	//vector<Major*> majorHash[HASH_SIZE];
-	//make_HT(majorHash, majorList);
-	//set_Complete_Hash(majorHash, input_major);
-
-	//make2Dvector(majorList, tempInfo, majorInfo[2]);
-	//subjectExtraction(year, semester, majorInfo[2], input_major, output_major[2], replace_major[2]);
+	// vector<Major*> majorHash[HASH_SIZE];
+	// make_HT(majorHash, majorList);
+	// set_Complete_Hash(majorHash, input_major);
+	// make2Dvector(majorList, tempInfo, majorInfo[2]);
+	// subjectExtraction(year, semester, majorInfo[2], input_major, output_major, replace_major);
 
 
 	// 교양
-	vector<Liberal> liberalCommon, liberalCommon_cyber;
-	vector<wstring> liberalNormal;
-	vector<Liberal> liberalExperiment, liberalTheory;
-	vector<Liberal> liberalMath_must, liberalMath;
-
-	int n_common, n_normal, n_math;
-	int n_science[2];
-
 	// [1] 순차 탐색 후 추천과목 리스트 추출
 	linearSearch(liberalList, input_liberal);
-	extractCommon(liberalList, liberalCommon, liberalCommon_cyber, semester, year, n_common);
-	extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
 	extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
 	extractNormal(liberalList, liberalNormal, n_normal);
+	extractCommon(liberalList, liberalCommon, liberalCommon_cyber, semester, year, n_common);
+	extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
 
-	//// [2] 이진 탐색 후 추천과목 리스트 추출
+	// [2] 이진 탐색 후 추천과목 리스트 추출
 	// vector<Liberal>tempVector = liberalList;
 	// BinarySearch(liberalList, input_liberal);
 	// make1DVector(liberalList, tempVector);
@@ -305,39 +309,36 @@ int main() {
 	// extractCommon(tempVector, liberalCommon, liberalCommon_cyber, semester, year, n_common);
 	// extractMath(year, tempVector, liberalMath_must, liberalMath, n_math);
 
-	//// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
-	//// 모든 전공 객체를 담은 해쉬 테이블 생성
-	//vector<Liberal*> liberalHash[HASH_SIZE_2];
-	//make_HT(liberalHash, liberalList);
-	//set_Complete_Hash(liberalHash, input_liberal);
-	//extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
-	//extractNormal(liberalList, liberalNormal, n_normal);
-	//extractCommon(liberalList, liberalCommon, liberalCommon_cyber, semester, year, n_common);
-	//extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
+	// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
+	// 모든 전공 객체를 담은 해쉬 테이블 생성
+	// vector<Liberal*> liberalHash[HASH_SIZE_2];
+	// make_HT(liberalHash, liberalList);
+	// set_Complete_Hash(liberalHash, input_liberal);
+	// extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
+	// extractNormal(liberalList, liberalNormal, n_normal);
+	// extractCommon(liberalList, liberalCommon, liberalCommon_cyber, semester, year, n_common);
+	// extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
 
 
 	// 파일 출력
 	wofstream fout("output.txt"); // 수강한 전체과목이 담긴 txt
 
-	// 파일 입력 에러
+	// 파일 출력 에러
 	if (fout.fail()) {
 		cerr << L"파일을 불러올 수 없습니다." << endl;
 		exit(100);
 	}
 
-	// 출력 결과 확인([1])
 	fout << L"[전공]";
 
 	fout << endl << L"> 추천" << endl;
-	for (int i = 0; i < output_major[0].size(); i++) {
-		fout << output_major[0][i].getName() << endl;
+	for (int i = 0; i < output_major.size(); i++) {
+		fout << output_major[i].getName() << endl;
 	}
-
 	fout << endl << L"> 대체가능" << endl;
-	for (int i = 0; i < replace_major[0].size(); i++) {
-		fout << replace_major[0][i].getName() << endl;
+	for (int i = 0; i < replace_major.size(); i++) {
+		fout << replace_major[i].getName() << endl;
 	}
-
 
 	fout << endl << L"----------------------------" << endl;
 	fout << endl << L"[교양]" << endl;

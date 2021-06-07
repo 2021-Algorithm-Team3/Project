@@ -1,3 +1,4 @@
+﻿/*교양 과목 함수*/
 #include "Lecture.h"
 #include <string>
 #include <vector>
@@ -11,7 +12,7 @@ using namespace std;
 #define MAX_KOR 55203
 #define HASH_SIZE 700
 
-void linearSearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal)
+void linearSearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal) // 선형 탐색
 {
 	for (int i = 0; i < inputLiberal.size(); i++)
 	{
@@ -25,13 +26,13 @@ void linearSearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal)
 
 bool compare(Liberal l1, Liberal l2)
 {
-	return l1.getName() < l2.getName();		// 강의명으로 ㄱㄴㄷ 정렬
+	return l1.getName() < l2.getName();	// 강의명으로 ㄱㄴㄷ 정렬
 }
 
-void BinarySearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal)
+void BinarySearch(vector<Liberal>& liberalList, vector<wstring>& inputLiberal) // 이진 탐색
 {
 
-	sort(liberalList.begin(), liberalList.end(), compare);		// 이진 탐색을 위해 정렬 먼저 진행
+	sort(liberalList.begin(), liberalList.end(), compare); // 이진 탐색을 위해 정렬 먼저 진행
 
 	for (int i = 0; i < inputLiberal.size(); i++)
 	{
@@ -95,7 +96,6 @@ void make_HT(vector<Liberal*>* liberalHash, vector<Liberal>& liberalList) {
 	for (int i = 0; i < liberalList.size(); i++) {
 		hash = hashing_L(liberalList[i].getName());
 
-
 		liberalHash[hash].push_back(&liberalList[i]);
 	}
 }
@@ -123,6 +123,7 @@ void set_Complete_Hash(vector<Liberal*>* liberalHash, vector<wstring>& inputList
 	}
 }
 
+// 공통교양 과목 추출
 void extractCommon(vector<Liberal>& liberalList, vector<Liberal>& liberalCommon, vector<Liberal>& liberalCommon_cyber, int semester, int year, int& n) {
 	int i;
 	int flag = 0;
@@ -148,7 +149,7 @@ void extractCommon(vector<Liberal>& liberalList, vector<Liberal>& liberalCommon,
 		}
 	}
 
-	if (flag == 0) {
+	if (flag == 0) { // 사이버 강의
 		for (int i = 7; i < 10; i++) {
 			liberalCommon_cyber.push_back(liberalList[i]);
 		}
@@ -156,6 +157,7 @@ void extractCommon(vector<Liberal>& liberalList, vector<Liberal>& liberalCommon,
 	}
 }
 
+// 기본소양 과목 추출
 void extractNormal(vector<Liberal>& liberalList, vector<wstring>& normalLiberal, int& n) {
 	int totalCredit = 9;
 	int cnt = 0;
@@ -180,12 +182,12 @@ void extractNormal(vector<Liberal>& liberalList, vector<wstring>& normalLiberal,
 	}
 }
 
+// MSC 수학 과목 추출
 void extractMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMath_must, vector<Liberal>& liberalMath, int& n) {
 	vector<Liberal> liberalMath_;
 	for (int i = 10; i < 17; i++) {
 		liberalMath_.push_back(liberalList[i]);
 	}
-
 
 	int sumOfCredit = 0;
 	int haveTo = 15;
@@ -220,6 +222,7 @@ void extractMath(int y, vector<Liberal>& liberalList, vector<Liberal>& liberalMa
 		n = 0;
 }
 
+// MSC 과학 과목 추출
 void extractScience(vector<Liberal>& liberalList, vector<Liberal>& liberalExperiment, vector<Liberal>& liberalTheory, int n[2]) {
 	n[0] = 0; n[1] = 0;
 	vector<Liberal> experiment; // 들은 실험 과목 

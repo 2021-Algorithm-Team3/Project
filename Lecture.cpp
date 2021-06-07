@@ -1,4 +1,4 @@
-#include <string>
+﻿#include <string>
 #include "Lecture.h"
 
 Major::Major(wstring name, int credit, wstring prior_lecture, bool must, bool completed, int semester) {
