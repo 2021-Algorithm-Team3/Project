@@ -64,7 +64,7 @@ int main() {
 	Major M44(L"시큐어코딩", 3, L"", false, false, 2);
 	Major M45(L"빅데이터분석", 3, L"", false, false, 2);
 	Major M46(L"컴퓨터공학종합설계1", 3, L"공개SW프로젝트", true, false, 0);
-	Major M47(L"컴퓨터공학종합설계2", 3, L"공개SW컴퓨터공학종합설계1", true, false, 0);
+	Major M47(L"컴퓨터공학종합설계2", 3, L"컴퓨터공학종합설계1", true, false, 0);
 	Major M48(L"개별연구1", 1, L"", true, false, 0);
 	Major M49(L"개별연구2", 1, L"", true, false, 0);
 	Major M50(L"개별연구3", 1, L"", false, false, 0);
@@ -141,7 +141,7 @@ int main() {
 	vector<Major> junior1 = { M13, M14, M15, M16, M17, M18, M19 };
 	vector<Major> junior2 = { M20, M21, M22, M23, M24, M25, M26 };
 	vector<Major> senior1 = { M46, M27, M28, M29, M30, M31, M32, M33, M34, M35, M36 };
-	vector<Major> senior2 = { M47, M37, M38, M39, M40, M41, M42, M43, M44, M45, M46, M47 };
+	vector<Major> senior2 = { M47, M37, M38, M39, M40, M41, M42, M43, M44, M45};
 	vector<Major> engineering = { M48, M49, M50, M51, M52, M53, M54, M55, M56 };
 
 	vector<vector<Major>> tempInfo;
@@ -266,7 +266,7 @@ int main() {
 	subjectExtraction(year, semester, majorInfo[0], input_major, output_major[0], replace_major[0]);
 
 	// [2] 이진 탐색 후 추천과목 리스트 추출
-	// BinarySearch(majorList, input_major);
+	//BinarySearch(majorList, input_major);
 	//make2Dvector(majorList, tempInfo, majorInfo[1]);
 	//subjectExtraction(year, semester, majorInfo[1], input_major, output_major[1], replace_major[1]);
 
@@ -290,18 +290,18 @@ int main() {
 	int n_science[2];
 
 	// [1] 순차 탐색 후 추천과목 리스트 추출
-	linearSearch(liberalList, input_liberal);
-	extractCommon(liberalList, liberalCommon, liberalCommon_cyber, semester, year, n_common);
-	extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
-	extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
-	extractNormal(liberalList, liberalNormal, n_normal);
+	//linearSearch(liberalList, input_liberal);
+	//extractCommon(liberalList, liberalCommon, liberalCommon_cyber, semester, year, n_common);
+	//extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
+	//extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
+	//extractNormal(liberalList, liberalNormal, n_normal);
 
 	//// [2] 이진 탐색 후 추천과목 리스트 추출
-	//BinarySearch(liberalList, input_liberal);
-	//extractScience(liberalList, liberalExperiment, liberalTheroy, n_science);
-	//extractNormal(liberalList, liberalNormal, n_normal);
-	//extractCommon(liberalList, liberalCommon, semester, year);
-	//extrachMath(year, liberalList, liberalMath_must, liberalMath, n_math);
+	BinarySearch(liberalList, input_liberal);
+	extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
+	extractNormal(liberalList, liberalNormal, n_normal);
+	extractCommon(liberalList, liberalCommon, liberalCommon_cyber, semester, year, n_common);
+	extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
 
 	//// [3] 입력 받은 과목을 hash탐색하여 추천과목 리스트 추출
 	//// 모든 전공 객체를 담은 해쉬 테이블 생성
@@ -310,8 +310,8 @@ int main() {
 	//set_Complete_Hash(liberalHash, input_liberal);
 	//extractScience(liberalList, liberalExperiment, liberalTheroy, n_science);
 	//extractNormal(liberalList, liberalNormal, n_normal);
-	//extractCommon(liberalList, liberalCommon, semester, year);
-	//extrachMath(year, liberalList, liberalMath_must, liberalMath, n_math);
+	//extractCommon(liberalList, liberalCommon, liberalCommon_cyber, semester, year, n_common);
+	//extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);
 
 
 	// 파일 출력
