@@ -30,13 +30,13 @@ void linearSearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 
 bool compare(Major m1, Major m2)
 {
-	return m1.getName() < m2.getName();      // °­ÀÇ¸íÀ¸·Î ¤¡¤¤¤§ Á¤·Ä
+	return m1.getName() < m2.getName();      // ï¿½ï¿½ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 }
 
 void BinarySearch(vector<Major>& majorList, vector<wstring>& inputMajor)
 {
 
-	sort(majorList.begin(), majorList.end(), compare);      // ÀÌÁø Å½»öÀ» À§ÇØ Á¤·Ä ¸ÕÀú ÁøÇà
+	sort(majorList.begin(), majorList.end(), compare);      // ï¿½ï¿½ï¿½ï¿½ Å½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 	for (int i = 0; i < inputMajor.size(); i++)
 	{
@@ -69,12 +69,12 @@ int hashing_M(wstring name) {
 	for (int i = 0; i < name.length(); i++) {
 		int temp = name[i];
 
-		if (temp >= MIN_KOR && temp <= MAX_KOR) {  // ÇöÀç º¸°í ÀÖ´Â ¹®ÀÚ°¡ ÇÑ±ÛÀÌ¸é kor_value¿¡ ´õÇÔ
+		if (temp >= MIN_KOR && temp <= MAX_KOR) {  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Ñ±ï¿½ï¿½Ì¸ï¿½ kor_valueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			kor_value += temp;
 		}
 		else {
-			other_value += temp;   // ¾Æ´Ï¸é other_value¿¡ ´õÇÔ
-			length--;  // ÇÑ±ÛÀÌ ¾Æ´Ñ ¹®ÀÚ¸¸Å­ length-1
+			other_value += temp;   // ï¿½Æ´Ï¸ï¿½ other_valueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			length--;  // ï¿½Ñ±ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½Å­ length-1
 		}
 	}
 	return (kor_value + other_value + name.length()) % HASH_SIZE;
@@ -83,11 +83,11 @@ int hashing_M(wstring name) {
 void make_HT(vector<Major*>* majorHash, vector<Major>& majorList) {
 	int hash = 0;
 
-	//ÇØ½ÃÅ×ÀÌºí ±¸¼º
+	//ï¿½Ø½ï¿½ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
 	for (int i = 0; i < majorList.size(); i++) {
 		hash = hashing_M(majorList[i].getName());
 
-		majorHash[hash].push_back(&majorList[i]);   // °¢ vectorÀÇ ±æÀÌ°¡ Àß¸ø ³ª¿À´Â ¿À·ù ¹ß»ý Áß
+		majorHash[hash].push_back(&majorList[i]);   // ï¿½ï¿½ vectorï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ß¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½
 	}
 }
 
@@ -98,12 +98,12 @@ void set_Complete_Hash(vector<Major*>* majorHash, vector<wstring>& inputList) {
 
 	for (int i = 0; i < inputList.size(); i++) {
 		hash = hashing_M(inputList[i]);
-		// ÇÏ³ª »ÓÀÌ¸é ¹Ù·Î °»½Å
-		if (majorHash[hash].size() == 0) {
+		// ï¿½Ï³ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½
+		if (majorHash[hash].size() == 1) {
 			majorHash[hash].at(0)->setCompleted();
 			totalCredit += majorHash[hash].at(0)->getCredit();
 		}
-		// ¿©·¯ °³¸é chainÀ» Å½»öÇÏ¿© °»½Å
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ chainï¿½ï¿½ Å½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 		else {
 			wstring name = inputList[i];
 			for (int i = 0; i < majorHash[hash].size(); i++) {
@@ -116,7 +116,7 @@ void set_Complete_Hash(vector<Major*>* majorHash, vector<wstring>& inputList) {
 	}
 }
 
-void make2Dvector(vector<Major>& majorList, vector<vector<Major>>& tempInfo, vector<vector<Major>>& majorInfo) { // °ú¸ñ ÃßÃâ ½Ã ÇÊ¿äÇÑ 2Â÷¿ø º¤ÅÍ(majorInfo) »ý¼º
+void make2Dvector(vector<Major>& majorList, vector<vector<Major>>& tempInfo, vector<vector<Major>>& majorInfo) { // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ 2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(majorInfo) ï¿½ï¿½ï¿½ï¿½
 	majorInfo = tempInfo;
 	for (int i = 0; i < tempInfo.size(); i++) {
 		for (int j = 0; j < tempInfo[i].size(); j++) {
@@ -131,8 +131,8 @@ void make2Dvector(vector<Major>& majorList, vector<vector<Major>>& tempInfo, vec
 
 void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<wstring>& inputList, vector<Major>& outputList, vector<Major>& replaceList) {
 	int end_idx, maxCredit, sumOfCredit = 0;
-	end_idx = (s == 1 ? 2 * (y - 1) : 2 * (y - 1) + 1); //µî·Ï ¿¹Á¤ ÇÐ³âÇÐ±â¿¡ µû¶ó majorInfo °Ë»ç ½Ã ¸î¹øÂ° index±îÁö °Ë»çÇÒÁö¸¦ °áÁ¤
-	vector<Major> tempList; // ÀÓ½Ã º¤ÅÍ
+	end_idx = (s == 1 ? 2 * (y - 1) : 2 * (y - 1) + 1); //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½Ð±â¿¡ ï¿½ï¿½ï¿½ï¿½ majorInfo ï¿½Ë»ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Â° indexï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	vector<Major> tempList; // ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 	for (int i = 0; i <= end_idx; i++) {
 		for (int j = 0; j < majorInfo[i].size(); j++) {
@@ -143,10 +143,10 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 						tempList.push_back(majorInfo[i][j]);
 						sumOfCredit += majorInfo[i][j].getCredit();
 					}
-					else { // ¼±ÀÌ¼ö°ú¸ñÀÌ ÀÖ´Â °æ¿ì
+					else { // ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
 						int flag = 0;
 						for (int k = 0; k < inputList.size(); k++) {
-							if (majorInfo[i][j].getPriorLecture() == inputList[k]) { flag = 1; break; } // ¼±ÀÌ¼ö°ú¸ñÀ» ¼ö°­ÇÑ °æ¿ì
+							if (majorInfo[i][j].getPriorLecture() == inputList[k]) { flag = 1; break; } // ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 						}
 						if (flag == 1) {
 							tempList.push_back(majorInfo[i][j]);
@@ -159,10 +159,10 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 	}
 
 	/*
-	(1) 1,2ÇÐ³âÀÌ¸é¼­ ÃßÃµ Àü°ø ÇÐÁ¡ÀÌ 15ÇÐÁ¡ ÀÌ»óÀÎ °æ¿ì
-	(2) 3,4ÇÐ³âÀÌ¸é¼­ ÃßÃµ Àü°ø ÇÐÁ¡ÀÌ 24ÇÐÁ¡ ÀÌ»óÀÎ °æ¿ì
-	µî·Ï¿¹Á¤ ÇÐ³â, ÇÐ±â °¡¿îµ¥ ÇÊ¼ö Àü°ø °ú¸ñÀÌ ¾Æ´Ñ °ú¸ñ °¡¿îµ¥ ÀÏºÎ¸¦ Á¦¿ÜÇÏ°í
-	ÀÌ¸¦ ´ëÃ¼ °¡´É ¸®½ºÆ®¿¡ ³Ö¾îÁÜ
+	(1) 1,2ï¿½Ð³ï¿½ï¿½Ì¸é¼­ ï¿½ï¿½Ãµ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 15ï¿½ï¿½ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	(2) 3,4ï¿½Ð³ï¿½ï¿½Ì¸é¼­ ï¿½ï¿½Ãµ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 24ï¿½ï¿½ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½, ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½îµ¥ ï¿½Ê¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½îµ¥ ï¿½ÏºÎ¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½
+	ï¿½Ì¸ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½
 	*/
 
 	if (end_idx < 4) maxCredit = 15; // (1)
@@ -172,16 +172,16 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 
 		for (int i = tempList.size() - 1; i >= 0; i--) {
 			if (sumOfCredit < maxCredit) break;
-			if (tempList[i].getMust() == false) { // ÇÊ¼ö Àü°øÀÌ ¾Æ´Ï¸é ´ëÃ¼ °¡´É ¸®½ºÆ®(replaceList)¿¡ Ãß°¡
+			if (tempList[i].getMust() == false) { // ï¿½Ê¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¸ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®(replaceList)ï¿½ï¿½ ï¿½ß°ï¿½
 				replaceList.push_back(tempList[i]);
 				sumOfCredit -= tempList[i].getCredit();
 			}
 		}
 	}
 
-	// °ø´ëÀü°ø Ã³¸®
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
 	for (int i = 0; i < majorInfo[8].size(); i++) {
-		if (i >= 0 && i <= 2 && majorInfo[8][i].getCompleted() == false ) { // °³º°¿¬±¸ ÇÊ¼ö Ã³¸®
+		if (i >= 0 && i <= 2 && majorInfo[8][i].getCompleted() == false ) { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¼ï¿½ Ã³ï¿½ï¿½
 			if(majorInfo[8][i].getMust() == true)
 				outputList.push_back(majorInfo[8][i]);
 			else
@@ -194,7 +194,7 @@ void subjectExtraction(int y, int s, vector<vector<Major>>& majorInfo, vector<ws
 		}
 	}
 
-	// replaceList¿¡ µé¾î°£ °ú¸ñÀ» Á¦¿ÜÇÏ°í outputList¿¡ Ãß°¡
+	// replaceListï¿½ï¿½ ï¿½ï¿½î°£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ outputListï¿½ï¿½ ï¿½ß°ï¿½
 	for (int i = 0; i < tempList.size(); i++) {
 		int flag = 0;
 		for (int j = 0; j < replaceList.size(); j++) {

@@ -310,7 +310,7 @@ int main() {
 	//vector<Liberal*> liberalHash[HASH_SIZE_2];
 	//make_HT(liberalHash, liberalList);
 	//set_Complete_Hash(liberalHash, input_liberal);
-	//extractScience(liberalList, liberalExperiment, liberalTheroy, n_science);
+	//extractScience(liberalList, liberalExperiment, liberalTheory, n_science);
 	//extractNormal(liberalList, liberalNormal, n_normal);
 	//extractCommon(liberalList, liberalCommon, liberalCommon_cyber, semester, year, n_common);
 	//extractMath(year, liberalList, liberalMath_must, liberalMath, n_math);

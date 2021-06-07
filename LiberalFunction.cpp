@@ -108,7 +108,7 @@ void set_Complete_Hash(vector<Liberal*>* liberalHash, vector<wstring>& inputList
 	for (int i = 0; i < inputList.size(); i++) {
 		hash = hashing_L(inputList[i]);
 		// 하나 뿐이면 바로 갱신
-		if (liberalHash[hash].size() == 0) {
+		if (liberalHash[hash].size() == 1) {
 			liberalHash[hash].at(0)->setCompleted();
 		}
 		// 여러 개면 chain을 탐색하여 갱신
